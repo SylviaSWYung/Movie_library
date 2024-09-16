@@ -117,5 +117,5 @@ public class Movie {
      */
     public void setRented(boolean isRented) {
         this.isRented = isRented;
-    }     
+    }
 }
