@@ -97,7 +97,7 @@
                 <!-- Default configuration for running -->
                 <!-- Usage: mvn javafx:run -->
                 <configuration>
-                    <mainClass>movielibrary/App</mainClass>
+                    <mainClass>movielibrary.App</mainClass>
                 </configuration>
             </plugin>
         </plugins>
