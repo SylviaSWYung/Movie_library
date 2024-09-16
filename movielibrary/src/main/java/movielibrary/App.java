@@ -1,5 +1,29 @@
 package movielibrary;
 
-public class App {
+import java.io.IOException;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+/**
+ * App class initializes the application and starts the project
+ */
+
+public class App extends Application {
     
+    @Override
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/FrontPage.fxml"));
+        Parent parent = fxmlLoader.load();
+        
+        primaryStage.setScene(new Scene(parent));
+        primaryStage.setTitle("MovieLibrary App");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
 }
