@@ -10,46 +10,49 @@ public class Movie {
     private boolean isRented; //Default value is set to false. False - Available. 
     
     /**
-     * Movie object with required parameters. Rent status is set to false. 
-     * Which means that it is available.
+     * Constructs a Movie object with the specified title, movie length, and description. 
+     * The movie is initially available for lend (isRented set to false). 
      * 
-     * @param title the title of the movie 
-     * @param movieLength the play length of the movie
-     * @param description description about the movie
+     * @param title the title of the movie, cannot be null or empty.
+     * @param movieLength the length of the movie in minutes, must be greater than 0 and less than or equal to 120. 
+     * @param description a brief description of the movie, cannot be null or empty, and must not exceed 50 characters. 
+     * @throws IllegalArgumentException if any of the parameters are invalid (null, empty, or out of range)
      */
     public Movie(String title, double movieLength, String description){
+        handleStringError(title);
         this.title = title; 
+        handleDoubleError(movieLength);
         this.movieLength = movieLength; 
+        handleStringError(description);
         this.description = description; 
         isRented = false; 
     }
     
     /**
-     * Returns the title of the movie
+     * Retrieves the title of the movie
      * 
-     * @return a String with the title of the movie
+     * @return the title of the movie as a String
      */
     public String getTitle() {
         return this.title;
     }
 
     /**
-     * Sets the title of the movie
-     * The title of the movie can't be empty. 
+     * Sets the title of the movie. 
+     * The title cannot be null or empty. 
      * 
-     * @param title
+     * @param title the title of the movie
+     * @throws IllegalArgumentException if the title is null or empty
      */
     public void setTitle(String title) {
-        if(title == null){
-            throw new NullPointerException("Title can't be null");
-        }
+        handleStringError(title);
         this.title = title;
     }
 
     /**
-     * Returns the movie length.
+     * Retrieves the length of the movie in minutes.
      * 
-     * @return the movie length in Double. 
+     * @return the movie length in double. 
      */
     public double getMovieLength() {
         return this.movieLength;
@@ -57,24 +60,20 @@ public class Movie {
 
     /**
      * Sets the length of the movie. 
-     * It has to be more than 0 minutes, and maximum of 120min. 
+     * The movie length must be greater than 0 and less than or equal to 120 minutes. 
      * 
-     * @param movieLength
+     * @param movieLength the length of the movie in minutes. 
+     * @throws IllegalArgumentException if the movie length is less than or equal to 0 or greater than 120 minutes
      */
     public void setMovieLength(double movieLength) {
-        if(movieLength < 0){
-            throw new IllegalArgumentException("The value is in minutes. The movie can't be 0 minutes.");
-        }
-        if(movieLength > 120){
-            throw new IllegalStateException("The movie is too long.");
-        }
+        handleDoubleError(movieLength);
         this.movieLength = movieLength;
     }
 
     /**
-     * Returns a short description of the movie.
+     * Retrieves the description of the movie.
      * 
-     * @return a String with the description of the movie
+     * @return the description of the movie as a String
      */
     public String getDescription() {
         return this.description;
@@ -82,40 +81,63 @@ public class Movie {
 
     /**
      * Sets the description of the movie. 
-     * The description of the movie cannot be more than 50 char and empty. 
+     * The description cannot be null or empty, and its length must not exceed 50 characters. 
      * 
-     * @param description a String description of the movie 
+     * @param description the description of the movie. 
+     * @throws IllegalArgumentException if the description is null, empty or exceeds 50 characters.  
      */
     public void setDescription(String description) {
-        if(description == null){
-            throw new NullPointerException("The description can't be null");
-        }
+        handleStringError(description);
         int maxCharacter = 50;
-        if(description.length() > maxCharacter || description.length() <= 0){
-            throw new IllegalStateException("The description is not valid");
+        if(description.length() > maxCharacter){
+            throw new IllegalArgumentException("The description cant exceed 50 characters");
         }
         this.description = description;
     }
 
     /**
-     * Returns a boolean for if it is rented. 
-     * False is equal to available. 
-     * True is equal to rented, in this case not available. 
+     * Retrives the rental status of the movie. 
+     * If the movie is lended, it returns true. Otherwise, it returns false. 
      * 
-     * @return a Boolean with the rented value. 
+     * @return true if the the movie is rented, false if it is available. 
      */
     public boolean getIsRented() {
         return this.isRented;
     }
 
     /**
-     * Sets the status of the rented movie. 
-     * False is equal to available. 
-     * True is equal to rented. 
+     * Sets the rental status of the movie. 
      * 
-     * @param isRented a Boolean stated the movie's rented status. 
+     * @param isRented true if the movie is lended, false if it is available 
      */
     public void setRented(boolean isRented) {
         this.isRented = isRented;
+    }
+
+    /**
+     * Validates the string input to ensure it is not null or empty. 
+     * 
+     * @param input the string to validate
+     * @throws IllegalArgumentException if the string is null or empty
+     */
+    private void handleStringError(String input){
+        if(input == null || input.isEmpty()){
+            throw new IllegalArgumentException("Your argument can't be empty or null");
+        }
+    }
+
+    /**
+     * Validates the movie length to ensure it is within the acceptable range.
+     * 
+     * @param minutes the movie length in minutes
+     * @throws IllegalArgumentException if the length is less than or equal to 0 or greater than 12
+     */
+    private void handleDoubleError(double minutes){
+        if(minutes <= 0){
+            throw new IllegalArgumentException("Movie length must be greater than 0 minutes.");
+        }
+        if(minutes > 120){
+            throw new IllegalArgumentException("The movie length can't exceed 120 minutes.");
+        }
     }
 }
