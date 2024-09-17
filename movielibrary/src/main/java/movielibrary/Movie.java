@@ -15,7 +15,7 @@ public class Movie {
      * 
      * @param title the title of the movie, cannot be null or empty.
      * @param movieLength the length of the movie in minutes, must be greater than 0 and less than or equal to 120. 
-     * @param description a brief description of the movie, cannot be null or empty, and must not exceed 50 characters. 
+     * @param description a brief description of the movie, cannot be null or empty, and must not exceed 250 characters. 
      * @throws IllegalArgumentException if any of the parameters are invalid (null, empty, or out of range)
      */
     public Movie(String title, double movieLength, String description){
@@ -82,10 +82,10 @@ public class Movie {
 
     /**
      * Sets the description of the movie. 
-     * The description cannot be null or empty, and its length must not exceed 50 characters. 
+     * The description cannot be null or empty, and its length must not exceed 250 characters. 
      * 
      * @param description the description of the movie. 
-     * @throws IllegalArgumentException if the description is null, empty or exceeds 50 characters.  
+     * @throws IllegalArgumentException if the description is null, empty or exceeds 250 characters.  
      */
     public void setDescription(String description) {
         handleStringError(description);
@@ -147,9 +147,9 @@ public class Movie {
      * @throws IllegalArgumentException if the length of the description exceeds 50 characters
      */
     private void handleDescriptionLength(String description){
-        int maxCharacter = 50;
+        int maxCharacter = 250;
         if(description.length() > maxCharacter){
-            throw new IllegalArgumentException("The description cant exceed 50 characters");
+            throw new IllegalArgumentException("The description cant exceed 250 characters");
         }
     }
 }
