@@ -24,6 +24,7 @@ public class Movie {
         handleDoubleError(movieLength);
         this.movieLength = movieLength; 
         handleStringError(description);
+        handleDescriptionLength(description);
         this.description = description; 
         isRented = false; 
     }
@@ -88,10 +89,7 @@ public class Movie {
      */
     public void setDescription(String description) {
         handleStringError(description);
-        int maxCharacter = 50;
-        if(description.length() > maxCharacter){
-            throw new IllegalArgumentException("The description cant exceed 50 characters");
-        }
+        handleDescriptionLength(description);
         this.description = description;
     }
 
@@ -138,6 +136,20 @@ public class Movie {
         }
         if(minutes > 120){
             throw new IllegalArgumentException("The movie length can't exceed 120 minutes.");
+        }
+    }
+
+    /**
+     * Validates the length of the given description.
+     * Throws an exception if the length exceeds the maximum allowed number of characters. 
+     * 
+     * @param description the description to validate, which is a String
+     * @throws IllegalArgumentException if the length of the description exceeds 50 characters
+     */
+    private void handleDescriptionLength(String description){
+        int maxCharacter = 50;
+        if(description.length() > maxCharacter){
+            throw new IllegalArgumentException("The description cant exceed 50 characters");
         }
     }
 }
