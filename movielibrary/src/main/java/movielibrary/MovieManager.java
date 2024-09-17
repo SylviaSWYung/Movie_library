@@ -31,10 +31,10 @@ public class MovieManager {
             String[] movieInfo = scanner.nextLine().split(";");
 
             String title = movieInfo[0];
-            //double movieLength = Double.parseDouble(movieInfo[1]);
+            double movieLength = Double.parseDouble(movieInfo[1]);
             String description = movieInfo[2];
 
-            movies.add(new Movie(title, 2, description));
+            movies.add(new Movie(title, movieLength, description));
         }
         scanner.close();
     }
