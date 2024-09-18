@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MovieManagerTest {
     
@@ -22,6 +24,18 @@ public class MovieManagerTest {
             fail("Exception occurred during setup: " + e.getMessage());
         }
         
+    }
+
+    //Tests if getMovies() in MovieManager.java retrieves the right list with right Movie objects
+    @Test
+    @DisplayName("Get Movies")
+    public void testGetMovies() {
+        Movie m1 = movieManager.findMovie("The Trollgirl");
+        Movie m2 = movieManager.findMovie("Loverboy");
+
+        List<Movie> listOfMovies = new ArrayList<Movie>(List.of(m1, m2));
+
+        Assertions.assertEquals(listOfMovies, movieManager.getMovies());
     }
 
     //Testing the default value false in Movie.csv
