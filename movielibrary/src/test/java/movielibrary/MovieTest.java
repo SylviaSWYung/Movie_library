@@ -13,7 +13,7 @@ public class MovieTest {
     //Default setup for each test
     @BeforeEach
     public void setup() {
-        movie = new Movie("Cinderella", 200, "A girl with evil step sisters who becomes a princess. ");
+        movie = new Movie("Cinderella", 110, "A girl with evil step sisters.");
     }
     
     //Testing the construction of Movie class
@@ -22,8 +22,8 @@ public class MovieTest {
     public void testConstructor() {
 
         Assertions.assertEquals("Cinderella", movie.getTitle());
-        Assertions.assertEquals(200, movie.getMovieLength());
-        Assertions.assertEquals("A girl with evil step sisters who becomes a princess. ", movie.getDescription());
+        Assertions.assertEquals(110, movie.getMovieLength());
+        Assertions.assertEquals("A girl with evil step sisters.", movie.getDescription());
         Assertions.assertFalse(movie.getIsRented());
 
         movie = new Movie("Ompalompa", 20, "omp");
