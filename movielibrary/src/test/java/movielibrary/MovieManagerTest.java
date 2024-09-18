@@ -10,8 +10,10 @@ import org.junit.jupiter.api.Test;
 
 public class MovieManagerTest {
     
+    //MovieManager object for testing
     private MovieManager movieManager;
 
+    //Default setup for each test
     @BeforeEach
     public void setup() throws IOException {
         try {
@@ -22,6 +24,7 @@ public class MovieManagerTest {
         
     }
 
+    //Testing the default value false in Movie.csv
     @Test
     @DisplayName("Read from File")
     public void testReadFromFile() throws IOException {
@@ -29,6 +32,8 @@ public class MovieManagerTest {
         Assertions.assertFalse(movieManager.checkIfRented("Loverboy"));
     }
 
+    //Testing rent and returnBack method for each movie
+    //Testing if the value in Movie.csv changes to true and back to false
     @Test
     @DisplayName("Write to File")
     public void testWriteToFile() throws IOException {
