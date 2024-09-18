@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * FrontPageController handles the FXML
  */
 
-public class Controller { // rename class to FrontPageController
+public class FrontPageController {
     
     /**
      * FXML UI components on the FrontPage
