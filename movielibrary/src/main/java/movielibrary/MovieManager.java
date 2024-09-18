@@ -23,7 +23,7 @@ public class MovieManager {
      */
     public MovieManager() throws IOException {
         movies = new ArrayList<Movie>();
-        this.file = new File("movielibrary/src/main/resources/Movies.csv");
+        this.file = new File(getClass().getClassLoader().getResource("Movies.csv").getFile());
 
         this.scanner = new Scanner(this.file);
         scanner.nextLine();
