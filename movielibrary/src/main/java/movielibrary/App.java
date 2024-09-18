@@ -15,12 +15,16 @@ public class App extends Application {
     
     @Override
     public void start(Stage primaryStage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/FrontPage.fxml"));
-        Parent parent = fxmlLoader.load();
-        
-        primaryStage.setScene(new Scene(parent));
-        primaryStage.setTitle("MovieLibrary App");
-        primaryStage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/FrontPage.fxml"));
+            Parent parent = fxmlLoader.load();
+            
+            primaryStage.setScene(new Scene(parent));
+            primaryStage.setTitle("MovieLibrary App");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
