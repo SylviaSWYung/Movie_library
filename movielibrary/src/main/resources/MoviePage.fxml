@@ -8,7 +8,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="IWantItbtn" layoutX="207.0" layoutY="335.0" mnemonicParsing="false" text="I want it!" />
+      <Button fx:id="Lendbtn" layoutX="207.0" layoutY="335.0" mnemonicParsing="false" text="Lend" />
       <Button fx:id="Cancelbtn" layoutX="346.0" layoutY="335.0" mnemonicParsing="false" text="Cancel" />
       <TextField fx:id="MovieTitle" layoutX="216.0" layoutY="34.0" prefHeight="41.0" prefWidth="169.0" />
       <TextArea fx:id="Summary" layoutX="52.0" layoutY="132.0" prefHeight="95.0" prefWidth="497.0" />

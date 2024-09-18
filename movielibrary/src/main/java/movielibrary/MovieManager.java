@@ -23,7 +23,8 @@ public class MovieManager {
      */
     public MovieManager() throws IOException {
         movies = new ArrayList<Movie>();
-        this.file = new File("movielibrary/src/main/resources/Movies.csv");
+        ClassLoader classLoader = getClass().getClassLoader();
+        this.file = new File(classLoader.getResource("Movies.csv").getFile());
 
         this.scanner = new Scanner(this.file);
         scanner.nextLine();
@@ -56,6 +57,15 @@ public class MovieManager {
      */
     public void setFile(File file) {
         this.file = file;
+    }
+
+    /**
+     * Returns a list with Movie objects
+     * 
+     * @return a List of Movie objects
+     */
+    public List<Movie> getMovies() {
+        return movies;
     }
 
     /**
