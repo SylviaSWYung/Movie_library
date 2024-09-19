@@ -4,16 +4,14 @@ import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.util.List;
-import java.util.ArrayList;
-
 /**
  * MoviePageController handles the FXML
  */
@@ -39,80 +37,49 @@ public class MoviePageController {
     
     @FXML
     private Button Cancelbtn; 
+
     
-    private Movie selectedMovie;
+    private MovieManager movieManager;
     private Movie movie;
-    private String title;
-    private double movieLength;
-    private String description;
     
-
+   
     /**
-     * Initialize the MoviePage. Creates a MovieManager object to access the data from Movies.csv.
-     * Adds all movietitles from the data in Movies.csv to the List movieTitles.
-     * @throws 
+     * Handles the movie title on the MoviePage.fxml.
+     * @param movieTitle
      */
+    public void setMovieDetails(String movieTitle, String description, double movieLength) {
+        MovieTitle.setText(movieTitle);
+        Summary.setText(description);
+        MovieDuration.setText(String.valueOf(movieLength));
+    }
 
     @FXML
-     public void initialize() throws IOException {
-         try {
-             // accesses the movietitles from the Movies.csv file through the MovieManager
-             MovieManager movieman = new MovieManager();
-         
-             List<String> movieTitles = new ArrayList<>();
-             for (Movie mov : movieman.getMovies()) {
-                 movieTitles.add(mov.getTitle());
-             }
- 
-         } catch (Exception e){
-             e.printStackTrace();
-         }
+    public void initialize() throws IOException{
+        movieManager = new MovieManager();
     }
-    
-    /**
-     * Sets the movie detalis (title, description, and duration) when a movie is selected. 
-     * @param selectMovie 
-     */
-
-    @FXML
-    public void setMovieDetails(Movie selectMovie) {
-        this.selectedMovie = selectMovie;
-    
-        MovieTitle.setText(selectMovie.getTitle());
-        Summary.setText(selectedMovie.getDescription());
-        MovieDuration.setText(String.valueOf(selectedMovie.getMovieLength()));
-    }
-    
-    @FXML
-    public void setTitle(String title) {
-        // adds the movieTitle to the MovieTitlebox.
-        this.title = title;
-        MovieTitle.setText(this.title);
-    }
-    
-    
-    @FXML
-    public void setDescription(String description) {
-        // adds the movie description to the MovieTextArea.
-        this.description = description;
-        Summary.setText(this.description);
-    }
-        
-    @FXML
-    public void setMovieLength(double length) {
-        // adds the movie length to the MovieTextField. 
-        this.movieLength = length;
-        // MovieDuration.setViewOrder((this.movieLength));
-        MovieDuration.setText(String.valueOf(this.movieLength));
-    }
+   
 
     /**
      * Handles the lend button, lends the movie. 
      */
     
     @FXML
-        public void setRented() {
-    
+        public void handleLendbtn(ActionEvent event) throws IOException {
+            movie = movieManager.findMovie(MovieTitle.getText().strip());
+            if (movieManager.checkIfRented(movie.getTitle())) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Failed!");
+                alert.setContentText("The movie is alredy rented!");
+                alert.showAndWait();
+            } else {
+                movieManager.rent(movie.getTitle());
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("Movie lend!");
+                alert.showAndWait();
+            }
+            
+            
     }
 
     /**
@@ -120,9 +87,23 @@ public class MoviePageController {
      */
     
     @FXML
-        public void returnBack() {
-    
-    }
+        public void handleReturnbtn(ActionEvent event) throws IOException {
+            movie = movieManager.findMovie(MovieTitle.getText().strip());
+            if (!movieManager.checkIfRented(movie.getTitle())) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Failed!");
+                alert.setContentText("You have not rented this movie.");
+                alert.showAndWait();
+            } else {
+                movieManager.returnBack(movie.getTitle());
+                Alert alert = new Alert(AlertType.CONFIRMATION);
+                alert.setTitle("Success!");
+                alert.setContentText("Movie is returned!");
+                alert.showAndWait();
+            }
+                
+                
+        }
 
     /**
      * Handles the cancel button, returning to the front page.
