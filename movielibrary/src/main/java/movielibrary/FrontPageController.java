@@ -30,6 +30,9 @@ public class FrontPageController {
     @FXML
     private ChoiceBox<String> MovieScrollBar;
 
+    private MovieManager movieManager;
+    private Movie movie;
+
     /**
      * Initialize the FrontPage. Creates a MovieManager object to access the data from Movies.csv.
      * Adds all movietitles from the data in Movies.csv to the List movieTitles.
@@ -40,10 +43,10 @@ public class FrontPageController {
     public void initialize() throws IOException {
         try {
             // accesses the movietitles from the Movies.csv file through the MovieManager
-            MovieManager movieman = new MovieManager();
+            movieManager = new MovieManager();
         
             List<String> movieTitles = new ArrayList<>();
-            for (Movie mov : movieman.getMovies()) {
+            for (Movie mov : movieManager.getMovies()) {
                 movieTitles.add(mov.getTitle());
             }
 
@@ -61,8 +64,9 @@ public class FrontPageController {
     @FXML
     public void handleMoreInfoButton() throws IOException {
             String chosenMovie = MovieScrollBar.getValue();
+            movie = movieManager.findMovie(chosenMovie);
             if (chosenMovie != null && !chosenMovie.isEmpty()) {
-                loadPage("MoviePage.fxml", chosenMovie);
+                loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Please chose a movie from the scrollbar menu");
                 alert.setTitle("Error");
@@ -77,14 +81,14 @@ public class FrontPageController {
      * @param page A String with the .fxml file
      */
 
-    public void loadPage(String page, String chosenMovie) {
+    public void loadPage(String page, String movieTitle, String description, double movieLength) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + page));
             Parent parent = loader.load();
 
             MoviePageController moviePageController = loader.getController();
 
-            moviePageController.setMovieTitle(chosenMovie);
+            moviePageController.setMovieDetails(movieTitle, description, movieLength);
 
             Stage stage = (Stage) MoreInfobtn.getScene().getWindow();
             Scene scene = new Scene(parent);
