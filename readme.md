@@ -1,6 +1,5 @@
 # Movie Library 
-<!-- En README.md-fil på rotnivå i kodelageret skal beskrive innholdet, spesielt hvilken mappe inni kodelageret som utgjør kodingsprosjektet. -->
-
+[open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2024/gr2403/gr2403)
 
 ## Overview 
 The Movie Library application is designed to assist librarians in maintaining an organized system for managing movie rentals. It serves as both a self-checkout and self-check-in platform for users who wish to borrow or return movies. The app tracks movie rentals by referencing a `movie.csv` file, which indicates the availability of each movie.
