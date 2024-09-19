@@ -62,7 +62,7 @@ public class FrontPageController {
     public void handleMoreInfoButton() throws IOException {
             String chosenMovie = MovieScrollBar.getValue();
             if (chosenMovie != null && !chosenMovie.isEmpty()) {
-                loadPage("MoviePage.fxml");
+                loadPage("MoviePage.fxml", chosenMovie);
             } else {
                 Alert alert = new Alert(AlertType.ERROR, "Please chose a movie from the scrollbar menu");
                 alert.setTitle("Error");
@@ -77,9 +77,15 @@ public class FrontPageController {
      * @param page A String with the .fxml file
      */
 
-    public void loadPage(String page) {
+    public void loadPage(String page, String chosenMovie) {
         try {
-            Parent parent = FXMLLoader.load(getClass().getResource("/" + page));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + page));
+            Parent parent = loader.load();
+
+            MoviePageController moviePageController = loader.getController();
+
+            moviePageController.setMovieTitle(chosenMovie);
+
             Stage stage = (Stage) MoreInfobtn.getScene().getWindow();
             Scene scene = new Scene(parent);
             stage.setScene(scene);
