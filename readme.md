@@ -49,5 +49,6 @@ The docs folder contains documentation for releases, as well as images folder fo
 
 ## Links to documentation 
 [Release 1 documentation](/docs/release1.md)
+[User stories](/movielibrary/src/main/java/readme.md)
 
 

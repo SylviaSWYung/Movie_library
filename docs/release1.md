@@ -13,9 +13,9 @@ The user stories we aimed to fulfill involved enabling a librarian to manage the
 However, there are several aspects we plan to address in future updates:<br>
 
 * **Button Functionality**: The "Lend" button is currently always clickable. We intend to implement a feature that disables this button if the movie has already been lent to another user.<br>
-<!-- Er punktet over fortsatt gjeldende? -->
 * **Movie Selection**: The current selection includes only two movies, which is insufficient for variety. We aim to add 2 more movies to enhance the selection for users.<br>
-* **More methods in MovieManager.java**: We plan to add `addMovie()` method in `MovieManager.java`, implement a method to retrieve the list of movies within `MovieManager.java`, and subsequently expand the test coverage by adding more test in `MoviemanagerTest.java` once these features are in place. <br>
+* **More methods in MovieManager.java**: We plan to add `addMovie()` method in `MovieManager.java`, and subsequently expand the test coverage by adding more test in `MoviemanagerTest.java` once these features are in place. <br>
+* **Update correct movies.csv file**: Currently the movie.csv file is only updated on the target folder. We wish to implement this on movie.csv file in the movielibrary folder and not the target folder. 
 
 These improvements will enchance the user experience and functionality of the system. <br>
 
@@ -25,6 +25,8 @@ Our plan was to hold meetings twice a week, with the possibility of additional m
 Team members were expected to announce on Messenger when they completed their tasks. This practice allowed for the efficient allocation of additional work to those who were available, enhancing overall productivity. If someone had less workload or finished their tasks, they communicated this through Messenger to take on more tasks.<br>
 
 We also recognized the importance of active engagement with Git for effective teamwork. When a merge request was active, an available team member would review it promptly. Active merge requests were announced in the Messenger group to prevent an overwhelming backlog of requests and maintain workflow efficiency.<br>
+
+Following the release 1, we have gained a clearer understanding of the group's varying coding skill levels and a better sense of how we collaborate as a team. As a result, we've decided to incorporate pair programming from the outset in the next release. <br>
 
 These practices significantly contributed to making the programming and development process more efficient.<br>
 
