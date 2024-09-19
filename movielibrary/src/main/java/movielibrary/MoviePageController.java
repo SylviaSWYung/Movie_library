@@ -73,7 +73,7 @@ public class MoviePageController {
                 alert.showAndWait();
             } else {
                 movieManager.rent(movie.getTitle());
-                Alert alert = new Alert(AlertType.CONFIRMATION);
+                Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success!");
                 alert.setContentText("Movie lend!");
                 alert.showAndWait();
