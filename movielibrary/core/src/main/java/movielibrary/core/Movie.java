@@ -1,4 +1,4 @@
-package movielibrary;
+package core;
 
 /**
  * Movie class contains data, and has methods to verify it

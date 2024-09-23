@@ -1,4 +1,4 @@
-package movielibrary;
+package util;
 
 import java.io.IOException;
 import javafx.fxml.FXML;

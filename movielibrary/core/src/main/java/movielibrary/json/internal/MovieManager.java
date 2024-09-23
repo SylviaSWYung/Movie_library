@@ -1,4 +1,4 @@
-package movielibrary;
+package internal;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -25,7 +25,7 @@ public class MovieManager {
         movies = new ArrayList<Movie>();
         ClassLoader classLoader = getClass().getClassLoader();
         this.file = new File(classLoader.getResource("Movies.csv").getFile());
-
+        //Todo-> change retrieval method when changing from csv to json.
         this.scanner = new Scanner(this.file);
         scanner.nextLine();
         while (scanner.hasNextLine()) {
