@@ -1,4 +1,4 @@
-package internal;
+package json.internal;
 
 import java.io.File;
 import java.io.FileWriter;
