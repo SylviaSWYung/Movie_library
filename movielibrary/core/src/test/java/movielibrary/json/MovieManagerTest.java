@@ -1,4 +1,4 @@
-package movielibrary;
+package movielibrary.json;
 
 import java.io.IOException;
 
