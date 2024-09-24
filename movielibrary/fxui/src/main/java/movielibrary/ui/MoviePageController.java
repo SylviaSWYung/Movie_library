@@ -1,4 +1,4 @@
-package util;
+package movielibrary.ui;
 
 import java.io.IOException;
 import javafx.event.ActionEvent;
