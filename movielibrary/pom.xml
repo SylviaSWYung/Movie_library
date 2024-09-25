@@ -168,6 +168,7 @@
     <modules>
         <module>core</module>
         <module>fxui</module>
+        <module>fxui</module>
     </modules>
 
 </project>
