@@ -1,4 +1,4 @@
-package json.internal;
+package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import movielibrary.core.Movie;
 
 /**
  * MovieManager class contains data, and has methods to verify it

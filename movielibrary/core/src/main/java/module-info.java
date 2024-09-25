@@ -1,6 +1,6 @@
-module movielibrary {
-    requires javafx.controls;
-    requires javafx.fxml;
+module movielibrary.core {
+    // requires transitive com.fasterxml.jackson.databind;
 
-    opens movielibrary to javafx.graphics, javafx.fxml;
+    exports movielibrary.core;
+    exports movielibrary.json;
 }

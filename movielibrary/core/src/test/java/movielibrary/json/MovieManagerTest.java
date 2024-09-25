@@ -7,6 +7,10 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import movielibrary.core.Movie;
+import movielibrary.json.internal.MovieManager;
+
 import java.util.ArrayList;
 import java.util.List;
 
