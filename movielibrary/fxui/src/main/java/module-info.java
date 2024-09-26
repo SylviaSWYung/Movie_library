@@ -1,4 +1,6 @@
 module movielibrary.ui {
+    
+    requires movielibrary.core;
     requires javafx.controls;
     requires javafx.fxml;
 
