@@ -11,21 +11,21 @@ import movielibrary.core.Movie;
 /**
  * 
  */
-public class Serializer {
+public class MovieSerializer {
 
     private ObjectMapper movieLibrary;
     private File file;
     private List<Movie> moviesInLibrary;
-    private Deserializer movieDeserializer;
+    private MovieDeserializer movieDeserializer;
 
     /**
      * Initializes the Serializer object
      */
-    public Serializer(File file) throws IOException {
+    public MovieSerializer(File file) throws IOException {
         movieLibrary = new ObjectMapper();
         this.file = file;
         //moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>() {});
-        this.movieDeserializer = new Deserializer(this.file);
+        this.movieDeserializer = new MovieDeserializer(this.file);
         this.moviesInLibrary = movieDeserializer.getMoviesInLibrary();
 
     }

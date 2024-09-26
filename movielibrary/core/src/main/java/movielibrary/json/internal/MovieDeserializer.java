@@ -9,13 +9,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import movielibrary.core.Movie;
 
-public class Deserializer {
+public class MovieDeserializer {
     private ObjectMapper movieLibrary;
     private File file; 
     private List<Movie> moviesInLibrary;
     
     //JSON string til data, lese fil 
-    public Deserializer(File file) throws IOException{
+    public MovieDeserializer(File file) throws IOException{
         movieLibrary = new ObjectMapper();
         this.file = file;
         moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});

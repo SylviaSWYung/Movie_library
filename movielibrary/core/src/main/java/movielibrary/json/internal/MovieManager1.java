@@ -6,13 +6,13 @@ import java.io.IOException;
 public class MovieManager1 {
     
     private File file;
-    private Serializer movieSerializer;
-    private Deserializer movieDeserializer;
+    private MovieSerializer movieSerializer;
+    private MovieDeserializer movieDeserializer;
 
     public MovieManager1() throws IOException {
         this.file = new File("movielibrary/core/src/main/resources/movielibrary/Movies.json");
-        movieSerializer = new Serializer(this.file);
-        movieDeserializer = new Deserializer(this.file);
+        movieSerializer = new MovieSerializer(this.file);
+        movieDeserializer = new MovieDeserializer(this.file);
     }
 
     /**
