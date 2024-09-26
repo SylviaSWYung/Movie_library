@@ -1,5 +1,7 @@
 package movielibrary.core;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Movie class contains data, and has methods to verify it
  */
@@ -18,7 +20,7 @@ public class Movie {
      * @param description a brief description of the movie, cannot be null or empty, and must not exceed 250 characters. 
      * @throws IllegalArgumentException if any of the parameters are invalid (null, empty, or out of range)
      */
-    public Movie(String title, double movieLength, String description){
+    public Movie(@JsonProperty("title") String title, @JsonProperty("movieLength") double movieLength, @JsonProperty("description") String description){
         handleStringError(title);
         this.title = title; 
         handleDoubleError(movieLength);

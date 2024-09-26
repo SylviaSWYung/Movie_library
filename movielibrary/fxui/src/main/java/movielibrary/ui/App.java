@@ -16,7 +16,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/FrontPage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/movielibrary/ui/FrontPage.fxml"));
             Parent parent = fxmlLoader.load();
             
             primaryStage.setScene(new Scene(parent));
