@@ -23,9 +23,10 @@ public class Deserializer {
 
     public Movie findMovie(String title) throws IOException{
         Movie foundMovie = moviesInLibrary.stream()
-                                        .filter(selectedMovie -> selectedMovie.getTitle().equals(title))
+                                        .filter(selectedMovie -> selectedMovie.getTitle().trim().equals(title.trim()))
                                         .findFirst()
                                         .orElse(null);
+        System.out.println(foundMovie.getTitle());
         return foundMovie;
     }
 
@@ -40,6 +41,7 @@ public class Deserializer {
         if(selectedMovie == null){
             throw new NoSuchElementException("The movie doesn't exist in the library.");
         }
+        System.out.println(selectedMovie.getIsRented());
         return selectedMovie.getIsRented();
     }
 
