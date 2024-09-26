@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movielibrary.MoviePageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movielibrary.ui.MoviePageController">
    <children>
       <Button fx:id="Lendbtn" layoutX="207.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleLendbtn" text="Lend" />
       <Button fx:id="Cancelbtn" layoutX="346.0" layoutY="335.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />

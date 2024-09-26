@@ -8,6 +8,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
+import movielibrary.core.Movie;
+import movielibrary.json.internal.MovieManager;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
@@ -83,7 +85,7 @@ public class FrontPageController {
 
     public void loadPage(String page, String movieTitle, String description, double movieLength) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/" + page));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/" + page));
             Parent parent = loader.load();
 
             MoviePageController moviePageController = loader.getController();

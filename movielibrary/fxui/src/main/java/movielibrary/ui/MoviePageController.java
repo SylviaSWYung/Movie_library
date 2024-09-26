@@ -12,6 +12,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import movielibrary.core.Movie;
+import movielibrary.json.internal.MovieManager;
+
 /**
  * MoviePageController handles the FXML
  */
@@ -114,7 +117,7 @@ public class MoviePageController {
     @FXML
         public void returnToFrontPage(ActionEvent event) throws IOException {
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Frontpage.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/Frontpage.fxml"));
                 Parent root = loader.load();
     
                 // get current stage and set the new scene (frontpage).

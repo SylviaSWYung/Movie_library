@@ -25,20 +25,21 @@ public class MovieManager {
      */
     public MovieManager() throws IOException {
         movies = new ArrayList<Movie>();
-        ClassLoader classLoader = getClass().getClassLoader();
-        this.file = new File(classLoader.getResource("Movies.csv").getFile());
+
+        this.file = new File("../core/src/main/resources/movielibrary/Movies.csv");
+
         //Todo-> change retrieval method when changing from csv to json.
         this.scanner = new Scanner(this.file);
         scanner.nextLine();
-        while (scanner.hasNextLine()) {
-            String[] movieInfo = scanner.nextLine().split(";");
+            while (scanner.hasNextLine()) {
+                String[] movieInfo = scanner.nextLine().split(";");
 
-            String title = movieInfo[0];
-            double movieLength = Double.parseDouble(movieInfo[1]);
-            String description = movieInfo[2];
+                String title = movieInfo[0];
+                double movieLength = Double.parseDouble(movieInfo[1]);
+                String description = movieInfo[2];
 
-            movies.add(new Movie(title, movieLength, description));
-        }
+                movies.add(new Movie(title, movieLength, description));
+            }
         scanner.close();
     }
 
@@ -112,8 +113,8 @@ public class MovieManager {
         }
 
         Movie movieFromTitle = this.movies.stream()
-                        .filter(m -> m.getTitle().equals(title))
-                        .findAny()
+                     .filter(m -> m.getTitle().equals(title))
+                     .findAny()
                         .orElse(null);
         
         if (movieFromTitle == null) {
@@ -134,7 +135,7 @@ public class MovieManager {
         boolean isRented = false;
 
         this.scanner = new Scanner(this.file);
-        while (scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
             String[] newMovie = scanner.nextLine().split(";");
 
             String titleInFile = newMovie[0].trim();
@@ -157,13 +158,13 @@ public class MovieManager {
         StringBuilder content = new StringBuilder();
 
         this.scanner = new Scanner(this.file);
-        while (scanner.hasNextLine()) {
-            String[] movieData = scanner.nextLine().split(";");
+            while (scanner.hasNextLine()) {
+                String[] movieData = scanner.nextLine().split(";");
 
             String titleInFile = movieData[0].trim();
             if (title.equals(titleInFile)) {
-                movieData[3] = String.valueOf(newStatus);
-            }
+                    movieData[3] = String.valueOf(newStatus);
+                }
             String updatedMovieInformation = String.join(";", movieData);
             content.append(updatedMovieInformation).append("\n");
         }
@@ -179,7 +180,7 @@ public class MovieManager {
      */
     public void reWriteFile(StringBuilder builder) throws IOException {
         FileWriter writer = new FileWriter(this.file);
-        writer.write(builder.toString());
+            writer.write(builder.toString());
         writer.close();
     }
 
