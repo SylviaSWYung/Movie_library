@@ -9,7 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManager;
+import movielibrary.json.internal.MovieManagerCSV;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ import java.util.List;
 public class MovieManagerTest {
     
     //MovieManager object for testing
-    private MovieManager movieManager;
+    private MovieManagerCSV movieManager;
 
     //Default setup for each test
     @BeforeEach
     public void setup() throws IOException {
         try {
-            movieManager = new MovieManager();
+            movieManager = new MovieManagerCSV();
         } catch (IOException e) {
             fail("Exception occurred during setup: " + e.getMessage());
         }

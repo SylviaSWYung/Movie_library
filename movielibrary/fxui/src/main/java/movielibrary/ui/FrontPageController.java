@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManager;
+import movielibrary.json.internal.MovieManagerCSV;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
@@ -32,7 +32,7 @@ public class FrontPageController {
     @FXML
     private ChoiceBox<String> MovieScrollBar;
 
-    private MovieManager movieManager;
+    private MovieManagerCSV movieManager;
     private Movie movie;
 
     /**
@@ -45,7 +45,7 @@ public class FrontPageController {
     public void initialize() throws IOException {
         try {
             // accesses the movietitles from the Movies.csv file through the MovieManager
-            movieManager = new MovieManager();
+            movieManager = new MovieManagerCSV();
         
             List<String> movieTitles = new ArrayList<>();
             for (Movie mov : movieManager.getMovies()) {

@@ -13,7 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManager;
+import movielibrary.json.internal.MovieManagerCSV;
 
 /**
  * MoviePageController handles the FXML
@@ -42,7 +42,7 @@ public class MoviePageController {
     private Button Cancelbtn; 
 
     
-    private MovieManager movieManager;
+    private MovieManagerCSV movieManager;
     private Movie movie;
     
    
@@ -58,7 +58,7 @@ public class MoviePageController {
 
     @FXML
     public void initialize() throws IOException{
-        movieManager = new MovieManager();
+        movieManager = new MovieManagerCSV();
     }
    
 
