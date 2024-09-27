@@ -1,199 +1,81 @@
 package movielibrary.json.internal;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-
-import movielibrary.core.Movie;
 
 /**
- * MovieManager class contains data, and has methods to verify it
+ * The {@code MovieManager} class provides methods to manage the renting and returning of movies in 
+ * a movie library. It interacts with the {@link MovieSerializer} and {@link MovieDeserializer} classes
+ * to update and retrieve movie data from a JSON file. 
  */
 public class MovieManager {
     
-    private List<Movie> movies;
     private File file;
-    private Scanner scanner;
+    private MovieSerializer movieSerializer;
+    private MovieDeserializer movieDeserializer;
 
     /**
-     * Initializes the MoveManager object. Creates a File object using a path to the Movies.csv file.
-     * Adds all movies in Movies.csv to the List movies
+     * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
+     * Initializes the serializer and deserializer for handling the movie data. 
+     * 
+     * @throws IOException if an I/O error occurs while reading the file 
      */
     public MovieManager() throws IOException {
-        movies = new ArrayList<Movie>();
-
-        this.file = new File("../core/src/main/resources/movielibrary/Movies.csv");
-
-        //Todo-> change retrieval method when changing from csv to json.
-        this.scanner = new Scanner(this.file);
-        scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                String[] movieInfo = scanner.nextLine().split(";");
-
-                String title = movieInfo[0];
-                double movieLength = Double.parseDouble(movieInfo[1]);
-                String description = movieInfo[2];
-
-                movies.add(new Movie(title, movieLength, description));
-            }
-        scanner.close();
+        this.file = new File("movielibrary/core/src/main/resources/movielibrary/Movies.json");
+        movieSerializer = new MovieSerializer(this.file);
+        movieDeserializer = new MovieDeserializer(this.file);
     }
 
     /**
-     * Returns the file
+     * Returns the file object representing the movie library data
      * 
-     * @return a File object with data for all movies in library
+     * @return a {@code File} object pointing to the movie library JSON file
      */
     public File getFile() {
         return this.file;
     }
 
     /**
-     * Sets the file
-     * The file cannot be empty and has to be of type File
+     * Sets the file for the movie library data.
+     * The file cannot be empty and has to be of type {@code File}
      * 
-     * @param file a File object with a path
+     * @param file a {@code File} object representing the new movie library data file
      */
     public void setFile(File file) {
         this.file = file;
     }
 
     /**
-     * Returns a list with Movie objects
+     * Rents a movie with the speciifed title by setting its rental status to be true. 
+     * If the movie is already rented, an {@link IllegalStateException} is thrown.
      * 
-     * @return a List of Movie objects
-     */
-    public List<Movie> getMovies() {
-        return movies;
-    }
-
-    /**
-     * Rents a movie from library. Sets status to true in file
-     * @param title a String with the title of the movie
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
+     * @param title the title of the movie to be rented
+     * @throws IOException if an I/O error occurs while accessing the file
+     * @throws IllegalStateException if the movie is already rented 
      */
     public void rent(String title) throws IOException {
-        Movie foundMovie = findMovie(title);
 
-        if (!checkIfRented(title)) {
-            updateMovieStatus(title, true);
+        if (this.movieDeserializer.checkIfRented(title)) {
+            throw new IllegalStateException("The movie is already rented.");
         }
-        foundMovie.setRented(true);
+
+        this.movieSerializer.serialize(title, true);
     }
 
     /**
-     * Returns movie back to library. Sets status to false in file
-     * @param title a String with the title of the movie
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
+     * Returns a movie with the specified title by setting its rental status to false. 
+     * If the movie is not currently rented, an {@link IllegalStateException} is thrown.
+     * 
+     * @param title the title of the movie to be returned
+     * @throws IOException if an I/O error occurs while accessing the file 
+     * @throws IllegalStateException if the movie is not currently rented 
      */
     public void returnBack(String title) throws IOException {
-        Movie foundMovie = findMovie(title);
-
-        if (checkIfRented(title)) {
-            updateMovieStatus(title, false);
-        }
-        foundMovie.setRented(false);
-    }
-
-    /**
-     * Finds a movie in library by title. Title can't be empty.
-     * 
-     * @param title a String with the title of the movie
-     * @return the movie with the given title
-     * @throws IllegalArgumentException if the title is empty
-     * @throws NoSuchElementException if the movie doesn't exist in library
-     */
-    public Movie findMovie(String title) {
-        if (title.isEmpty()) {
-            throw new IllegalArgumentException("The movie title can't be empty. ");
+        if (!this.movieDeserializer.checkIfRented(title)) {
+            throw new IllegalStateException("The movie is not rented.");
         }
 
-        Movie movieFromTitle = this.movies.stream()
-                     .filter(m -> m.getTitle().equals(title))
-                     .findAny()
-                        .orElse(null);
-        
-        if (movieFromTitle == null) {
-            throw new NoSuchElementException("This movie doesn't exist in this library. ");
-        }
-
-        return movieFromTitle;
+        this.movieSerializer.serialize(title, false);
     }
 
-    /**
-     * Checks the availability of the movie in file, either true or false
-     * @param title a String with the title of the movie
-     * @return boolean if the movie is rented or not
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public boolean checkIfRented(String title) throws IOException {
-        findMovie(title);
-        boolean isRented = false;
-
-        this.scanner = new Scanner(this.file);
-            while (scanner.hasNextLine()) {
-            String[] newMovie = scanner.nextLine().split(";");
-
-            String titleInFile = newMovie[0].trim();
-            if (titleInFile.equals(title)) {
-                isRented = Boolean.parseBoolean(newMovie[3].trim());
-            }
-        }
-
-        return isRented;
-    }
-
-    /**
-     * Updates the rented status of the movie
-     * @param title a String with the title of the movie
-     * @param newStatus a boolean to set the movie status rented/not rented
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void updateMovieStatus(String title, boolean newStatus) throws IOException {
-        findMovie(title);
-        StringBuilder content = new StringBuilder();
-
-        this.scanner = new Scanner(this.file);
-            while (scanner.hasNextLine()) {
-                String[] movieData = scanner.nextLine().split(";");
-
-            String titleInFile = movieData[0].trim();
-            if (title.equals(titleInFile)) {
-                    movieData[3] = String.valueOf(newStatus);
-                }
-            String updatedMovieInformation = String.join(";", movieData);
-            content.append(updatedMovieInformation).append("\n");
-        }
-        scanner.close();
-        reWriteFile(content);
-    }
-
-
-    /**
-     * Rewrites file
-     * @param builder StringBuilder used to manipulate strings
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void reWriteFile(StringBuilder builder) throws IOException {
-        FileWriter writer = new FileWriter(this.file);
-            writer.write(builder.toString());
-        writer.close();
-    }
-
-    /**
-     * toString method for object
-     * @return String with titles of movies in List movies
-     */
-    @Override
-    public String toString() {
-        String output = "";
-        for (Movie m : this.movies) {
-            output += m.getTitle() + "\n";
-        }
-        return output;
-    }
 }
