@@ -21,7 +21,7 @@ public class MovieManager {
      * @throws IOException if an I/O error occurs while reading the file 
      */
     public MovieManager() throws IOException {
-        this.file = new File("movielibrary/core/src/main/resources/movielibrary/Movies.json");
+        this.file = new File("../core/src/main/resources/movielibrary/Movies.json");
         movieSerializer = new MovieSerializer(this.file);
         movieDeserializer = new MovieDeserializer(this.file);
     }

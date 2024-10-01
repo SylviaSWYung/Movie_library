@@ -1,5 +1,6 @@
 package movielibrary.ui;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManagerCSV;
+import movielibrary.json.internal.MovieDeserializer;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
 
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * FrontPageController handles the FXML
+ * FrontPageController handles the FXML file
  */
 
 public class FrontPageController {
@@ -32,28 +33,32 @@ public class FrontPageController {
     @FXML
     private ChoiceBox<String> MovieScrollBar;
 
-    private MovieManagerCSV movieManager;
+    /**
+     * Decleare movieDeserializer variable of type MovieDeserializer and movie variable of type Movie
+     */
+
+    private MovieDeserializer movieDeserializer;
     private Movie movie;
 
     /**
-     * Initialize the FrontPage. Creates a MovieManager object to access the data from Movies.csv.
-     * Adds all movietitles from the data in Movies.csv to the List movieTitles.
+     * Initialize the FrontPage. Creates a MovieDeserializer object to access the data from Movies.json.
+     * Adds all movietitles from the data in Movies.json to the List movieTitles.
      * Adds the MovieTitle elements as items in the MovieScrollBar
      */
 
     @FXML
     public void initialize() throws IOException {
         try {
-            // accesses the movietitles from the Movies.csv file through the MovieManager
-            movieManager = new MovieManagerCSV();
-        
+            File jsonFile = new File("../core/src/main/resources/movielibrary/Movies.json");
+            movieDeserializer = new MovieDeserializer(jsonFile);
+
             List<String> movieTitles = new ArrayList<>();
-            for (Movie mov : movieManager.getMovies()) {
+            for (Movie mov : movieDeserializer.getMoviesInLibrary()) {
                 movieTitles.add(mov.getTitle());
             }
-
             // adds the movieTitles in the ChoiceBox
             MovieScrollBar.getItems().addAll(movieTitles);
+
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -61,12 +66,14 @@ public class FrontPageController {
 
     /**
      * Handles MoreInfobtn OnAction
+     * Throws error if the user has not chosen a movie before clicking MoreInforbtn
+     * If the user has chosen a movie and clicks the MoreInfobtn, the FrontPage.fxml will load to MoviePage.fxml
      */
 
     @FXML
     public void handleMoreInfoButton() throws IOException {
             String chosenMovie = MovieScrollBar.getValue();
-            movie = movieManager.findMovie(chosenMovie);
+            movie = movieDeserializer.findMovie(chosenMovie);
             if (chosenMovie != null && !chosenMovie.isEmpty()) {
                 loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
             } else {
@@ -78,9 +85,12 @@ public class FrontPageController {
     }
 
     /**
-     * loadPage method for redirecting and loading another .fxml page
+     * loadPage method for redirecting and loading the MoviePage.fxml
      * 
      * @param page A String with the .fxml file
+     * @param movieTitle A String with the movieTitle of the chosen movie
+     * @param description A String with the description of the chosen movie
+     * @param movieLength A double with the length of the chosen movie
      */
 
     public void loadPage(String page, String movieTitle, String description, double movieLength) {
