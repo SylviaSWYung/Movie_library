@@ -2,7 +2,6 @@ package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -20,7 +19,6 @@ public class MovieSerializer {
 
     private ObjectMapper movieLibrary;
     private File file;
-    private List<Movie> moviesInLibrary;
     private MovieDeserializer movieDeserializer;
 
     /**
@@ -35,7 +33,6 @@ public class MovieSerializer {
         movieLibrary = new ObjectMapper();
         this.file = file;
         this.movieDeserializer = new MovieDeserializer(this.file);
-        this.moviesInLibrary = movieDeserializer.getMoviesInLibrary();
 
     }
 
@@ -47,7 +44,7 @@ public class MovieSerializer {
      * @throws IOException if an I/O error occurs while writing to the file. 
      */
     public void writeAllMoviesPretty() throws IOException {
-        movieLibrary.writerWithDefaultPrettyPrinter().writeValue(this.file, this.moviesInLibrary);
+        movieLibrary.writerWithDefaultPrettyPrinter().writeValue(this.file, movieDeserializer.getMoviesInLibrary());
     }
 
     /* public void serialize(Movie movie) throws IOException {
@@ -67,6 +64,10 @@ public class MovieSerializer {
         Movie movieToUpdate = this.movieDeserializer.findMovie(title);
         movieToUpdate.setRented(newStatus);
         writeAllMoviesPretty();
+    }
+
+    public boolean getRentedStatus(String title) throws IOException {
+        return this.movieDeserializer.checkIfRented(title);
     }
 
 }
