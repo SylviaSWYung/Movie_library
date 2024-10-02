@@ -46,4 +46,4 @@ As a librarian, I want users to view detailed descriptions of movies before borr
 
 ## Links
 More info and screenshot for the app can be accessed at: <br>
-[Release1 md](/docs/release1.md)
+[Release1 md](/docs/release1/release1.md)

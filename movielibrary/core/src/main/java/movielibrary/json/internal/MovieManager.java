@@ -12,7 +12,6 @@ public class MovieManager {
     
     private File file;
     private MovieSerializer movieSerializer;
-    private MovieDeserializer movieDeserializer;
 
     /**
      * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
@@ -23,7 +22,6 @@ public class MovieManager {
     public MovieManager() throws IOException {
         this.file = new File("../core/src/main/resources/movielibrary/Movies.json");
         movieSerializer = new MovieSerializer(this.file);
-        movieDeserializer = new MovieDeserializer(this.file);
     }
 
     /**
@@ -55,7 +53,7 @@ public class MovieManager {
      */
     public void rent(String title) throws IOException {
 
-        if (this.movieDeserializer.checkIfRented(title)) {
+        if (this.movieSerializer.getRentedStatus(title)) {
             throw new IllegalStateException("The movie is already rented.");
         }
 
@@ -71,7 +69,7 @@ public class MovieManager {
      * @throws IllegalStateException if the movie is not currently rented 
      */
     public void returnBack(String title) throws IOException {
-        if (!this.movieDeserializer.checkIfRented(title)) {
+        if (!this.movieSerializer.getRentedStatus(title)) {
             throw new IllegalStateException("The movie is not rented.");
         }
 

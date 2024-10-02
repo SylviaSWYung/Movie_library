@@ -70,6 +70,7 @@ public class MovieDeserializer {
      * @throws NoSuchElementException if the movie with the specified title is not found in the library
      */
     public boolean checkIfRented(String title) throws IOException{
+        reloadMovieData();
         Movie selectedMovie = findMovie(title);
         if(selectedMovie == null){
             throw new NoSuchElementException("The movie doesn't exist in the library.");
@@ -77,4 +78,8 @@ public class MovieDeserializer {
         return selectedMovie.getIsRented();
     }
 
+    public void reloadMovieData() throws IOException {
+        moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
+    }
+    
 }
