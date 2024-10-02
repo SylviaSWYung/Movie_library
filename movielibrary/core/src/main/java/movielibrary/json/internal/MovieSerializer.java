@@ -66,6 +66,13 @@ public class MovieSerializer {
         writeAllMoviesPretty();
     }
 
+    /**
+     * Returns the rented status of the movie with the written title
+     * 
+     * @param title the title of the movie to get the rented status from
+     * @return a boolean with the rented status of the movie
+     * @throws IOException if an I/O error occurs while reading the file
+     */
     public boolean getRentedStatus(String title) throws IOException {
         return this.movieDeserializer.checkIfRented(title);
     }
