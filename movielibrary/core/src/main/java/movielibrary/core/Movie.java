@@ -9,11 +9,11 @@ public class Movie {
     private String title; 
     private double movieLength; 
     private String description; 
-    private boolean isRented; //Default value is set to false. False - Available. 
+    private boolean isLent; //Default value is set to false. False - Available. 
     
     /**
      * Constructs a Movie object with the specified title, movie length, and description. 
-     * The movie is initially available for lend (isRented set to false). 
+     * The movie is initially available for lending (isLent set to false). 
      * 
      * @param title the title of the movie, cannot be null or empty.
      * @param movieLength the length of the movie in minutes, must be greater than 0 and less than or equal to 120. 
@@ -28,7 +28,7 @@ public class Movie {
         handleStringError(description);
         handleDescriptionLength(description);
         this.description = description; 
-        isRented = false; 
+        isLent = false; 
     }
     
     /**
@@ -96,22 +96,22 @@ public class Movie {
     }
 
     /**
-     * Retrives the rental status of the movie. 
+     * Retrives the lending status of the movie. 
      * If the movie is lended, it returns true. Otherwise, it returns false. 
      * 
-     * @return true if the the movie is rented, false if it is available. 
+     * @return true if the the movie is lending, false if it is available. 
      */
-    public boolean getIsRented() {
-        return this.isRented;
+    public boolean getIsLent() {
+        return this.isLent;
     }
 
     /**
-     * Sets the rental status of the movie. 
+     * Sets the lending status of the movie. 
      * 
-     * @param isRented true if the movie is lended, false if it is available 
+     * @param isLent true if the movie is lended, false if it is available 
      */
-    public void setRented(boolean isRented) {
-        this.isRented = isRented;
+    public void setLent(boolean isLent) {
+        this.isLent = isLent;
     }
 
     /**

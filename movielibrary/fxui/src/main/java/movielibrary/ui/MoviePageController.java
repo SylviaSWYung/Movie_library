@@ -85,7 +85,7 @@ public class MoviePageController {
 
     /**
      * Handles the lend button, lends the movie.
-     * Finds the chosen movie and checks if it is rented
+     * Finds the chosen movie and checks if it is lent
      * If the movie is already lent, the program will give an error alert
      * If the movie is not lent, it sets the movie as lent and gives a confirmation alert
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
@@ -94,13 +94,13 @@ public class MoviePageController {
     @FXML
         public void handleLendbtn(ActionEvent event) throws IOException {
             movie = movieDeserializer.findMovie(MovieTitle.getText().strip());
-            if (movieDeserializer.checkIfRented(movie.getTitle())) {
+            if (movieDeserializer.checkIfLent(movie.getTitle())) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Failed!");
-                alert.setContentText("The movie is alredy rented!");
+                alert.setContentText("The movie is alredy lent!");
                 alert.showAndWait();
             } else {
-                movieManager.rent(movie.getTitle());
+                movieManager.lent(movie.getTitle());
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success!");
                 alert.setContentText("Movie lend!");
@@ -112,7 +112,7 @@ public class MoviePageController {
 
     /**
      * Handles the return button, returns the movie. 
-     * Finds the chosen movie and checks if it is rented
+     * Finds the chosen movie and checks if it is lent
      * If the movie is not lent, the program will give an error alert
      * If the movie is lent, it sets the movie as not lent (returns) and gives a confirmation alert
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
@@ -121,10 +121,10 @@ public class MoviePageController {
     @FXML
         public void handleReturnbtn(ActionEvent event) throws IOException {
             movie = movieDeserializer.findMovie(MovieTitle.getText().strip());
-            if (!movieDeserializer.checkIfRented(movie.getTitle())) {
+            if (!movieDeserializer.checkIfLent(movie.getTitle())) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Failed!");
-                alert.setContentText("You have not rented this movie.");
+                alert.setContentText("You have not lent this movie.");
                 alert.showAndWait();
             } else {
                 movieManager.returnBack(movie.getTitle());
