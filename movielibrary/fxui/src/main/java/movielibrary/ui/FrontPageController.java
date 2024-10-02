@@ -18,32 +18,39 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- * FrontPageController handles the FXML file
+ * The {@code FrontPageController} handles the FXML file {@code FrontPage} and it's behaviour.
+ * Handles the user interaction with the UI components on the FrontPage.
+ * The user interaction includes choosing a movie from the {@code ChoiceBox} and clicking the {@code MoreInfo} button.
  */
 
 public class FrontPageController {
     
     /**
      * FXML UI components on the FrontPage
+     * {@code MoreInfobtn} is a button that redirects the user to the {@code MoviePage.fxml} page
      */
 
     @FXML
     private Button MoreInfobtn;
 
+    /**
+     * {@code MovieScrollBar} is a {@code ChoiceBox} that contains all the movie titles from the {@code Movies.json} file
+     */
     @FXML
     private ChoiceBox<String> MovieScrollBar;
 
     /**
-     * Decleare movieDeserializer variable of type MovieDeserializer and movie variable of type Movie
+     * Declare movieDeserializer variable of type {@link MovieDeserializer} and movie variable of type {@link Movie}
      */
 
     private MovieDeserializer movieDeserializer;
     private Movie movie;
 
     /**
-     * Initialize the FrontPage. Creates a MovieDeserializer object to access the data from Movies.json.
-     * Adds all movietitles from the data in Movies.json to the List movieTitles.
-     * Adds the MovieTitle elements as items in the MovieScrollBar
+     * Initialize the FrontPage. Creates a {@link MovieDeserializer} object to access the data from {@code Movies.json}.
+     * Adds all movietitles from the data in {@link Movies.json} to the List {@code movieTitles}.
+     * Adds the {@code MovieTitle} elements as items in the {@code MovieScrollBar}
+     * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
 
     @FXML
@@ -66,8 +73,9 @@ public class FrontPageController {
 
     /**
      * Handles MoreInfobtn OnAction
-     * Throws error if the user has not chosen a movie before clicking MoreInforbtn
-     * If the user has chosen a movie and clicks the MoreInfobtn, the FrontPage.fxml will load to MoviePage.fxml
+     * Throws error if the user has not chosen a movie before clicking {@code MoreInfobtn}
+     * If the user has chosen a movie and clicks the {@code MoreInfobtn}, the {@code FrontPage.fxml} will load to {@code MoviePage.fxml}
+     * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
 
     @FXML
@@ -85,7 +93,7 @@ public class FrontPageController {
     }
 
     /**
-     * loadPage method for redirecting and loading the MoviePage.fxml
+     * loadPage method for redirecting and loading the {@code MoviePage.fxml} page
      * 
      * @param page A String with the .fxml file
      * @param movieTitle A String with the movieTitle of the chosen movie
