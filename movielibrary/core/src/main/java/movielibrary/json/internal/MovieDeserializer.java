@@ -82,5 +82,4 @@ public class MovieDeserializer {
         moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
     }
     
-
 }
