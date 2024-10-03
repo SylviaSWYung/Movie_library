@@ -13,7 +13,7 @@ public class Movie {
     
     /**
      * Constructs a Movie object with the specified title, movie length, and description. 
-     * The movie is initially available for lending (isLent set to false). 
+     * The movie is initially available for lending ({@code isLent} set to false). 
      * 
      * @param title the title of the movie, cannot be null or empty.
      * @param movieLength the length of the movie in minutes, must be greater than 0 and less than or equal to 120. 

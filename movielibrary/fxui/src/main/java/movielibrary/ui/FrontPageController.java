@@ -22,14 +22,12 @@ import java.util.ArrayList;
  * Handles the user interaction with the UI components on the FrontPage.
  * The user interaction includes choosing a movie from the {@code ChoiceBox} and clicking the {@code MoreInfo} button.
  */
-
 public class FrontPageController {
     
     /**
      * FXML UI components on the FrontPage
      * {@code MoreInfobtn} is a button that redirects the user to the {@code MoviePage.fxml} page
      */
-
     @FXML
     private Button MoreInfobtn;
 
@@ -42,17 +40,15 @@ public class FrontPageController {
     /**
      * Declare movieDeserializer variable of type {@link MovieDeserializer} and movie variable of type {@link Movie}
      */
-
     private MovieDeserializer movieDeserializer;
     private Movie movie;
 
     /**
      * Initialize the FrontPage. Creates a {@link MovieDeserializer} object to access the data from {@code Movies.json}.
-     * Adds all movietitles from the data in {@link Movies.json} to the List {@code movieTitles}.
+     * Adds all movietitles from the data in {@code Movies.json} to the List {@code movieTitles}.
      * Adds the {@code MovieTitle} elements as items in the {@code MovieScrollBar}
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
-
     @FXML
     public void initialize() throws IOException {
         try {
@@ -77,7 +73,6 @@ public class FrontPageController {
      * If the user has chosen a movie and clicks the {@code MoreInfobtn}, the {@code FrontPage.fxml} will load to {@code MoviePage.fxml}
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
-
     @FXML
     public void handleMoreInfoButton() throws IOException {
             String chosenMovie = MovieScrollBar.getValue();
@@ -100,7 +95,6 @@ public class FrontPageController {
      * @param description A String with the description of the chosen movie
      * @param movieLength A double with the length of the chosen movie
      */
-
     public void loadPage(String page, String movieTitle, String description, double movieLength) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/" + page));
