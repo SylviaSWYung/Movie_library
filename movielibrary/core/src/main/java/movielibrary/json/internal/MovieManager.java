@@ -5,7 +5,7 @@ import java.io.IOException;
 
 /**
  * The {@code MovieManager} class provides methods to manage the renting and returning of movies in 
- * a movie library. It interacts with the {@link MovieSerializer} and {@link MovieDeserializer} classes
+ * a movie library. It interacts with the {@link MovieSerializer} class
  * to update and retrieve movie data from a JSON file. 
  */
 public class MovieManager {
@@ -15,7 +15,7 @@ public class MovieManager {
 
     /**
      * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
-     * Initializes the serializer and deserializer for handling the movie data. 
+     * Initializes the serializer for handling the movie data. 
      * 
      * @throws IOException if an I/O error occurs while reading the file 
      */
@@ -44,7 +44,7 @@ public class MovieManager {
     }
 
     /**
-     * Rents a movie with the speciifed title by setting its rental status to be true. 
+     * Rents a movie with the specified title by setting its rental status to be true. 
      * If the movie is already rented, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be rented

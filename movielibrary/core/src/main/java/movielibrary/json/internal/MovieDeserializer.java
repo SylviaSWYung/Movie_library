@@ -78,6 +78,11 @@ public class MovieDeserializer {
         return selectedMovie.getIsRented();
     }
 
+    /**
+     * Reloads the data from the updated file into moviesInLibrary by converting the file into a list of {@link Movie}
+     * 
+     * @throws IOException if an I/O error occurs while reading the file
+     */
     public void reloadMovieData() throws IOException {
         moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
     }
