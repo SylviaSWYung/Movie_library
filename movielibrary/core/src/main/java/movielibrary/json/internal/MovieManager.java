@@ -4,26 +4,24 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * The {@code MovieManager} class provides methods to manage the renting and returning of movies in 
- * a movie library. It interacts with the {@link MovieSerializer} and {@link MovieDeserializer} classes
+ * The {@code MovieManager} class provides methods to manage the lenting and returning of movies in 
+ * a movie library. It interacts with the {@link MovieSerializer} class
  * to update and retrieve movie data from a JSON file. 
  */
 public class MovieManager {
     
     private File file;
     private MovieSerializer movieSerializer;
-    private MovieDeserializer movieDeserializer;
 
     /**
      * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
-     * Initializes the serializer and deserializer for handling the movie data. 
+     * Initializes the serializer for handling the movie data. 
      * 
      * @throws IOException if an I/O error occurs while reading the file 
      */
     public MovieManager() throws IOException {
         this.file = new File("../core/src/main/resources/movielibrary/Movies.json");
         movieSerializer = new MovieSerializer(this.file);
-        movieDeserializer = new MovieDeserializer(this.file);
     }
 
     /**
@@ -46,33 +44,33 @@ public class MovieManager {
     }
 
     /**
-     * Rents a movie with the speciifed title by setting its rental status to be true. 
-     * If the movie is already rented, an {@link IllegalStateException} is thrown.
+     * Lenting a movie with the specified title by setting its lenting status to be true. 
+     * If the movie is already lent, an {@link IllegalStateException} is thrown.
      * 
-     * @param title the title of the movie to be rented
+     * @param title the title of the movie to be lent
      * @throws IOException if an I/O error occurs while accessing the file
-     * @throws IllegalStateException if the movie is already rented 
+     * @throws IllegalStateException if the movie is already lent 
      */
-    public void rent(String title) throws IOException {
+    public void lent(String title) throws IOException {
 
-        if (this.movieDeserializer.checkIfRented(title)) {
-            throw new IllegalStateException("The movie is already rented.");
+        if (this.movieSerializer.getLentStatus(title)) {
+            throw new IllegalStateException("The movie is already lent.");
         }
 
         this.movieSerializer.serialize(title, true);
     }
 
     /**
-     * Returns a movie with the specified title by setting its rental status to false. 
-     * If the movie is not currently rented, an {@link IllegalStateException} is thrown.
+     * Returns a movie with the specified title by setting its lenting status to false. 
+     * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be returned
      * @throws IOException if an I/O error occurs while accessing the file 
-     * @throws IllegalStateException if the movie is not currently rented 
+     * @throws IllegalStateException if the movie is not currently lent 
      */
     public void returnBack(String title) throws IOException {
-        if (!this.movieDeserializer.checkIfRented(title)) {
-            throw new IllegalStateException("The movie is not rented.");
+        if (!this.movieSerializer.getLentStatus(title)) {
+            throw new IllegalStateException("The movie is not lent.");
         }
 
         this.movieSerializer.serialize(title, false);

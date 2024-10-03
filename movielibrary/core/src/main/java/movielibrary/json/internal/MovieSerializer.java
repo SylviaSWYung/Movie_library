@@ -2,7 +2,6 @@ package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -10,7 +9,7 @@ import movielibrary.core.Movie;
 
 /**
  * The {@code MovieSerializer} class provides functionality for serializing and 
- * updating a list of {@link Movie} object to a JSON file. It supports updating the rental status
+ * updating a list of {@link Movie} object to a JSON file. It supports updating the lenting status
  * and writing the list of movies back to the file. 
  * 
  * <p>This class utilizes the Jackson Library for JSON serialization and deserialization, 
@@ -20,7 +19,6 @@ public class MovieSerializer {
 
     private ObjectMapper movieLibrary;
     private File file;
-    private List<Movie> moviesInLibrary;
     private MovieDeserializer movieDeserializer;
 
     /**
@@ -35,7 +33,6 @@ public class MovieSerializer {
         movieLibrary = new ObjectMapper();
         this.file = file;
         this.movieDeserializer = new MovieDeserializer(this.file);
-        this.moviesInLibrary = movieDeserializer.getMoviesInLibrary();
 
     }
 
@@ -47,7 +44,7 @@ public class MovieSerializer {
      * @throws IOException if an I/O error occurs while writing to the file. 
      */
     public void writeAllMoviesPretty() throws IOException {
-        movieLibrary.writerWithDefaultPrettyPrinter().writeValue(this.file, this.moviesInLibrary);
+        movieLibrary.writerWithDefaultPrettyPrinter().writeValue(this.file, movieDeserializer.getMoviesInLibrary());
     }
 
     /* public void serialize(Movie movie) throws IOException {
@@ -56,17 +53,28 @@ public class MovieSerializer {
     } */
 
     /**
-     * Updates the rental status of the movie with the specified title in the library, 
+     * Updates the lenting status of the movie with the specified title in the library, 
      * then serializes the updated movie list back to the file in a formatted JSON structure. 
      * 
      * @param title the title of the movie to update
-     * @param newStatus the new rental status to set for the movie
+     * @param newStatus the new lenting status to set for the movie
      * @throws IOException if an I/O error occurs while the writing to the file 
      */
     public void serialize(String title, boolean newStatus) throws IOException {
         Movie movieToUpdate = this.movieDeserializer.findMovie(title);
-        movieToUpdate.setRented(newStatus);
+        movieToUpdate.setLent(newStatus);
         writeAllMoviesPretty();
+    }
+
+    /**
+     * Returns the lenting status of the movie with the written title
+     * 
+     * @param title the title of the movie to get the lent status from
+     * @return a boolean with the lent status of the movie
+     * @throws IOException if an I/O error occurs while reading the file
+     */
+    public boolean getLentStatus(String title) throws IOException {
+        return this.movieDeserializer.checkIfLent(title);
     }
 
 }

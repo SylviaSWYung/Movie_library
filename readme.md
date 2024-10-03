@@ -2,7 +2,7 @@
 [open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2024/gr2403/gr2403)
 
 ## Overview 
-The Movie Library application is designed to assist librarians in maintaining an organized system for managing movie rentals. It serves as both a self-checkout and self-check-in platform for users who wish to borrow or return movies. The app tracks movie rentals by referencing a `movie.csv` file, which indicates the availability of each movie.
+The Movie Library application is designed to assist librarians in maintaining an organized system for managing movie lending. It serves as both a self-checkout and self-check-in platform for users who wish to borrow or return movies. The app tracks movie lending by referencing a `movie.csv` file, which indicates the availability of each movie.
 
 The Frontpage is designed to provide an overview of all available movies for lending, presented in a down scrollable list. Users can select a movie they’re interested in and click the "More Info" button, which takes them to the Moviepage. The Moviepage offers detailed information about the selected film, including a brief summary. At the bottom of the page, there are two buttons: "Lend" and "Cancel." By clicking "Lend", the movie will be lent to the user. "Return" button will let the user return its movie back to the library. Clicking "Cancel" will return the user to the Frontpage.
 
