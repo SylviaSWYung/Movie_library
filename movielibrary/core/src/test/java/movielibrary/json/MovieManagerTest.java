@@ -46,26 +46,26 @@ public class MovieManagerTest {
     @Test
     @DisplayName("Read from File")
     public void testReadFromFile() throws IOException {
-        Assertions.assertFalse(movieManager.checkIfRented("The Trollgirl"));
-        Assertions.assertFalse(movieManager.checkIfRented("Loverboy"));
+        Assertions.assertFalse(movieManager.checkIfLent("The Trollgirl"));
+        Assertions.assertFalse(movieManager.checkIfLent("Loverboy"));
     }
 
-    //Testing rent and returnBack method for each movie
+    //Testing lent and returnBack method for each movie
     //Testing if the value in Movie.csv changes to true and back to false
     @Test
     @DisplayName("Write to File")
     public void testWriteToFile() throws IOException {
-        movieManager.rent("The Trollgirl");
-        Assertions.assertTrue(movieManager.checkIfRented("The Trollgirl"));
+        movieManager.lent("The Trollgirl");
+        Assertions.assertTrue(movieManager.checkIfLent("The Trollgirl"));
 
-        movieManager.rent("Loverboy");
-        Assertions.assertTrue(movieManager.checkIfRented("Loverboy"));
+        movieManager.lent("Loverboy");
+        Assertions.assertTrue(movieManager.checkIfLent("Loverboy"));
 
         movieManager.returnBack("The Trollgirl");
-        Assertions.assertFalse(movieManager.checkIfRented("The Trollgirl"));
+        Assertions.assertFalse(movieManager.checkIfLent("The Trollgirl"));
 
         movieManager.returnBack("Loverboy");
-        Assertions.assertFalse(movieManager.checkIfRented("Loverboy"));
+        Assertions.assertFalse(movieManager.checkIfLent("Loverboy"));
     }
 
 }

@@ -24,13 +24,13 @@ public class MovieTest {
         Assertions.assertEquals("Cinderella", movie.getTitle());
         Assertions.assertEquals(110, movie.getMovieLength());
         Assertions.assertEquals("A girl with evil step sisters.", movie.getDescription());
-        Assertions.assertFalse(movie.getIsRented());
+        Assertions.assertFalse(movie.getIsLent());
 
         movie = new Movie("Ompalompa", 20, "omp");
         Assertions.assertEquals("Ompalompa", movie.getTitle());
         Assertions.assertEquals(20, movie.getMovieLength());
         Assertions.assertEquals("omp", movie.getDescription());
-        Assertions.assertFalse(movie.getIsRented());
+        Assertions.assertFalse(movie.getIsLent());
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             movie = new Movie("", 20, "Nothing");
@@ -60,8 +60,8 @@ public class MovieTest {
         movie.setTitle("The Frog Princess");
         Assertions.assertEquals("The Frog Princess", movie.getTitle());
 
-        movie.setRented(true);
-        Assertions.assertTrue(movie.getIsRented());
+        movie.setLent(true);
+        Assertions.assertTrue(movie.getIsLent());
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             movie.setTitle("");
@@ -108,13 +108,13 @@ public class MovieTest {
         });
     }
 
-    //Testing the setRented method
+    //Testing the setLent method
     @Test
-    @DisplayName("Test-rent")
-    public void testIsRented() {
-        Assertions.assertFalse(movie.getIsRented());
-        movie.setRented(true);
-        Assertions.assertTrue(movie.getIsRented());
+    @DisplayName("Test-Lent")
+    public void testIsLent() {
+        Assertions.assertFalse(movie.getIsLent());
+        movie.setLent(true);
+        Assertions.assertTrue(movie.getIsLent());
     }
 
 

@@ -72,17 +72,17 @@ public class MovieManagerCSV {
     }
 
     /**
-     * Rents a movie from library. Sets status to true in file
+     * Lending a movie from library. Sets status to true in file
      * @param title a String with the title of the movie
      * @throws IOException exceptions produced by failed or interrupted I/O operations
      */
-    public void rent(String title) throws IOException {
+    public void lent(String title) throws IOException {
         Movie foundMovie = findMovie(title);
 
-        if (!checkIfRented(title)) {
+        if (!checkIfLent(title)) {
             updateMovieStatus(title, true);
         }
-        foundMovie.setRented(true);
+        foundMovie.setLent(true);
     }
 
     /**
@@ -93,10 +93,10 @@ public class MovieManagerCSV {
     public void returnBack(String title) throws IOException {
         Movie foundMovie = findMovie(title);
 
-        if (checkIfRented(title)) {
+        if (checkIfLent(title)) {
             updateMovieStatus(title, false);
         }
-        foundMovie.setRented(false);
+        foundMovie.setLent(false);
     }
 
     /**
@@ -127,12 +127,12 @@ public class MovieManagerCSV {
     /**
      * Checks the availability of the movie in file, either true or false
      * @param title a String with the title of the movie
-     * @return boolean if the movie is rented or not
+     * @return boolean if the movie is lent or not
      * @throws IOException exceptions produced by failed or interrupted I/O operations
      */
-    public boolean checkIfRented(String title) throws IOException {
+    public boolean checkIfLent(String title) throws IOException {
         findMovie(title);
-        boolean isRented = false;
+        boolean isLent = false;
 
         this.scanner = new Scanner(this.file);
             while (scanner.hasNextLine()) {
@@ -140,17 +140,17 @@ public class MovieManagerCSV {
 
             String titleInFile = newMovie[0].trim();
             if (titleInFile.equals(title)) {
-                isRented = Boolean.parseBoolean(newMovie[3].trim());
+                isLent = Boolean.parseBoolean(newMovie[3].trim());
             }
         }
 
-        return isRented;
+        return isLent;
     }
 
     /**
-     * Updates the rented status of the movie
+     * Updates the lent status of the movie
      * @param title a String with the title of the movie
-     * @param newStatus a boolean to set the movie status rented/not rented
+     * @param newStatus a boolean to set the movie status lent/not lent
      * @throws IOException exceptions produced by failed or interrupted I/O operations
      */
     public void updateMovieStatus(String title, boolean newStatus) throws IOException {

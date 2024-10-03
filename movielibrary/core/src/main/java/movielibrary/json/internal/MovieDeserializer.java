@@ -12,7 +12,7 @@ import movielibrary.core.Movie;
 /**
  * The {@code MovieDeserializer} class provides functionality to deserialize JSON data
  * from a file into a list of {@link Movie} objects. It allows searching for movies by title, 
- * retrieving the list of movies, and checking whether a movie is rented. 
+ * retrieving the list of movies, and checking whether a movie is lent. 
  * 
  * <p>This class uses the Jackson library to handle JSON deserialization.</p>
  */ 
@@ -62,20 +62,20 @@ public class MovieDeserializer {
     }
 
     /**
-     * Checks whether the movie with the specified title is currently rented. 
+     * Checks whether the movie with the specified title is currently lent. 
      * 
      * @param title the title of the movie to check
-     * @return {@code true} if the movie is rented, {@code false} otherwise
+     * @return {@code true} if the movie is lent, {@code false} otherwise
      * @throws IOException if an I/O error occurs while the accessing the movie library
      * @throws NoSuchElementException if the movie with the specified title is not found in the library
      */
-    public boolean checkIfRented(String title) throws IOException{
+    public boolean checkIfLent(String title) throws IOException{
         reloadMovieData();
         Movie selectedMovie = findMovie(title);
         if(selectedMovie == null){
             throw new NoSuchElementException("The movie doesn't exist in the library.");
         }
-        return selectedMovie.getIsRented();
+        return selectedMovie.getIsLent();
     }
 
     /**
