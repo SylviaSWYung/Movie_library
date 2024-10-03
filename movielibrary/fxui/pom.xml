@@ -104,7 +104,7 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
+    
     <profiles>
         <profile>
             <id>app</id>
@@ -137,6 +137,54 @@
                 </dependency>
             </dependencies>
         </profile>
+
+    
+        <profile>
+            <id>jacoco</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.1.2</version>
+                        <configuration>
+                            <!-- <skipTests>${skipUiTests}</skipTests> -->
+                            <!-- <systemPropertyVariables>
+                                <headless>${headlessTests}</headless>
+                            </systemPropertyVariables> -->
+                            <argLine>
+                            @{jaCoCoArgLine}
+                            --add-opens movielibrary.ui/movielibrary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                            --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                            --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
+                            </argLine>
+                        </configuration>
+                    </plugin> 
+                    <plugin> 
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <configuration>
+                            <propertyName>jaCoCoArgLine</propertyName>
+                         </configuration>
+                        <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>test</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                        </executions>
+                    </plugin>  
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <build>
@@ -148,20 +196,14 @@
                 <configuration>
                 </configuration>
             </plugin>
-            <plugin>
+           
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.0.0-M5</version>
                 <configuration>
-                    <skipTests>${skipUiTests}</skipTests>
-                    <systemPropertyVariables>
-                        <headless>${headlessTests}</headless>
-                    </systemPropertyVariables>
                     <argLine>
-                    @{jaCoCoArgLine}
                     --add-opens movielibrary.ui/movielibrary.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-                    --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
-                    --add-exports javafx.graphics/com.sun.glass.ui.delegate=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>
