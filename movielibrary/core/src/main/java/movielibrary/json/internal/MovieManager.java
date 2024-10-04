@@ -44,7 +44,7 @@ public class MovieManager {
     }
 
     /**
-     * Lending a movie with the specified title by setting its lenting status to be true. 
+     * Lending a movie with the specified title by setting its lending status to be true. 
      * If the movie is already lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be lend
@@ -61,7 +61,7 @@ public class MovieManager {
     }
 
     /**
-     * Returns a movie with the specified title by setting its lenting status to false. 
+     * Returns a movie with the specified title by setting its lending status to false. 
      * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be returned
