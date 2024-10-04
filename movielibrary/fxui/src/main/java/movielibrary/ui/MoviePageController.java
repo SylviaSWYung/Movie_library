@@ -107,9 +107,9 @@ public class MoviePageController {
    
 
     /**
-     * Handles the {@code lend} button, and lends the movie. Finds the chosen movie and checks if it is lent.
-     * If the movie is already lent, the program will give an error alert.
-     * If the movie is not lent, it sets the movie as lent and gives a confirmation alert.
+     * Handles the {@code lent} button, and lends the movie. Finds the chosen movie and checks if it is lent.
+     * If the movie is already lend, the program will give an error alert.
+     * If the movie is not lend, it sets the movie as lent and gives a confirmation alert.
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
     @FXML
@@ -121,7 +121,7 @@ public class MoviePageController {
                 alert.setContentText("The movie is alredy lent!");
                 alert.showAndWait();
             } else {
-                movieManager.lent(movie.getTitle());
+                movieManager.lend(movie.getTitle());
                 Alert alert = new Alert(AlertType.INFORMATION);
                 alert.setTitle("Success!");
                 alert.setContentText("Movie lend!");

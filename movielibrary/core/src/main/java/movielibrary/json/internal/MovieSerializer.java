@@ -9,7 +9,7 @@ import movielibrary.core.Movie;
 
 /**
  * The {@code MovieSerializer} class provides functionality for serializing and 
- * updating a list of {@link Movie} object to a JSON file. It supports updating the lenting status
+ * updating a list of {@link Movie} object to a JSON file. It supports updating the lending status
  * and writing the list of movies back to the file. 
  * 
  * <p>This class utilizes the Jackson Library for JSON serialization and deserialization, 
@@ -53,11 +53,11 @@ public class MovieSerializer {
     } */
 
     /**
-     * Updates the lenting status of the movie with the specified title in the library, 
+     * Updates the lending status of the movie with the specified title in the library, 
      * then serializes the updated movie list back to the file in a formatted JSON structure. 
      * 
      * @param title the title of the movie to update
-     * @param newStatus the new lenting status to set for the movie
+     * @param newStatus the new lending status to set for the movie
      * @throws IOException if an I/O error occurs while the writing to the file 
      */
     public void serialize(String title, boolean newStatus) throws IOException {
@@ -67,7 +67,7 @@ public class MovieSerializer {
     }
 
     /**
-     * Returns the lenting status of the movie with the written title
+     * Returns the lending status of the movie with the written title
      * 
      * @param title the title of the movie to get the lent status from
      * @return a boolean with the lent status of the movie

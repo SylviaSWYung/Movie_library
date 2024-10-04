@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * The {@code MovieManager} class provides methods to manage the lenting and returning of movies in 
+ * The {@code MovieManager} class provides methods to manage the lending and returning of movies in 
  * a movie library. It interacts with the {@link MovieSerializer} class
  * to update and retrieve movie data from a JSON file. 
  */
@@ -44,33 +44,33 @@ public class MovieManager {
     }
 
     /**
-     * Lenting a movie with the specified title by setting its lenting status to be true. 
+     * Lending a movie with the specified title by setting its lending status to be true. 
      * If the movie is already lent, an {@link IllegalStateException} is thrown.
      * 
-     * @param title the title of the movie to be lent
+     * @param title the title of the movie to be lend
      * @throws IOException if an I/O error occurs while accessing the file
-     * @throws IllegalStateException if the movie is already lent 
+     * @throws IllegalStateException if the movie is already lent
      */
-    public void lent(String title) throws IOException {
+    public void lend(String title) throws IOException {
 
         if (this.movieSerializer.getLentStatus(title)) {
-            throw new IllegalStateException("The movie is already lent.");
+            throw new IllegalStateException("The movie is already lend.");
         }
 
         this.movieSerializer.serialize(title, true);
     }
 
     /**
-     * Returns a movie with the specified title by setting its lenting status to false. 
+     * Returns a movie with the specified title by setting its lending status to false. 
      * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be returned
      * @throws IOException if an I/O error occurs while accessing the file 
-     * @throws IllegalStateException if the movie is not currently lent 
+     * @throws IllegalStateException if the movie is not currently lent
      */
     public void returnBack(String title) throws IOException {
         if (!this.movieSerializer.getLentStatus(title)) {
-            throw new IllegalStateException("The movie is not lent.");
+            throw new IllegalStateException("The movie is not lend.");
         }
 
         this.movieSerializer.serialize(title, false);
