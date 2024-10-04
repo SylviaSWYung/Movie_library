@@ -44,12 +44,12 @@ public class MovieManager {
     }
 
     /**
-     * Lending a movie with the specified title by setting its lending status to be true. 
-     * If the movie is already lend, an {@link IllegalStateException} is thrown.
+     * Lending a movie with the specified title by setting its lenting status to be true. 
+     * If the movie is already lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be lend
      * @throws IOException if an I/O error occurs while accessing the file
-     * @throws IllegalStateException if the movie is already lend
+     * @throws IllegalStateException if the movie is already lent
      */
     public void lend(String title) throws IOException {
 
@@ -61,12 +61,12 @@ public class MovieManager {
     }
 
     /**
-     * Returns a movie with the specified title by setting its lending status to false. 
-     * If the movie is not currently lend, an {@link IllegalStateException} is thrown.
+     * Returns a movie with the specified title by setting its lenting status to false. 
+     * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
      * 
      * @param title the title of the movie to be returned
      * @throws IOException if an I/O error occurs while accessing the file 
-     * @throws IllegalStateException if the movie is not currently lend
+     * @throws IllegalStateException if the movie is not currently lent
      */
     public void returnBack(String title) throws IOException {
         if (!this.movieSerializer.getLentStatus(title)) {
