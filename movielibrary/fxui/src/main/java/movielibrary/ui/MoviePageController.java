@@ -2,6 +2,8 @@ package movielibrary.ui;
 
 import java.io.File;
 import java.io.IOException;
+
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -158,25 +160,44 @@ public class MoviePageController {
 
     /**
      * Handles the {@code cancel} button, returning to the front page.
-     * Accesses the {@code FrontPage.fxml} file and sets the new stage to this page.
+     * Runs the {@code returnToFrontPage} method to load the front page {@code FrontPage.fxml}.
      * @param event The event that will trigger this handler, in this case a button click user action.
      * @throws IOException Throws IOException if an I/O error occurs while accessing the file
      */
     @FXML
-        public void returnToFrontPage(ActionEvent event) throws IOException {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/Frontpage.fxml"));
-                Parent root = loader.load();
+    public void returnToFrontPage(ActionEvent event) throws IOException {
+        loadFrontPage(false);
+    }
     
-                // get current stage and set the new scene (frontpage).
-                Stage stage = (Stage) Cancelbtn.getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+    /**
+     * Loads the front page {@code FrontPage.fxml} and sets the new stage to this page
+     * Main purpose of the method is to load the front page and simulate an IOException
+     * @param throwError A boolean that simulates an IOException if true
+     * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+     */
+    public void loadFrontPage(boolean throwError) throws IOException {
+        try {
+            if (throwError) {
+                throw new IOException("Simulated IOException");
             }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/Frontpage.fxml"));
+            Parent root = loader.load();
+    
+            // get current stage and set the new scene (frontpage).
+            Stage stage = (Stage) Cancelbtn.getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Platform.runLater(() -> {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText(null);
+                alert.setContentText("Could not load the page");
+                alert.showAndWait();
+            });
         }
+    }
     
         
     }
