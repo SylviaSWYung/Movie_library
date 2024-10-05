@@ -1,0 +1,26 @@
+[
+    {
+    "title":"The Trollgirl",
+    "movieLength":100,
+    "description":"When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.",
+    "isLent":false
+    },
+    {
+    "title":"Loverboy",
+    "movieLength":30,
+    "description":"Based on a true story, about a boy who marries his crush",
+    "isLent":false
+    },
+    {
+    "title":"Day in the life of gr2403",
+    "movieLength":110,
+    "description":"The movie follows four young computer science girls, fighting their way thorugh their worst nightmare ITP",
+    "isLent":false
+    },
+    {
+    "title":"Life is tough",
+    "movieLength":120, 
+    "description":"A movie about why life is a bitch sometimes",
+    "isLent":false 
+    }
+]
