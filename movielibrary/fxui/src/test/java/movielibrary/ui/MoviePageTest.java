@@ -136,4 +136,14 @@ public class MoviePageTest extends ApplicationTest {
         verifyThat("#MovieScrollBar", NodeMatchers.isVisible());
         verifyThat("#MoreInfobtn", NodeMatchers.isVisible());
     }
+
+    // test the IO exception that occurs when failing to return to the front page
+    @Test
+    public void testReturnToFrontPageFail() throws IOException {
+        moviePageController.loadFrontPage(true);
+        WaitForAsyncUtils.waitForFxEvents();
+    
+        verifyThat(".alert", NodeMatchers.isVisible());
+        verifyThat(".alert .content", hasText("Could not load the page"));
+    }
 }
