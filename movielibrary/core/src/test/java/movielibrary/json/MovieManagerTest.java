@@ -1,71 +1,74 @@
 package movielibrary.json;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.Assertions;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManagerCSV;
+import movielibrary.json.internal.MovieManager;
 
-import java.util.ArrayList;
-import java.util.List;
-
+//Tests for MovieManager.java class
 public class MovieManagerTest {
     
-    //MovieManager object for testing
-    private MovieManagerCSV movieManager;
+    //MovieManager object to test, File object to use a temporary file
+    private MovieManager movieManager;
+    private File temporaryFile;
 
     //Default setup for each test
+    //Creates a temporary file (a copy of the original Movies.json) for the testing, and initializes the MovieManager object
     @BeforeEach
     public void setup() throws IOException {
+        File sourceOfFile = new File("../core/src/main/resources/movielibrary/Movies.json");
+        temporaryFile = new File("../core/src/main/resources/movielibrary/tempmovies.json");
+        Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         try {
-            movieManager = new MovieManagerCSV();
+            movieManager = new MovieManager();
+            movieManager.setFile(temporaryFile);
         } catch (IOException e) {
-            fail("Exception occurred during setup: " + e.getMessage());
+            fail("An error occured during setup: " + e.getMessage());
         }
-        
     }
 
-    //Tests if getMovies() in MovieManager.java retrieves the right list with right Movie objects
-    @Test
-    @DisplayName("Get Movies")
-    public void testGetMovies() {
-        Movie m1 = movieManager.findMovie("The Trollgirl");
-        Movie m2 = movieManager.findMovie("Loverboy");
-
-        List<Movie> listOfMovies = new ArrayList<Movie>(List.of(m1, m2));
-
-        Assertions.assertEquals(listOfMovies, movieManager.getMovies());
+    //Deletes the temporary file after each test
+    @AfterEach
+    public void deleteTemporaryFile() {
+        temporaryFile.delete();
     }
 
-    //Testing the default value false in Movie.csv
+    //Test getFile method of MovieManager.java
     @Test
-    @DisplayName("Read from File")
-    public void testReadFromFile() throws IOException {
-        Assertions.assertFalse(movieManager.checkIfLent("The Trollgirl"));
-        Assertions.assertFalse(movieManager.checkIfLent("Loverboy"));
+    @DisplayName("Test file")
+    public void testFile() {
+        Assertions.assertEquals(temporaryFile, movieManager.getFile());
     }
 
-    //Testing lent and returnBack method for each movie
-    //Testing if the value in Movie.csv changes to true and back to false
+    //Test lend method
     @Test
-    @DisplayName("Write to File")
-    public void testWriteToFile() throws IOException {
-        movieManager.lent("The Trollgirl");
-        Assertions.assertTrue(movieManager.checkIfLent("The Trollgirl"));
+    @DisplayName("Lend movie")
+    public void testLend() throws IOException {
+        movieManager.lend("The Trollgirl");
+        //Cannot lend when already lent
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            movieManager.lend("The Trollgirl");
+        });
+    }
 
-        movieManager.lent("Loverboy");
-        Assertions.assertTrue(movieManager.checkIfLent("Loverboy"));
-
-        movieManager.returnBack("The Trollgirl");
-        Assertions.assertFalse(movieManager.checkIfLent("The Trollgirl"));
-
-        movieManager.returnBack("Loverboy");
-        Assertions.assertFalse(movieManager.checkIfLent("Loverboy"));
+    //Test ReturnBack method of MovieManager.java
+    @Test
+    @DisplayName("Return movie")
+    public void testReturnBack() throws IOException {
+        //Cannot return a book without it being lent
+        Assertions.assertThrows(IllegalStateException.class, () -> {
+            movieManager.returnBack("Loverboy");
+        });
     }
 
 }
