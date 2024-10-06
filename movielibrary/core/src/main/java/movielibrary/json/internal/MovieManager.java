@@ -38,9 +38,11 @@ public class MovieManager {
      * The file cannot be empty and has to be of type {@code File}
      * 
      * @param file a {@code File} object representing the new movie library data file
+     * @throws IOException if an I/O error occurs while reading the file 
      */
-    public void setFile(File file) {
+    public void setFile(File file) throws IOException {
         this.file = file;
+        movieSerializer = new MovieSerializer(file);
     }
 
     /**
