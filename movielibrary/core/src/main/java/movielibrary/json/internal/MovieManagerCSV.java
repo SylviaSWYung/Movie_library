@@ -7,193 +7,198 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
-
 import movielibrary.core.Movie;
 
 /**
- * MovieManager class contains data, and has methods to verify it
+ * MovieManager class contains data, and has methods to verify it.
  */
 public class MovieManagerCSV {
     
-    private List<Movie> movies;
-    private File file;
-    private Scanner scanner;
+  private List<Movie> movies;
+  private File file;
+  private Scanner scanner;
 
-    /**
-     * Initializes the MoveManager object. Creates a File object using a path to the Movies.csv file.
-     * Adds all movies in Movies.csv to the List movies
-     */
-    public MovieManagerCSV() throws IOException {
-        movies = new ArrayList<Movie>();
+  /**
+   * Initializes the MoveManager object. Creates a File object using a path to the Movies.csv file.
+   * Adds all movies in Movies.csv to the List movies
+   */
+  public MovieManagerCSV() throws IOException {
+    movies = new ArrayList<Movie>();
 
-        this.file = new File("../core/src/main/resources/movielibrary/Movies.csv");
+    this.file = new File("../core/src/main/resources/movielibrary/Movies.csv");
 
-        //Todo-> change retrieval method when changing from csv to json.
-        this.scanner = new Scanner(this.file);
-        scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                String[] movieInfo = scanner.nextLine().split(";");
+    //Todo-> change retrieval method when changing from csv to json.
+    this.scanner = new Scanner(this.file);
+    scanner.nextLine();
+    while (scanner.hasNextLine()) {
+      String[] movieInfo = scanner.nextLine().split(";");
 
-                String title = movieInfo[0];
-                double movieLength = Double.parseDouble(movieInfo[1]);
-                String description = movieInfo[2];
+      String title = movieInfo[0];
+      double movieLength = Double.parseDouble(movieInfo[1]);
+      String description = movieInfo[2];
 
-                movies.add(new Movie(title, movieLength, description));
-            }
-        scanner.close();
+      movies.add(new Movie(title, movieLength, description));
+    }
+    scanner.close();
+  }
+
+  /**
+   * Returns the file.
+   *
+   * @return a File object with data for all movies in library
+   */
+  public File getFile() {
+    return this.file;
+  }
+
+  /**
+   * Sets the file.
+   * The file cannot be empty and has to be of type File.
+   *
+   * @param file a File object with a path
+   */
+  public void setFile(File file) {
+    this.file = file;
+  }
+
+  /**
+   * Returns a list with Movie objects.
+   *
+   * @return a List of Movie objects
+   */
+  public List<Movie> getMovies() {
+    return movies;
+  }
+
+  /**
+   * Lending a movie from library. Sets status to true in file.
+   *
+   * @param title a String with the title of the movie
+   * @throws IOException exceptions produced by failed or interrupted I/O operations
+   */
+  public void lent(String title) throws IOException {
+    Movie foundMovie = findMovie(title);
+
+    if (!checkIfLent(title)) {
+      updateMovieStatus(title, true);
+    }
+    foundMovie.setLent(true);
+  }
+
+  /**
+   * Returns movie back to library. Sets status to false in file.
+   *
+   * @param title a String with the title of the movie
+   * @throws IOException exceptions produced by failed or interrupted I/O operations
+   */
+  public void returnBack(String title) throws IOException {
+    Movie foundMovie = findMovie(title);
+
+    if (checkIfLent(title)) {
+      updateMovieStatus(title, false);
+    }
+    foundMovie.setLent(false);
+  }
+
+  /**
+   * Finds a movie in library by title. Title can't be empty.
+   *
+   * @param title a String with the title of the movie
+   * @return the movie with the given title
+   * @throws IllegalArgumentException if the title is empty
+   * @throws NoSuchElementException if the movie doesn't exist in library
+   */
+  public Movie findMovie(String title) {
+    if (title.isEmpty()) {
+      throw new IllegalArgumentException("The movie title can't be empty. ");
     }
 
-    /**
-     * Returns the file
-     * 
-     * @return a File object with data for all movies in library
-     */
-    public File getFile() {
-        return this.file;
+    Movie movieFromTitle = this.movies.stream()
+                  .filter(m -> m.getTitle().equals(title))
+                  .findAny()
+                    .orElse(null);
+    
+    if (movieFromTitle == null) {
+      throw new NoSuchElementException("This movie doesn't exist in this library. ");
     }
 
-    /**
-     * Sets the file
-     * The file cannot be empty and has to be of type File
-     * 
-     * @param file a File object with a path
-     */
-    public void setFile(File file) {
-        this.file = file;
+    return movieFromTitle;
+  }
+
+  /**
+   * Checks the availability of the movie in file, either true or false.
+   *
+   * @param title a String with the title of the movie
+   * @return boolean if the movie is lent or not
+   * @throws IOException exceptions produced by failed or interrupted I/O operations
+   */
+  public boolean checkIfLent(String title) throws IOException {
+    findMovie(title);
+    boolean isLent = false;
+
+    this.scanner = new Scanner(this.file);
+    while (scanner.hasNextLine()) {
+      String[] newMovie = scanner.nextLine().split(";");
+
+      String titleInFile = newMovie[0].trim();
+      if (titleInFile.equals(title)) {
+        isLent = Boolean.parseBoolean(newMovie[3].trim());
+      }
     }
 
-    /**
-     * Returns a list with Movie objects
-     * 
-     * @return a List of Movie objects
-     */
-    public List<Movie> getMovies() {
-        return movies;
+    return isLent;
+  }
+
+  /**
+   * Updates the lent status of the movie.
+   *
+   * @param title a String with the title of the movie
+   * @param newStatus a boolean to set the movie status lent/not lent
+   * @throws IOException exceptions produced by failed or interrupted I/O operations
+   */
+  public void updateMovieStatus(String title, boolean newStatus) throws IOException {
+    findMovie(title);
+    StringBuilder content = new StringBuilder();
+
+    this.scanner = new Scanner(this.file);
+    while (scanner.hasNextLine()) {
+      String[] movieData = scanner.nextLine().split(";");
+
+      String titleInFile = movieData[0].trim();
+      if (title.equals(titleInFile)) {
+        movieData[3] = String.valueOf(newStatus);
+      }
+      String updatedMovieInformation = String.join(";", movieData);
+      content.append(updatedMovieInformation).append("\n");
     }
+    scanner.close();
+    reWriteFile(content);
+  }
 
-    /**
-     * Lending a movie from library. Sets status to true in file
-     * @param title a String with the title of the movie
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void lent(String title) throws IOException {
-        Movie foundMovie = findMovie(title);
 
-        if (!checkIfLent(title)) {
-            updateMovieStatus(title, true);
-        }
-        foundMovie.setLent(true);
+  /**
+   * Rewrites file.
+   *
+   * @param builder StringBuilder used to manipulate strings
+   * @throws IOException exceptions produced by failed or interrupted I/O operations
+   */
+  public void reWriteFile(StringBuilder builder) throws IOException {
+    FileWriter writer = new FileWriter(this.file);
+    writer.write(builder.toString());
+    writer.close();
+  }
+
+  /**
+   * toString method for object.
+   *
+   * @return String with titles of movies in List movies
+   */
+  @Override
+  public String toString() {
+    String output = "";
+    for (Movie m : this.movies) {
+      output += m.getTitle() + "\n";
     }
-
-    /**
-     * Returns movie back to library. Sets status to false in file
-     * @param title a String with the title of the movie
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void returnBack(String title) throws IOException {
-        Movie foundMovie = findMovie(title);
-
-        if (checkIfLent(title)) {
-            updateMovieStatus(title, false);
-        }
-        foundMovie.setLent(false);
-    }
-
-    /**
-     * Finds a movie in library by title. Title can't be empty.
-     * 
-     * @param title a String with the title of the movie
-     * @return the movie with the given title
-     * @throws IllegalArgumentException if the title is empty
-     * @throws NoSuchElementException if the movie doesn't exist in library
-     */
-    public Movie findMovie(String title) {
-        if (title.isEmpty()) {
-            throw new IllegalArgumentException("The movie title can't be empty. ");
-        }
-
-        Movie movieFromTitle = this.movies.stream()
-                     .filter(m -> m.getTitle().equals(title))
-                     .findAny()
-                        .orElse(null);
-        
-        if (movieFromTitle == null) {
-            throw new NoSuchElementException("This movie doesn't exist in this library. ");
-        }
-
-        return movieFromTitle;
-    }
-
-    /**
-     * Checks the availability of the movie in file, either true or false
-     * @param title a String with the title of the movie
-     * @return boolean if the movie is lent or not
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public boolean checkIfLent(String title) throws IOException {
-        findMovie(title);
-        boolean isLent = false;
-
-        this.scanner = new Scanner(this.file);
-            while (scanner.hasNextLine()) {
-            String[] newMovie = scanner.nextLine().split(";");
-
-            String titleInFile = newMovie[0].trim();
-            if (titleInFile.equals(title)) {
-                isLent = Boolean.parseBoolean(newMovie[3].trim());
-            }
-        }
-
-        return isLent;
-    }
-
-    /**
-     * Updates the lent status of the movie
-     * @param title a String with the title of the movie
-     * @param newStatus a boolean to set the movie status lent/not lent
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void updateMovieStatus(String title, boolean newStatus) throws IOException {
-        findMovie(title);
-        StringBuilder content = new StringBuilder();
-
-        this.scanner = new Scanner(this.file);
-            while (scanner.hasNextLine()) {
-                String[] movieData = scanner.nextLine().split(";");
-
-            String titleInFile = movieData[0].trim();
-            if (title.equals(titleInFile)) {
-                    movieData[3] = String.valueOf(newStatus);
-                }
-            String updatedMovieInformation = String.join(";", movieData);
-            content.append(updatedMovieInformation).append("\n");
-        }
-        scanner.close();
-        reWriteFile(content);
-    }
-
-
-    /**
-     * Rewrites file
-     * @param builder StringBuilder used to manipulate strings
-     * @throws IOException exceptions produced by failed or interrupted I/O operations
-     */
-    public void reWriteFile(StringBuilder builder) throws IOException {
-        FileWriter writer = new FileWriter(this.file);
-            writer.write(builder.toString());
-        writer.close();
-    }
-
-    /**
-     * toString method for object
-     * @return String with titles of movies in List movies
-     */
-    @Override
-    public String toString() {
-        String output = "";
-        for (Movie m : this.movies) {
-            output += m.getTitle() + "\n";
-        }
-        return output;
-    }
+    return output;
+  }
 }

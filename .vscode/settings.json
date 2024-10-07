@@ -12,5 +12,11 @@
             "vmArgs": ["--add-opens", "movielibrary.ui/movielibrary.ui=ALL-UNNAMED", "--add-exports", "javafx.graphics/com.sun.javafx.application=ALL-UNNAMED"]
         }
     ],
-    "java.test.defaultConfig": "fxuiTesting"
+    "java.test.defaultConfig": "fxuiTesting",
+
+    // Editor settings
+    "editor.tabSize": 2,
+		"editor.insertSpaces": true,
+        "editor.guides.indentation": true,
+        "editor.detectIndentation": false
 }
