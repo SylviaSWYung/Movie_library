@@ -75,16 +75,16 @@ public class FrontPageController {
      */
     @FXML
     public void handleMoreInfoButton() throws IOException {
-            String chosenMovie = MovieScrollBar.getValue();
+        String chosenMovie = MovieScrollBar.getValue();
+        if (chosenMovie != null && !chosenMovie.isEmpty()) {
             movie = movieDeserializer.findMovie(chosenMovie);
-            if (chosenMovie != null && !chosenMovie.isEmpty()) {
-                loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
-            } else {
-                Alert alert = new Alert(AlertType.ERROR, "Please chose a movie from the scrollbar menu");
-                alert.setTitle("Error");
-                alert.setHeaderText("No movie chosen");
-                alert.showAndWait();
-            }
+            loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
+        } else {
+            Alert alert = new Alert(AlertType.ERROR, "Please choose a movie from the scrollbar menu");
+            alert.setTitle("Error");
+            alert.setHeaderText("No movie chosen");
+            alert.showAndWait();
+        }
     }
 
     /**
