@@ -1,0 +1,27 @@
+@startuml packageDiagram.puml
+
+component core {
+  package movielibrary.core
+  package movielibrary.json
+}
+
+component fxui {
+  package movielibrary.ui
+}
+
+component javafx {
+  component fxml {
+  }
+}
+
+component jackson {
+}
+
+fxui ...> javafx
+movielibrary.ui ...> movielibrary.core
+movielibrary.ui ...> movielibrary.json
+movielibrary.core ...> movielibrary.json
+movielibrary.json ...> jackson
+
+
+@enduml
