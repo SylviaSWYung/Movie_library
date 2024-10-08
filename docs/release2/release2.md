@@ -25,13 +25,13 @@ However, there are still some features from Release 1 that have not yet been imp
 
 
 ## Code quality
-<!-- Ps: legg med brukerdataeksempelet også i denne mappen hvor dere har en fil typ «userData.json» --> -->
+<!-- Ps: legg med brukerdataeksempelet også i denne mappen hvor dere har en fil typ «userData.json» --> 
 
 We used JaCoCo, SpotBugs and Checkstyle for code quality check, as metioned above in [Milestones reached](#milestones-reached). 
 
-The JaCoCo output file shows a 98% coverage of instructions and 93% coverage of branches, in core module. Core is divided into a file handling classes and a movie class. The file handling classes have 96% coverage of instructions, and 83% coverage of branches. Movie class has 100% coverage both in instructions and branches. 
+The JaCoCo output file shows a 98% coverage of instructions and 93% coverage of branches, in core module. Core is divided into a file handling classes and a movie class. The file handling classes have 96% coverage of instructions, and 83% coverage of branches. `Movie` class has 100% coverage both in instructions and branches. 
 
-<!-- The FXUI module has ___% coverage of instructions and ___% coverage of branches. -->
+The FXUI module has 96% coverage of instructions and 91% coverage of branches. The `FrontPageController` has 95% coverage of instructions, and 83% coverage of branches. While `MoviePageController` has 100% coverage of both instructions and branches. The `App` has 79% coverage of instructions. The reason why `App`coverage is not > 80%, is because it require us to test the main method. But we will test the start method that loads the page, this is to avoid the JavaFX thread issue when running the main method. This is because the main method doesn't handle any direct initialization logic.
 
 As metioned in [Milestones reached](#milestones-reached), Checkstyle were used for proper formating, while SpotBugs were used to avoid bad code practices. 
 
@@ -41,6 +41,3 @@ Following release 1, we adopted pair programming to facilitate knowledge sharing
 Since Release 1, we have consistently utilized GitLab features such as Milestones, Labels, assigned code reviewers, and releases. This has enhanced collaboration within the group and maximized the benefits of GitLab's tools. 
 
 ## Relevant links 
-
-
-<!-- dokumentere valg knyttet til arbeidsvaner, arbeidsflyt og kodekvalitet (f.eks. tilnærming til testing, verktøy for sjekking av kodekvalitet og innstillinger for dem) -->
