@@ -18,6 +18,12 @@ The application is now launched, and the user can try the different functionalit
 ### To run the test: 
 1. Run `mvn clean test` from `gr2403/movielibrary`. 
 
+## Code quality
+We used JaCoCo, SpotBugs and Checkstyle for code quality check, as metioned in [Release2.md](/docs/release2/release2.md). 
+
+Before checking the code quality, you have to do the following steps in [Building and running the project](#building-and-running-the-project). 
+
+<!-- Write more her!! before release2 TODO -->
 
 ## Requirements
 * <b>Java 17:</b> This project is developed using Java 17. 
@@ -64,14 +70,48 @@ The docs folder contains documentation for releases, as well as images folder fo
             * movielibrary\ui
           * resources 
         * test
-      * target
+      * target 
 
-## Code quality 
+## Core module 
+The Core Module contains the java classes reponsible for managing the fundamental logic of the application, along with their respective test classes. Additionally, it includes a `module-info` file and a `pom.xml`. 
+
+### Packages 
+The core module is divided into two packages, core and json. 
+
+<b>Core</b>: <br>
+<b>Filepath</b>: [/movielibrary/core/src/main/java/movielibrary/core/](/movielibrary/core/src/main/java/movielibrary/core/) <br>
+
+Core consist of `Movie.java`. `Movie` class represents a movie with attributes such as title, length, description, and lending status. It includes methods for data validation, and retrieval of movie properties, ensuring that the input values meet specified criteria. The class encapsulates movie-related functionalities, making it a crucal component of the Movie Library application. 
+
+<b>JSON\internal</b>: <br>
+<b>Filepath</b>: [/movielibrary/core/src/main/java/movielibrary/json/internal/](/movielibrary/core/src/main/java/movielibrary/json/internal/) <br>
+
+JSON\internal consists of `MovieDeserializer.java`, `MovieManager.java` and `MovieSerializer.java`. These three classes work together to manage a movie library's data efficiently. The `MovieDeserializer` class is responsible for deserializing JSON data from a file into a list of `Movie` objects, enabling the searching of movies by title, retrieving the complete list of movies, and checking their lending status using the Jackson library for JSON deserialization. The `MovieManager` class interacts with the `MovieSerializer` to facilitate the lending and returning of movies, ensuring that their lending status is accurately updated in the JSON file. Meanwhile, the `MovieSerializer` class handles the serialization of `Movie` objects back into the JSON format, allowing updates to the lending status and writing the entire movie list back to the file, thus ensuring the integrity and accuracy of the movie data.
+
+### Test files
+
+<b>Core</b>:<br>
+<b>Filepath</b>: [/movielibrary/core/src/test/java/movielibrary/core/](/movielibrary/core/src/test/java/movielibrary/core/)<br>
+
+The `MovieTest` class is designed to verify the functionality of the Movie class within the `movielibrary.core` package. Utilizing the JUnit 5 framework, it includes several test methods that assess various aspects of the `Movie` class, such as the constructor, setter methods for the title, description, and movie length, as well as the functionality of the lending feature. JaCoCo reports the test coverage as 100%.
 
 
-<!-- ## Core module  -->
+<b>JSON</b>:<br>
+<b>Filepath</b>: [/movielibrary/core/src/test/java/movielibrary/json/](/movielibrary/core/src/test/java/movielibrary/json/) <br>
 
-<!-- ## FXUI module  -->
+
+
+
+## FXUI module 
+The FXUI Module contains the main java class that executes the application (`App.java`), all associated FXML files that define the user interface, their corresponding controller classes, UI test files, and test versions of each FXML window. Similar to the Core Module, it also includes a `module-info` file and a `pom.xml` file.  
+
+### FXML files
+
+### Controllers
+
+### Test files
+
+
 
 <!-- Spring Boot module here  -->
 
