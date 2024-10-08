@@ -34,42 +34,42 @@ public class MoviePageController {
    * {@code MovieTitle} is a textfield that gives the chosen movie title.
    */
   @FXML
-  private TextField MovieTitle;
+  private TextField movieTitleInPage;
   
   /**
    * FXML UI components on the MoviePage.
    * {@code Summary} is a textarena that gives the chosen movie summary and description.
    */
   @FXML
-  private TextArea Summary;
+  private TextArea summary;
   
   /**
    * FXML UI components on the MoviePage.
    * {@code MovieDuration} is a textfield that gives the chosen movie duration.
    */
   @FXML
-  private TextField MovieDuration;
+  private TextField movieDuration;
   
   /**
    * FXML UI components on the MoviePage.
    * {@code Lendbtn} is a button used for lending the chosen movie.
    */
   @FXML
-  private Button Lendbtn;
+  private Button lendbtn;
   
   /**
    * FXML UI components on the MoviePage.
    * {@code Returnbtn} is a button used for returning the movie.  
    */
   @FXML
-  private Button Returnbtn;
+  private Button returnbtn;
   
   /**
    * FXML UI components on the MoviePage.
    * {@code Cancelbtn} is a button that returns the user back to {@code FrontPage.fxml}.
    */
   @FXML
-  private Button Cancelbtn;
+  private Button cancelbtn;
 
   /**
    * Declare movieDeserializer variable of type {@link MovieDeserializer}, 
@@ -93,9 +93,9 @@ public class MoviePageController {
    * @param movieLength A double with the length of the chosen movie
    */
   public void setMovieDetails(String movieTitle, String description, double movieLength) {
-    MovieTitle.setText(movieTitle);
-    Summary.setText(description);
-    MovieDuration.setText(String.valueOf(movieLength));
+    movieTitleInPage.setText(movieTitle);
+    summary.setText(description);
+    movieDuration.setText(String.valueOf(movieLength));
   }
 
   /**
@@ -123,7 +123,7 @@ public class MoviePageController {
    */
   @FXML
   public void handleLendbtn(ActionEvent event) throws IOException {
-    movie = movieDeserializer.findMovie(MovieTitle.getText().strip());
+    movie = movieDeserializer.findMovie(movieTitleInPage.getText().strip());
     if (movieDeserializer.checkIfLent(movie.getTitle())) {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Failed!");
@@ -148,7 +148,7 @@ public class MoviePageController {
    */
   @FXML
   public void handleReturnbtn(ActionEvent event) throws IOException {
-    movie = movieDeserializer.findMovie(MovieTitle.getText().strip());
+    movie = movieDeserializer.findMovie(movieTitleInPage.getText().strip());
     if (!movieDeserializer.checkIfLent(movie.getTitle())) {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setTitle("Failed!");
@@ -192,7 +192,7 @@ public class MoviePageController {
       Parent root = loader.load();
 
       // get current stage and set the new scene (frontpage).
-      Stage stage = (Stage) Cancelbtn.getScene().getWindow();
+      Stage stage = (Stage) cancelbtn.getScene().getWindow();
       Scene scene = new Scene(root);
       stage.setScene(scene);
       stage.show();
