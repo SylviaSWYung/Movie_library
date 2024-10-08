@@ -29,14 +29,14 @@ public class FrontPageController {
    * {@code MoreInfobtn} is a button that redirects the user to the {@code MoviePage.fxml} page
    */
   @FXML
-  private Button MoreInfobtn;
+  private Button moreInfobtn;
 
   /**
    * {@code MovieScrollBar} is a {@code ChoiceBox} that contains 
    * all the movie titles from the {@code Movies.json} file.
    */
   @FXML
-  private ChoiceBox<String> MovieScrollBar;
+  private ChoiceBox<String> movieScrollBar;
 
   /**
    * Declare movieDeserializer variable of type {@link MovieDeserializer} 
@@ -64,7 +64,7 @@ public class FrontPageController {
         movieTitles.add(mov.getTitle());
       }
       // adds the movieTitles in the ChoiceBox
-      MovieScrollBar.getItems().addAll(movieTitles);
+      movieScrollBar.getItems().addAll(movieTitles);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -81,7 +81,7 @@ public class FrontPageController {
     */
   @FXML
   public void handleMoreInfoButton() throws IOException {
-    String chosenMovie = MovieScrollBar.getValue();
+    String chosenMovie = movieScrollBar.getValue();
     if (chosenMovie != null && !chosenMovie.isEmpty()) {
       movie = movieDeserializer.findMovie(chosenMovie);
       loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
@@ -110,7 +110,7 @@ public class FrontPageController {
 
       moviePageController.setMovieDetails(movieTitle, description, movieLength);
 
-      Stage stage = (Stage) MoreInfobtn.getScene().getWindow();
+      Stage stage = (Stage) moreInfobtn.getScene().getWindow();
       Scene scene = new Scene(parent);
       stage.setScene(scene);
       stage.show();

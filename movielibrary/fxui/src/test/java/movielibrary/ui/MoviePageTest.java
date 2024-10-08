@@ -60,13 +60,13 @@ public class MoviePageTest extends ApplicationTest {
     moviePageController.setMovieDetails("The Trollgirl", "When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.", 100);
     WaitForAsyncUtils.waitForFxEvents();
 
-    TextField movieTitleField = lookup("#MovieTitle").queryAs(TextField.class);
+    TextField movieTitleField = lookup("#movieTitleInPage").queryAs(TextField.class);
     assertThat(movieTitleField).hasText("The Trollgirl");
 
-    TextArea summaryField = lookup("#Summary").queryAs(TextArea.class);
+    TextArea summaryField = lookup("#summary").queryAs(TextArea.class);
     assertThat(summaryField).hasText("When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.");
 
-    TextField movieDurationField = lookup("#MovieDuration").queryAs(TextField.class);
+    TextField movieDurationField = lookup("#movieDuration").queryAs(TextField.class);
     assertThat(movieDurationField).hasText("100.0");
   }
 
@@ -133,8 +133,8 @@ public class MoviePageTest extends ApplicationTest {
     clickOn(LabeledMatchers.hasText("Cancel"));
     WaitForAsyncUtils.waitForFxEvents();
     
-    verifyThat("#MovieScrollBar", NodeMatchers.isVisible());
-    verifyThat("#MoreInfobtn", NodeMatchers.isVisible());
+    verifyThat("#movieScrollBar", NodeMatchers.isVisible());
+    verifyThat("#moreInfobtn", NodeMatchers.isVisible());
   }
 
   // test the IO exception that occurs when failing to return to the front page
