@@ -93,33 +93,42 @@ JSON\internal consists of `MovieDeserializer.java`, `MovieManager.java` and `Mov
 <b>Core</b>:<br>
 <b>Filepath</b>: [/movielibrary/core/src/test/java/movielibrary/core/](/movielibrary/core/src/test/java/movielibrary/core/)<br>
 
-The `MovieTest` class is designed to verify the functionality of the Movie class within the `movielibrary.core` package. Utilizing the JUnit 5 framework, it includes several test methods that assess various aspects of the `Movie` class, such as the constructor, setter methods for the title, description, and movie length, as well as the functionality of the lending feature. JaCoCo reports the test coverage as 100%.
+The `MovieTest` class is designed to verify the functionality of the Movie class within the `movielibrary.core` package. Utilizing the JUnit 5 framework, it includes several test methods that assess various aspects of the `Movie` class, such as the constructor, setter methods for the title, description, and movie length, as well as the functionality of the lending feature. JaCoCo reports the test coverage of instructions as 100%.
 
 
 <b>JSON</b>:<br>
 <b>Filepath</b>: [/movielibrary/core/src/test/java/movielibrary/json/](/movielibrary/core/src/test/java/movielibrary/json/) <br>
 
-
+The `MovieDeserializerTest`, `MovieManagerTest`, and `MovieSerializerTest` classes collectively ensure the robustness of the movie management functionality within the application. Together, these test classes play a critical role in maintaining the integrity and reliability of the movie management system by ensuring that essential functionalities are thoroughly tested and validated. JaCoCo reports the test coverage of instruction as 96%.
 
 
 ## FXUI module 
 The FXUI Module contains the main java class that executes the application (`App.java`), all associated FXML files that define the user interface, their corresponding controller classes, UI test files, and test versions of each FXML window. Similar to the Core Module, it also includes a `module-info` file and a `pom.xml` file.  
 
 ### FXML files
+<b>Filepath</b>: [/movielibrary/fxui/src/main/resources/movielibrary/ui/](/movielibrary/fxui/src/main/resources/movielibrary/ui/)<br>
+
+The FXML files define the structure and layout of the Movie Library application's user interface, controlling the visual elements such as buttons, text fields, and navigation between pages. 
+
 
 ### Controllers
+<b>Filepath</b>: [/movielibrary/fxui/src/main/java/movielibrary/ui/](/movielibrary/fxui/src/main/java/movielibrary/ui/)<br>
+
+The controllers handle the interaction between the user and the UI, responding to input actions and updating the interface based on the data or logic within the Movie Library app. `App.java` is also located in this folder. 
+
 
 ### Test files
+<b>Filepath</b>: [/movielibrary/fxui/src/test/java/movielibrary/ui/](/movielibrary/fxui/src/test/java/movielibrary/ui/)<br>
 
-
+The test file ensure that the UI elements and controllers function correctly, verifying that interaction and data updates occur as expected within the Movie Library application. The JaCoCo reports a 96% test coverage of instructions. 
 
 <!-- Spring Boot module here  -->
 
 
 ## Links to documentation 
-[Release 1 documentation](/docs/release1/release1.md)
-[Release 2 documentation](/docs/release2/release2.md)
-[User stories](/movielibrary/src/main/java/readme.md)
-[AI tools](/docs/release1/ai-tools.md)
+- [Release 1 documentation](/docs/release1/release1.md) <br>
+- [Release 2 documentation](/docs/release2/release2.md) <br>
+- [User stories](/movielibrary/src/main/java/readme.md) <br>
+- [AI tools](/docs/release1/ai-tools.md) <br>
 
 
