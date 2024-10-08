@@ -110,7 +110,7 @@
                     <executions>
                         <execution>
                         <id>checkstyle-check</id>
-                        <phase>verify</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>
@@ -131,7 +131,7 @@
                     <executions>
                         <execution>
                         <id>spotbugs-check</id>
-                        <phase>verify</phase>
+                        <phase>test</phase>
                         <goals>
                             <goal>check</goal>
                         </goals>

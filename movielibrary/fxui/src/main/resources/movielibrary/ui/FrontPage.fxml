@@ -13,8 +13,8 @@
             <Font size="24.0" />
          </font>
       </Text>
-      <Button fx:id="MoreInfobtn" layoutX="224.0" layoutY="334.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: #ff659d;" text="More info" textFill="#000000c4" onAction="#handleMoreInfoButton"/>
-      <ChoiceBox fx:id="MovieScrollBar" layoutX="159.0" layoutY="116.0" prefHeight="35.0" prefWidth="284.0" />
+      <Button fx:id="moreInfobtn" layoutX="224.0" layoutY="334.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="153.0" style="-fx-background-color: #ff659d;" text="More info" textFill="#000000c4" onAction="#handleMoreInfoButton"/>
+      <ChoiceBox fx:id="movieScrollBar" layoutX="159.0" layoutY="116.0" prefHeight="35.0" prefWidth="284.0" />
       <Text layoutX="193.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose a movie and read more about it." />
    </children>
 </Pane>

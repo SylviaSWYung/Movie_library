@@ -10,70 +10,71 @@ import java.io.IOException;
  */
 public class MovieManager {
     
-    private File file;
-    private MovieSerializer movieSerializer;
+  private File file;
+  private MovieSerializer movieSerializer;
 
-    /**
-     * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
-     * Initializes the serializer for handling the movie data. 
-     * 
-     * @throws IOException if an I/O error occurs while reading the file 
-     */
-    public MovieManager() throws IOException {
-        this.file = new File("../core/src/main/resources/movielibrary/Movies.json");
-        movieSerializer = new MovieSerializer(this.file);
+  /**
+   * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
+   * Initializes the serializer for handling the movie data. 
+   *
+   * @throws IOException if an I/O error occurs while reading the file 
+   */
+  public MovieManager() throws IOException {
+    this.file = new File("../core/src/main/resources/movielibrary/Movies.json");
+    movieSerializer = new MovieSerializer(this.file);
+  }
+
+  /**
+   * Returns the file object representing the movie library data.
+   *
+   * @return a {@code File} object pointing to the movie library JSON file
+   */
+  public File getFile() {
+    return this.file;
+  }
+
+  /**
+   * Sets the file for the movie library data.
+   * The file cannot be empty and has to be of type {@code File}
+   *
+   * @param file a {@code File} object representing the new movie library data file
+   * @throws IOException if an I/O error occurs while reading the file 
+   */
+  public void setFile(File file) throws IOException {
+    this.file = file;
+    movieSerializer = new MovieSerializer(file);
+  }
+
+  /**
+   * Lending a movie with the specified title by setting its lending status to be true. 
+   * If the movie is already lent, an {@link IllegalStateException} is thrown.
+   *
+   * @param title the title of the movie to be lend
+   * @throws IOException if an I/O error occurs while accessing the file
+   * @throws IllegalStateException if the movie is already lent
+   */
+  public void lend(String title) throws IOException {
+    if (this.movieSerializer.getLentStatus(title)) {
+      throw new IllegalStateException("The movie is already lend.");
     }
 
-    /**
-     * Returns the file object representing the movie library data
-     * 
-     * @return a {@code File} object pointing to the movie library JSON file
-     */
-    public File getFile() {
-        return this.file;
+    this.movieSerializer.serialize(title, true);
+  }
+
+  /**
+   * Returns a movie with the specified title by setting its lending status to false. 
+   * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
+   *
+   * @param title the title of the movie to be returned
+   * @throws IOException if an I/O error occurs while accessing the file 
+   * @throws IllegalStateException if the movie is not currently lent
+   */
+  public void returnBack(String title) throws IOException {
+    if (!this.movieSerializer.getLentStatus(title)) {
+      throw new IllegalStateException("The movie is not lend.");
     }
 
-    /**
-     * Sets the file for the movie library data.
-     * The file cannot be empty and has to be of type {@code File}
-     * 
-     * @param file a {@code File} object representing the new movie library data file
-     */
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    /**
-     * Lending a movie with the specified title by setting its lending status to be true. 
-     * If the movie is already lent, an {@link IllegalStateException} is thrown.
-     * 
-     * @param title the title of the movie to be lend
-     * @throws IOException if an I/O error occurs while accessing the file
-     * @throws IllegalStateException if the movie is already lent
-     */
-    public void lend(String title) throws IOException {
-
-        if (this.movieSerializer.getLentStatus(title)) {
-            throw new IllegalStateException("The movie is already lend.");
-        }
-
-        this.movieSerializer.serialize(title, true);
-    }
-
-    /**
-     * Returns a movie with the specified title by setting its lending status to false. 
-     * If the movie is not currently lent, an {@link IllegalStateException} is thrown.
-     * 
-     * @param title the title of the movie to be returned
-     * @throws IOException if an I/O error occurs while accessing the file 
-     * @throws IllegalStateException if the movie is not currently lent
-     */
-    public void returnBack(String title) throws IOException {
-        if (!this.movieSerializer.getLentStatus(title)) {
-            throw new IllegalStateException("The movie is not lend.");
-        }
-
-        this.movieSerializer.serialize(title, false);
-    }
+    this.movieSerializer.serialize(title, false);
+  }
 
 }
