@@ -77,16 +77,16 @@ public class FrontPageController {
    * If the user has chosen a movie and clicks the {@code MoreInfobtn}, 
    * the {@code FrontPage.fxml} will load to {@code MoviePage.fxml}
    *
-   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
-   */
+    * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+    */
   @FXML
   public void handleMoreInfoButton() throws IOException {
     String chosenMovie = MovieScrollBar.getValue();
-    movie = movieDeserializer.findMovie(chosenMovie);
     if (chosenMovie != null && !chosenMovie.isEmpty()) {
+      movie = movieDeserializer.findMovie(chosenMovie);
       loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
     } else {
-      Alert alert = new Alert(AlertType.ERROR, "Please chose a movie from the scrollbar menu");
+      Alert alert = new Alert(AlertType.ERROR, "Please choose a movie from the scrollbar menu");
       alert.setTitle("Error");
       alert.setHeaderText("No movie chosen");
       alert.showAndWait();
