@@ -36,7 +36,7 @@ The JaCoCo output file shows a 98% coverage of instructions and 93% coverage of 
 As metioned in [Milestones reached](#milestones-reached), Checkstyle were used for proper formating, while SpotBugs were used to avoid bad code practices. 
 
 ## Experiences
-Following release 1, we adopted pair programming to facilitate knowledge sharing and perform peer reviews to ensure code quality. Initally, we followed conventional commit practies, maintaining consistency with commit types, but used different emojis. After receiving feedback from our Teaching Assistent (TA), we standardized the use of emojis by assigning one specific emoji to each commit type.  
+Following release 1, we adopted pair programming to facilitate knowledge sharing and perform peer reviews to ensure code quality. Initally, we followed conventional commit practices, maintaining consistency with commit types, but used different emojis. After receiving feedback from our Teaching Assistent (TA), we standardized the use of emojis by assigning one specific emoji to each commit type.  
 
 Since Release 1, we have consistently utilized GitLab features such as Milestones, Labels, assigned code reviewers, and releases. This has enhanced collaboration within the group and maximized the benefits of GitLab's tools. 
 
