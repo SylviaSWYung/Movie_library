@@ -32,7 +32,13 @@ public class MovieDeserializer {
   public MovieDeserializer(File file) throws IOException {
     movieLibrary = new ObjectMapper();
     this.file = file;
-    moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
+
+    try {
+      moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
+    } catch (IOException e) {
+      System.err.println("An error occured during reading movie data: " + e.getMessage());
+    }
+    
   }
 
   /**

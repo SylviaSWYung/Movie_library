@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,12 +23,15 @@ import movielibrary.json.internal.MovieDeserializer;
 public class MovieDeserializerTest {
     
   MovieDeserializer movieDeserializer;
-  File testFile;
+  File temporaryFile;
 
   @BeforeEach
   public void setUp() throws IOException{
-    testFile = new File("src/main/resources/movielibrary/MoviesTest.json");
-    movieDeserializer = new MovieDeserializer(testFile);
+    File sourceOfFile = new File("../core/src/main/resources/movielibrary/Movies.json");
+    temporaryFile = new File("../core/src/main/resources/movielibrary/tempmovies.json");
+    Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+    movieDeserializer = new MovieDeserializer(temporaryFile);
   }
 
   @Test

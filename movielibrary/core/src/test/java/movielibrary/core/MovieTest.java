@@ -13,7 +13,7 @@ public class MovieTest {
   //Default setup for each test
   @BeforeEach
   public void setup() {
-    movie = new Movie("Cinderella", 110, "A girl with evil step sisters.");
+    movie = Movie.createMovie("Cinderella", 110, "A girl with evil step sisters.");
   }
   
   //Testing the construction of Movie class
@@ -25,30 +25,30 @@ public class MovieTest {
     Assertions.assertEquals("A girl with evil step sisters.", movie.getDescription());
     Assertions.assertFalse(movie.getIsLent());
 
-    movie = new Movie("Ompalompa", 20, "omp");
+    movie = Movie.createMovie("Ompalompa", 20, "omp");
     Assertions.assertEquals("Ompalompa", movie.getTitle());
     Assertions.assertEquals(20, movie.getMovieLength());
     Assertions.assertEquals("omp", movie.getDescription());
     Assertions.assertFalse(movie.getIsLent());
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = new Movie("", 20, "Nothing");
+        movie = Movie.createMovie("", 20, "Nothing");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = new Movie("Hello", 20, "");
+        movie = Movie.createMovie("Hello", 20, "");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = new Movie("No time movie?", 0, "Nothing");
+        movie = Movie.createMovie("No time movie?", 0, "Nothing");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = new Movie("Too long movie", 150, "Nothing");
+        movie = Movie.createMovie("Too long movie", 150, "Nothing");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = new Movie("Too long description", 20, "Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.");
+        movie = Movie.createMovie("Too long description", 20, "Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.");
     });
   }
 
