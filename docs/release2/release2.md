@@ -22,6 +22,15 @@ Our user stories were initially outlined in [release1.md](/docs/release1/release
 However, there are still some features from Release 1 that have not yet been implemented. These features are postponed because the primary focus of Release 2 was on improving code quality. More details can be found in the [Experiences](#experiences) section.  
 
 ## PlantUML
+Figur 1, shows a diagram that outlines the package architecture of the Movie Library project, highlightning the relationship between its main components. It consists of three primary components: core, fxui, and javafx. Core Module contains two packages: `movielibrary.core` for core functionalities, and `movielibrary.json` for handling JSON data. FXUI Mode represents the user interface package, `movielibrary.ui`, which interacts with both the core functionalities and JSON handling packages. The relationship illustrate how the user interface (fxui) depends on JavaFX, while `movielibrary.ui` interacts with both the core and JSON packages. The core package also relies on the JSON package for data handling, which, in turn, depends on the Jackson library for JSON processing. This modular design enhances the maintainability and scalability of the application. <br>
+
+![packageDiagram.puml](https://www.plantuml.com/plantuml/png/ZOzB3eCm34JtFaLEa2DKB7eHDmqe4CTHFeWASVSgeKWKXDhjpFECfua9GyfaXKSrOAVl1hk097qc2w2OF3ljab0Sj9X1R9mW7essvX4ml6Hnhxm-ieDbdzLEsLndPVDDzpXYErL-7q6sIiiHLaDa9-OYrnufvUsJ0OUUrJiF-OtLJQV3ly2YR4_LNm6WqUwPoRu1 "packageDiagram.puml")<br>
+<b>Figur 1</b>: Package Diagram for Project Movie Library. <br>
+
+Figur 2, illustrates a class diagram with its key classes and their relationships with the Movie Library project. This class diagram for the Movie Library project shows the relationships between key classes: `Movie`, `MovieSerializer`, `MovieDeserializer`, and `MovieManager`. The `Movie` class represents individual movies, with attributes like title, length, description, and lent status, alongside methods for managing them. `MovieSerializer` and `MovieDeserializer` handle the serialization and deserialization of movie data using `ObjectMapper` and a file system. `MovieManager` oversees movie operations, such as lending and returning movies, relying on `MovieSerializer` for data management. The diagram emphasizes the interaction between these classes to efficiently manage and track movie information. <br>
+
+![classDiagram.puml](https://www.plantuml.com/plantuml/png/bPFTJiCm38NlynJMhWO29EuH0bIG9cq2gRn0rfhEB4shnDq4Y7T7JPicRGSID_knlnoV4xTtbgNXfbIGAMbjGh8mihogsueGhWQRwa08Nm8WPKEw02PM208WhvgjGYXRO8swu1q4AaUR6QgPAYq0jbMbK6eWkqRDWIgGNrkvvLdGAv0tGT9r0fq4MTVnmWNooccxwg6Y7ApNZdt7tNZAF4jCnbFd-MBIMHYd7TexgNE5tVb7OohZjKZNpHHBdA4Ey-P8Duns2WOZVPPJ3hz7wqpHa5JqYSOjzddxZXblP5sZwQ-0jaQQ3m7mH0hXZRgDkyC9sd2yd5N6Isal86N9ZJszXgCXndkbdB9zCSZy4Q-mbnqTlXW6Q3nsujE08qV_YhWcopTEuxRZx4e7DExwvpG0pdZtlZoHpjslMMplFTjXjb-zkGVcvDKOL9NiH1B9SZdDk95Q5dsy8O8ta4vM5Fvxka1klqVlYoiCMaD7eSv_yyYDqGyosozJZjhVGemyBguNSEa-9-x4V5qzUzwpOffd0Itm9t4D01tZ9yOJXBX3dJUb-W40 "classDiagram.puml")<br>
+<b>Figur 2</b>: Class diagram for Project Movie Library.
 
 
 ## Code quality
@@ -29,15 +38,17 @@ However, there are still some features from Release 1 that have not yet been imp
 
 We used JaCoCo, SpotBugs and Checkstyle for code quality check, as metioned above in [Milestones reached](#milestones-reached). 
 
-The JaCoCo output file shows a 98% coverage of instructions and 93% coverage of branches, in core module. Core is divided into a file handling classes and a movie class. The file handling classes have 96% coverage of instructions, and 83% coverage of branches. `Movie` class has 100% coverage both in instructions and branches. 
+The JaCoCo output file shows a 96% coverage of instructions and 93% coverage of branches, in core module. Core is divided into a file handling classes and a movie class. The file handling classes have 93% coverage of instructions, and 83% coverage of branches. `Movie` class has 100% coverage both in instructions and branches. 
 
-The FXUI module has 96% coverage of instructions and 91% coverage of branches. The `FrontPageController` has 95% coverage of instructions, and 83% coverage of branches. While `MoviePageController` has 100% coverage of both instructions and branches. The `App` has 79% coverage of instructions. The reason why `App`coverage is not > 80%, is because it require us to test the main method. But we will test the start method that loads the page, this is to avoid the JavaFX thread issue when running the main method. This is because the main method doesn't handle any direct initialization logic.
+The FXUI module has 96% coverage of instructions and 91% coverage of branches. The `FrontPageController` has 95% coverage of instructions, and 83% coverage of branches. While `MoviePageController` has 100% coverage of both instructions and branches. The `App` has 79% coverage of instructions. The reason the `App` does not exceed 80% coverage is due to the need to test the `main` method. However, we will focus on testing the `start` method, which loads the application page, to avoid issues with the JavaFX thread when executing the `main` method. The `main` method itself does not handle any direct initialization logic.
 
 As metioned in [Milestones reached](#milestones-reached), Checkstyle were used for proper formating, while SpotBugs were used to avoid bad code practices. 
 
 ## Experiences
-Following release 1, we adopted pair programming to facilitate knowledge sharing and perform peer reviews to ensure code quality. Initally, we followed conventional commit practices, maintaining consistency with commit types, but used different emojis. After receiving feedback from our Teaching Assistent (TA), we standardized the use of emojis by assigning one specific emoji to each commit type.  
+Following [Release 1](/docs/release1/release1.md), we adopted pair programming to facilitate knowledge sharing and perform peer reviews to ensure code quality. Initally, we followed conventional commit practices, maintaining consistency with commit types, but used different emojis. After receiving feedback from our Teaching Assistent (TA), we standardized the use of emojis by assigning one specific emoji to each commit type. Since Release 1, we have consistently utilized GitLab features such as Milestones, Labels, assigned code reviewers, and releases. This has enhanced collaboration within the group and maximized the benefits of GitLab's tools. 
 
-Since Release 1, we have consistently utilized GitLab features such as Milestones, Labels, assigned code reviewers, and releases. This has enhanced collaboration within the group and maximized the benefits of GitLab's tools. 
+In Release 1, we intended to implement certain functionalities; however, due to the emphasis on code quality in Release 2, we postponed some of these functions to Release 3.
 
 ## Relevant links 
+[classDiagram](/docs/release2/umlDiagrams/classDiagram.puml) <br>
+[packageDiagram](/docs/release2/umlDiagrams/packageDiagram.puml) <br>
