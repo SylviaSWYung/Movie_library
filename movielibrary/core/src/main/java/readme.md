@@ -1,7 +1,7 @@
 # Movielibrary 
 
 ## About the app
-Movie Library is an app designed to help librarians maintain an organized structure for managing movie lending. It functions as both a self-checkout and self-check-in system for users borrowing and returning movies. The app keeps track of which movies are currently lent out by referencing a `movie.csv` file, which indicates the availability of each movie for lending.
+Movie Library is an app designed to help librarians maintain an organized structure for managing movie lending. It functions as both a self-checkout and self-check-in system for users borrowing and returning movies. The app keeps track of which movies are currently lent out by referencing a `movies.json` file, which indicates the availability of each movie for lending.
 
 ## User Stories (US)
 
