@@ -55,7 +55,7 @@ public class MovieManager {
    */
   public void lend(String title) throws IOException {
     if (this.movieSerializer.getLentStatus(title)) {
-      throw new IllegalStateException("The movie is already lend.");
+      throw new IllegalStateException("The movie is already lent.");
     }
 
     this.movieSerializer.serialize(title, true);
@@ -71,7 +71,7 @@ public class MovieManager {
    */
   public void returnBack(String title) throws IOException {
     if (!this.movieSerializer.getLentStatus(title)) {
-      throw new IllegalStateException("The movie is not lend.");
+      throw new IllegalStateException("The movie is not lent.");
     }
 
     this.movieSerializer.serialize(title, false);
