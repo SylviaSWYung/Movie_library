@@ -27,50 +27,52 @@ Before checking the code quality, you have to do the following steps in [Buildin
 
 ## Requirements
 * <b>Java 17:</b> This project is developed using Java 17. 
-<!-- Må kanskje oppdateres etter å ha fikset warning -->
-* <b>Maven 3.8.1+:</b> The project is managed with Maven. 
+* <b>Maven 3.11.0:</b> The project is managed with Maven. 
 
 ## Dependencies
 * <b>JUnit 5.10.0</b>: Used during the testing phase of the project. It helps with unit testing, integration testing, and test framework setups. 
-* <b>JavaFX 17</b>: Used to provide libraries for building graphical user interfaces (GUIs) in JavaFX. They are required to compile and run the application. 
+* <b>JavaFX 22.0.2</b>: Used to provide libraries for building graphical user interfaces (GUIs) in JavaFX. They are required to compile and run the application. 
 * <b>TestFX 4.0.16-alpha</b>: Used for GUI testing and assertion support in application. 
-* <b>CheckStyle 3.5.0</b>: Used to ensure code style compliance by analyzing Java code for adherence to coding conventions. 
-* <b>SpotBugs 4.8.6.4</b>: Used for static code analysis to identify potential bugs in the codebase. 
-* <b>JaCoCo 0.8.12</b>: Used for measuring code coverage during testing, providing insights into which parts of the code are exercised by tests.
-* <b>Maven Surfire 3.1.2</b>: Used to run tests in the Maven build lifecycle, facilitating automated test execution. 
 * <b>Mockito 5.13.0</b>: Used for creating mock objects in unit tests, allowing for isolation of the code being tested. 
 * <b>Jackson core 2.17.2</b>: Used for processing JSON data, providing functionality to parse and generate JSON in the application. 
 * <b>Jackson Databind 2.17.2</b>: Used to convert between Java objects and JSON, simplifying data serialization and deserialization. 
-* <b>WireMock 2.27.2</b>: Used to simulate HTTP services for testing, enabling the application to interact with mock server responses. 
 * <b>Hamcrest 2.2</b>: Used for writing expressive and readable assertions in tests, enhancing the clarity of test conditions. 
 
+## Plugins
+* <b>Maven Compiler 3.11.0</b>: Used to compile Java source code into bytecode, the Maven Compiler Plugin manages the compilation process.
+* <b>Maven CheckStyle 3.5.0</b>: Used to ensure code style compliance by analyzing Java code for adherence to coding conventions. 
+* <b>Maven Surfire 3.1.2</b>: Used to run tests in the Maven build lifecycle, facilitating automated test execution.
+* <b>SpotBugs 4.8.6.4</b>: Used for static code analysis to identify potential bugs in the codebase. 
+* <b>JaCoCo 0.8.12</b>: Used for measuring code coverage during testing, providing insights into which parts of the code are exercised by tests. 
+* <b>WireMock 2.27.2</b>: Used to simulate HTTP services for testing, enabling the application to interact with mock server responses. 
 
 ## Directory Structure 
 The docs folder contains documentation for releases, as well as images folder for the different screenshot of the app. Movielibrary folder contains the project code, including core module, and fxui module. The core and fxui module, each contains classes, and tests for the corresponding classes. The fxui also contains fxml files. While in core folder it contains the JSON file and filehandling. Below is an illustration of the directory structure. This will likely be changed through the project phases. 
 
-* docs
-    * images
-    * release1
-    * release2
-* movielibrary 
-    * core
-        * src 
-            * main
-              * java
-                * movielibrary
-                  * core
-                  * json\internal
-              * resources\movielibrary
-            * test 
-        * target
-    * fxui
-      * src 
-        * main
-          * java
-            * movielibrary\ui
-          * resources 
-        * test
-      * target 
+* [docs](/docs/)
+    * [images](/docs/images/)
+    * [release1](/docs/release1/)
+    * [release2](/docs/release2/)
+      * [umlDiagrams](/docs/release2/umlDiagrams/)
+* [movielibrary](/movielibrary/)
+    * [core](/movielibrary/core/)
+      * [src](/movielibrary/core/src/)
+          * [main](/movielibrary/core/src/main/)
+            * [java](/movielibrary/core/src/main/java/)
+              * [movielibrary](/movielibrary/core/src/main/java/movielibrary/)
+                * [core](/movielibrary/core/src/main/java/movielibrary/core/)
+                * [json](/movielibrary/core/src/main/java/movielibrary/json/)
+              * [resources\movielibrary](/movielibrary/core/src/main/resources/movielibrary/)
+          * [test](/movielibrary/core/src/test/)
+        * [target](/movielibrary/core/target/)
+    * [fxui](/movielibrary/fxui/)
+      * [src](/movielibrary/fxui/src/)
+        * [main](/movielibrary/fxui/src/main/)
+          * [java](/movielibrary/fxui/src/main/java/)
+            * [movielibrary\ui](/movielibrary/fxui/src/main/java/movielibrary/ui/)
+          * [resources](/movielibrary/fxui/src/main/resources/)
+        * [test](/movielibrary/fxui/src/test/)
+      * [target](/movielibrary/fxui/target/)
 
 ## Core module 
 The Core Module contains the java classes reponsible for managing the fundamental logic of the application, along with their respective test classes. Additionally, it includes a `module-info` file and a `pom.xml`. 
@@ -83,10 +85,10 @@ The core module is divided into two packages, core and json.
 
 Core consist of `Movie.java`. `Movie` class represents a movie with attributes such as title, length, description, and lending status. It includes methods for data validation, and retrieval of movie properties, ensuring that the input values meet specified criteria. The class encapsulates movie-related functionalities, making it a crucal component of the Movie Library application. 
 
-<b>JSON\internal</b>: <br>
-<b>Filepath</b>: [/movielibrary/core/src/main/java/movielibrary/json/internal/](/movielibrary/core/src/main/java/movielibrary/json/internal/) <br>
+<b>JSON</b>: <br>
+<b>Filepath</b>: [/movielibrary/core/src/main/java/movielibrary/json/](/movielibrary/core/src/main/java/movielibrary/json/internal/) <br>
 
-JSON\internal consists of `MovieDeserializer.java`, `MovieManager.java` and `MovieSerializer.java`. These three classes work together to manage a movie library's data efficiently. The `MovieDeserializer` class is responsible for deserializing JSON data from a file into a list of `Movie` objects, enabling the searching of movies by title, retrieving the complete list of movies, and checking their lending status using the Jackson library for JSON deserialization. The `MovieManager` class interacts with the `MovieSerializer` to facilitate the lending and returning of movies, ensuring that their lending status is accurately updated in the JSON file. Meanwhile, the `MovieSerializer` class handles the serialization of `Movie` objects back into the JSON format, allowing updates to the lending status and writing the entire movie list back to the file, thus ensuring the integrity and accuracy of the movie data.
+JSON consists of `MovieDeserializer.java`, `MovieManager.java` and `MovieSerializer.java`. These three classes work together to manage a movie library's data efficiently. The `MovieDeserializer` class is responsible for deserializing JSON data from a file into a list of `Movie` objects, enabling the searching of movies by title, retrieving the complete list of movies, and checking their lending status using the Jackson library for JSON deserialization. The `MovieManager` class interacts with the `MovieSerializer` to facilitate the lending and returning of movies, ensuring that their lending status is accurately updated in the JSON file. Meanwhile, the `MovieSerializer` class handles the serialization of `Movie` objects back into the JSON format, allowing updates to the lending status and writing the entire movie list back to the file, thus ensuring the integrity and accuracy of the movie data.
 
 ### Test files
 
@@ -130,5 +132,7 @@ The test file ensure that the UI elements and controllers function correctly, ve
 - [Release 2 documentation](/docs/release2/release2.md) <br>
 - [User stories](/movielibrary/src/main/java/readme.md) <br>
 - [AI tools](/docs/release1/ai-tools.md) <br>
+- [classDiagram after Release 2](/docs/release2/umlDiagrams/classDiagram.puml) <br>
+- [packageDiagram after Release 2](/docs/release2/umlDiagrams/packageDiagram.puml)
 
 
