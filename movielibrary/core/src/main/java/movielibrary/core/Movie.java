@@ -20,8 +20,6 @@ public class Movie {
    *                    must be greater than 0 and less than or equal to 120. 
    * @param description a brief description of the movie, cannot be null or empty, 
    *                    and must not exceed 250 characters. 
-   * @throws IllegalArgumentException if any of the parameters are invalid 
-   *                                  (null, empty, or out of range)
    */
   public Movie(@JsonProperty("title") String title, @JsonProperty("movieLength") 
       double movieLength, @JsonProperty("description") String description) {
@@ -31,6 +29,17 @@ public class Movie {
     isLent = false; 
   }
 
+  /**
+   * Creates a Movie object after validating title, movieLength and description.
+   *
+   * @param title the title of the movie, cannot be null or empty.
+   * @param movieLength the length of the movie in minutes, 
+   *                    must be greater than 0 and less than or equal to 120. 
+   * @param description a brief description of the movie, cannot be null or empty, 
+   *                    and must not exceed 250 characters. 
+   * @throws IllegalArgumentException if any of the parameters are invalid 
+   *                                  (null, empty, or out of range)
+   */
   public static Movie createMovie(String title, double movieLength, String description) {
     handleStringError(title);
     handleDoubleError(movieLength); 
