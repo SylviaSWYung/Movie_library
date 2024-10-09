@@ -19,11 +19,15 @@ The application is now launched, and the user can try the different functionalit
 1. Run `mvn clean test` from `gr2403/movielibrary`. 
 
 ## Code quality
-We used JaCoCo, SpotBugs and Checkstyle for code quality check, as metioned in [Release2.md](/docs/release2/release2.md). 
+We utilized JaCoCo, SpotBugs and Checkstyle to ensure code quality, as metioned in [Release2.md](/docs/release2/release2.md). 
 
-Before checking the code quality, you have to do the following steps in [Building and running the project](#building-and-running-the-project). 
+Before verifying code quality, please run the project with `mvn install clean` from `gr2403/movielibrary`. Then you can proceed to quality check the project. 
 
-<!-- Write more her!! before release2 TODO -->
+To check the JaCoCo test coverage for the Java project, open the `index.html` file. Its location depends on the module of interest. For the Core module, the file can be found at [/movielibrary/core/target/site/jacoco/](/movielibrary/core/target/site/jacoco/index.html), and for the FXUI module, the file is located at [/movielibrary/fxui/target/site/jacoco/](/movielibrary/fxui/target/site/jacoco/index.html). 
+
+To identify bugs and bad practices in the Java project, run `mvn spotbugs:check` to analyze the SpotBugs report. It provides details for each module, including the size of BugInstance and the number of errors. 
+
+To verify adherence to Google's coding standards, run `mvn checkstyle:check`. This will report any Checkstyle violations detected in the project. 
 
 ## Requirements
 * <b>Java 17:</b> This project is developed using Java 17. 
