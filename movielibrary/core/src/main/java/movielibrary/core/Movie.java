@@ -25,14 +25,19 @@ public class Movie {
    */
   public Movie(@JsonProperty("title") String title, @JsonProperty("movieLength") 
       double movieLength, @JsonProperty("description") String description) {
-    handleStringError(title);
     this.title = title; 
-    handleDoubleError(movieLength);
-    this.movieLength = movieLength; 
-    handleStringError(description);
-    handleDescriptionLength(description);
+    this.movieLength = movieLength;
     this.description = description; 
     isLent = false; 
+  }
+
+  public static Movie createMovie(String title, double movieLength, String description) {
+    handleStringError(title);
+    handleDoubleError(movieLength); 
+    handleStringError(description);
+    handleDescriptionLength(description);
+
+    return new Movie(title, movieLength, description);
   }
   
   /**
@@ -125,7 +130,7 @@ public class Movie {
    * @param input the string to validate
    * @throws IllegalArgumentException if the string is null or empty
    */
-  private void handleStringError(String input) {
+  private static void handleStringError(String input) {
     if (input == null || input.isEmpty()) {
       throw new IllegalArgumentException("Your argument can't be empty or null");
     }
@@ -137,7 +142,7 @@ public class Movie {
    * @param minutes the movie length in minutes
    * @throws IllegalArgumentException if the length is less than or equal to 0 or greater than 12
    */
-  private void handleDoubleError(double minutes) {
+  private static void handleDoubleError(double minutes) {
     if (minutes <= 0) {
       throw new IllegalArgumentException("Movie length must be greater than 0 minutes.");
     }
@@ -153,7 +158,7 @@ public class Movie {
    * @param description the description to validate, which is a String
    * @throws IllegalArgumentException if the length of the description exceeds 50 characters
    */
-  private void handleDescriptionLength(String description) {
+  private static void handleDescriptionLength(String description) {
     int maxCharacter = 250;
     if (description.length() > maxCharacter) {
       throw new IllegalArgumentException("The description cant exceed 250 characters");
