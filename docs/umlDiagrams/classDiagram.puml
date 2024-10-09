@@ -46,10 +46,10 @@ class MovieManager {
   void returnBack(Sting title)
 }
 
-MovieManager -- MovieSerializer
-MovieDeserializer -- Movie
-MovieSerializer -- Movie
-MovieSerializer -- MovieDeserializer
+MovieManager "1" - "1" MovieSerializer
+MovieDeserializer "1" - "*" Movie
+MovieSerializer " 1" -- "*" Movie
+MovieSerializer "1   " -- "1" MovieDeserializer
 
 @enduml
 
