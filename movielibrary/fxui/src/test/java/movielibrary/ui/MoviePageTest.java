@@ -37,7 +37,7 @@ public class MoviePageTest extends ApplicationTest {
   // create an instance of the MovieSerializer class modify and check the lent status of the movie
   @BeforeEach
   public void setUp() throws IOException {
-    File movieFile = new File("../core/src/main/resources/movielibrary/Movies.json");
+    File movieFile = new File("../core/src/main/resources/movielibrary/movies.json");
     movieSerializer = new MovieSerializer(movieFile);
   }
 
