@@ -25,7 +25,7 @@ public class MovieSerializerTest {
   //Creates a temporary file (a copy of the original Movies.json) for the testing, and initializes the MovieSerializer object
   @BeforeEach
   public void setup() throws IOException {
-    File sourceOfFile = new File("../core/src/main/resources/movielibrary/Movies.json");
+    File sourceOfFile = new File("../core/src/main/resources/movielibrary/movies.json");
     temporaryFile = new File("../core/src/main/resources/movielibrary/tempmovies.json");
     Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
