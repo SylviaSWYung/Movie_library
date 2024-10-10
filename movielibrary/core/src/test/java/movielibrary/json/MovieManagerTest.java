@@ -50,6 +50,15 @@ public class MovieManagerTest {
     Assertions.assertEquals(temporaryFile, movieManager.getFile());
   }
 
+  //Test setFile method
+  @Test
+  @DisplayName("Test setFile")
+  public void testSetFile() throws IOException {
+    File testFile = new File("../core/src/main/resources/movielibrary/newMovies.json");
+    movieManager.setFile(testFile);
+    Assertions.assertEquals(testFile, movieManager.getFile());
+  }
+
   //Test lend method
   @Test
   @DisplayName("Lend movie")
@@ -71,4 +80,11 @@ public class MovieManagerTest {
     });
   }
 
+  //Test successful return of a lent movie
+  @Test
+  @DisplayName("Test successful return")
+  public void testSuccessfulReturn() throws IOException {
+    movieManager.lend("Day in the life of gr2403");
+    movieManager.returnBack("Day in the life of gr2403");
+  }
 }
