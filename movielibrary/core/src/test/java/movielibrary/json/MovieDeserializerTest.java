@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,11 @@ public class MovieDeserializerTest {
     Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
     movieDeserializer = new MovieDeserializer(temporaryFile);
+  }
+
+  @AfterEach
+  public void deleteTemporaryFile() {
+    temporaryFile.delete();
   }
 
   @Test
