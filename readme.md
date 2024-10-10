@@ -8,7 +8,7 @@ The Frontpage is designed to provide an overview of all available movies for len
 
 ## Building and running the project 
 The project is built and run using Maven. Follow these steps to start the application: 
-1. Open your terminal and run `mvn install clean` from `gr2403/movielibrary`. 
+1. Open your terminal and run `mvn clean` from `gr2403/movielibrary`, then `mvn install`. 
     - This would run all of the test and qualitychecks.  
 2. Ensure that you are on correct directory using `cd movielibrary/fxui`.
 3. Run `mvn javafx:run` to launch the application. 
@@ -21,7 +21,7 @@ The application is now launched, and the user can try the different functionalit
 ## Code quality
 We utilized JaCoCo, SpotBugs and Checkstyle to ensure code quality, as metioned in [Release2.md](/docs/release2/release2.md). 
 
-Before verifying code quality, please run the project with `mvn install clean` from `gr2403/movielibrary`. Then you can proceed to quality check the project. 
+Before verifying code quality, please run the project with `mvn clean` and then `mvn install`from `gr2403/movielibrary`. Then you can proceed to quality check the project. 
 
 To check the JaCoCo test coverage for the Java project, open the `index.html` file. Its location depends on the module of interest. For the Core module, the file can be found at [/movielibrary/core/target/site/jacoco/](/movielibrary/core/target/site/jacoco/index.html), and for the FXUI module, the file is located at [/movielibrary/fxui/target/site/jacoco/](/movielibrary/fxui/target/site/jacoco/index.html). 
 
@@ -105,7 +105,7 @@ The `MovieTest` class is designed to verify the functionality of the Movie class
 <b>JSON</b>:<br>
 <b>Filepath</b>: [/movielibrary/core/src/test/java/movielibrary/json/](/movielibrary/core/src/test/java/movielibrary/json/) <br>
 
-The `MovieDeserializerTest`, `MovieManagerTest`, and `MovieSerializerTest` classes collectively ensure the robustness of the movie management functionality within the application. Together, these test classes play a critical role in maintaining the integrity and reliability of the movie management system by ensuring that essential functionalities are thoroughly tested and validated. JaCoCo reports the test coverage of instruction as 96%.
+The `MovieDeserializerTest`, `MovieManagerTest`, and `MovieSerializerTest` classes collectively ensure the robustness of the movie management functionality within the application. Together, these test classes play a critical role in maintaining the integrity and reliability of the movie management system by ensuring that essential functionalities are thoroughly tested and validated. JaCoCo reports the test coverage of instruction as 100%.
 
 
 ## FXUI module 
