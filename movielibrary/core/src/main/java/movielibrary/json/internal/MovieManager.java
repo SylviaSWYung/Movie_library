@@ -3,6 +3,8 @@ package movielibrary.json.internal;
 import java.io.File;
 import java.io.IOException;
 
+import movielibrary.core.Movie;
+
 /**
  * The {@code MovieManager} class provides methods to manage the lending and returning of movies in 
  * a movie library. It interacts with the {@link MovieSerializer} class
@@ -75,6 +77,19 @@ public class MovieManager {
     }
 
     this.movieSerializer.serialize(title, false);
+  }
+
+  /**
+   * Creates and adds a new movie to movielibrary.
+   *
+   * @param title title of the new movie
+   * @param movieLength movielength of the new movie
+   * @param description description og the new movie
+   * @throws IOException if an I/O error occurs while accessing the file 
+   */
+  public void addMovie(String title, double movieLength, String description) throws IOException {
+    Movie movie = Movie.createMovie(title, movieLength, description);
+    movieSerializer.serialize(movie);
   }
 
 }

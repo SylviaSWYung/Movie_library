@@ -46,10 +46,16 @@ public class MovieSerializer {
                 .writeValue(this.file, movieDeserializer.getMoviesInLibrary());
   }
 
-  /* public void serialize(Movie movie) throws IOException {
-      moviesInLibrary.add(movie);
+  /**
+   * Adds new movie to movielibrary.
+   *
+   * @param movie new movie that is added to the movielibrary
+   * @throws IOException if an I/O error occurs while writing to the file. 
+   */
+  public void serialize(Movie movie) throws IOException {
+      movieDeserializer.getMoviesInLibrary().add(movie);
       writeAllMoviesPretty();
-  } */
+  }
 
   /**
    * Updates the lent status of the movie with the specified title in the library, 
