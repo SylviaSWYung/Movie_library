@@ -2,7 +2,6 @@ package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.IOException;
-
 import movielibrary.core.Movie;
 
 /**

@@ -53,8 +53,8 @@ public class MovieSerializer {
    * @throws IOException if an I/O error occurs while writing to the file. 
    */
   public void addMovieToLibrary(Movie movie) throws IOException {
-      movieDeserializer.getMoviesInLibrary().add(movie);
-      writeAllMoviesPretty();
+    movieDeserializer.getMoviesInLibrary().add(movie);
+    writeAllMoviesPretty();
   }
 
   /**
