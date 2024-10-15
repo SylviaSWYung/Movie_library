@@ -52,7 +52,7 @@ public class MovieSerializer {
    * @param movie new movie that is added to the movielibrary
    * @throws IOException if an I/O error occurs while writing to the file. 
    */
-  public void serialize(Movie movie) throws IOException {
+  public void addMovieToLibrary(Movie movie) throws IOException {
       movieDeserializer.getMoviesInLibrary().add(movie);
       writeAllMoviesPretty();
   }
@@ -65,7 +65,7 @@ public class MovieSerializer {
    * @param newStatus the new lent status to set for the movie
    * @throws IOException if an I/O error occurs while the writing to the file 
    */
-  public void serialize(String title, boolean newStatus) throws IOException {
+  public void changeLentStatus(String title, boolean newStatus) throws IOException {
     Movie movieToUpdate = this.movieDeserializer.findMovie(title);
     movieToUpdate.setLent(newStatus);
     writeAllMoviesPretty();

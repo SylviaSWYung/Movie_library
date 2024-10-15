@@ -156,7 +156,7 @@ public class MoviePageController {
       alert.showAndWait();
     } else {
       movieManager.returnBack(movie.getTitle());
-      movieSerializer.serialize(movie.getTitle(), false);
+      movieSerializer.changeLentStatus(movie.getTitle(), false);
       Alert alert = new Alert(AlertType.CONFIRMATION);
       alert.setTitle("Success!");
       alert.setContentText("Movie is returned!");
