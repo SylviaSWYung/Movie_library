@@ -43,7 +43,7 @@ public class MovieSerializerTest {
   @DisplayName("Test-serialize")
   public void testSerializer() throws IOException {
     Assertions.assertFalse(movieSerializer.getLentStatus("Loverboy"));
-    movieSerializer.serialize("Loverboy", true);
+    movieSerializer.changeLentStatus("Loverboy", true);
     Assertions.assertTrue(movieSerializer.getLentStatus("Loverboy"));
   }
 

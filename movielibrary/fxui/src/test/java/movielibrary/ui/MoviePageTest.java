@@ -74,7 +74,7 @@ public class MoviePageTest extends ApplicationTest {
   // should display an alert that the movie is lent and set the lending status to true
   @Test
   public void testLendMovie() throws IOException {
-    movieSerializer.serialize("The Trollgirl", false);
+    movieSerializer.changeLentStatus("The Trollgirl", false);
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be false");
     clickOn(LabeledMatchers.hasText("Lend"));
     WaitForAsyncUtils.waitForFxEvents();
@@ -88,7 +88,7 @@ public class MoviePageTest extends ApplicationTest {
   // should display an alert that the movie is returned and set the lending status to false
   @Test
   public void testReturnMovie() throws IOException {
-    movieSerializer.serialize("The Trollgirl", true);
+    movieSerializer.changeLentStatus("The Trollgirl", true);
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be true");
     clickOn(LabeledMatchers.hasText("Return"));
     WaitForAsyncUtils.waitForFxEvents();
@@ -102,7 +102,7 @@ public class MoviePageTest extends ApplicationTest {
   // should display an alert that the movie is already lent and keep the lending status as true
   @Test
   public void testLendAlreadyLentMovie() throws IOException {
-    movieSerializer.serialize("The Trollgirl", true);
+    movieSerializer.changeLentStatus("The Trollgirl", true);
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be true");
     clickOn(LabeledMatchers.hasText("Lend"));
     WaitForAsyncUtils.waitForFxEvents();
@@ -116,7 +116,7 @@ public class MoviePageTest extends ApplicationTest {
   // should display an alert that the movie is not lent and keep the lending status as false
   @Test
   public void testReturnNotLentMovie() throws IOException {
-    movieSerializer.serialize("The Trollgirl", false);
+    movieSerializer.changeLentStatus("The Trollgirl", false);
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be false");
     clickOn(LabeledMatchers.hasText("Return"));
     WaitForAsyncUtils.waitForFxEvents();

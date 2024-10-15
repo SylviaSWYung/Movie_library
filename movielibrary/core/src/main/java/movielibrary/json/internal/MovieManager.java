@@ -60,7 +60,7 @@ public class MovieManager {
       throw new IllegalStateException("The movie is already lent.");
     }
 
-    this.movieSerializer.serialize(title, true);
+    this.movieSerializer.changeLentStatus(title, true);
   }
 
   /**
@@ -76,7 +76,7 @@ public class MovieManager {
       throw new IllegalStateException("The movie is not lent.");
     }
 
-    this.movieSerializer.serialize(title, false);
+    this.movieSerializer.changeLentStatus(title, false);
   }
 
   /**
@@ -89,7 +89,7 @@ public class MovieManager {
    */
   public void addMovie(String title, double movieLength, String description) throws IOException {
     Movie movie = Movie.createMovie(title, movieLength, description);
-    movieSerializer.serialize(movie);
+    movieSerializer.addMovieToLibrary(movie);
   }
 
 }
