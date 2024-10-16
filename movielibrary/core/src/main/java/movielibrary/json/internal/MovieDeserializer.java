@@ -51,8 +51,7 @@ public class MovieDeserializer {
   public Movie findMovie(String title) throws IOException {
     Movie foundMovie = moviesInLibrary.stream()
                                     .filter(selectedMovie -> 
-                                    selectedMovie.getTitle().toLowerCase().trim()
-                                    .equals(title.toLowerCase().trim()))
+                                    selectedMovie.getTitle().trim().equals(title.trim()))
                                     .findFirst()
                                     .orElse(null);
     return foundMovie;
