@@ -58,6 +58,30 @@ public class MovieSerializer {
   }
 
   /**
+   * Deletes a movie element from the movielibrary.
+   *
+   * @param title title of the movie to be deleted
+   * @throws IOException if an I/O error occurs while writing to the file or reading file.
+   * @throws IllegalStateException if the movie is not present in movielibrary
+   * @throws IllegalStateException if there is only 1 movie left in the library
+   */
+  public void deleteMovieFromLibrary(String title) throws IOException {
+    Movie movieToDelete = movieDeserializer.findMovie(title);
+
+    if (movieToDelete == null) {
+      throw new IllegalStateException("The movie doesn't exist in the library. ");
+    }
+
+    if (movieDeserializer.getMoviesInLibrary().size() <= 1) {
+      throw new 
+            IllegalStateException("There has to be at least 1 movie left in the movielibrary. ");
+    }
+
+    movieDeserializer.getMoviesInLibrary().remove(movieToDelete);
+    writeAllMoviesPretty();
+  }
+
+  /**
    * Updates the lent status of the movie with the specified title in the library, 
    * then serializes the updated movie list back to the file in a formatted JSON structure. 
    *
