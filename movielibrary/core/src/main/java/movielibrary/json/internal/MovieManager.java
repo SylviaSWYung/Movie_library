@@ -87,6 +87,9 @@ public class MovieManager {
    * @throws IOException if an I/O error occurs while accessing the file 
    */
   public void addMovie(String title, double movieLength, String description) throws IOException {
+    if (movieSerializer.movieIsFound(title)) {
+      throw new IllegalStateException("The movie title already exists in the movielibrary!");
+    }
     Movie movie = Movie.createMovie(title, movieLength, description);
     movieSerializer.addMovieToLibrary(movie);
   }
