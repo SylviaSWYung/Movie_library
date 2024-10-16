@@ -106,4 +106,17 @@ public class MovieSerializer {
     return this.movieDeserializer.checkIfLent(title);
   }
 
+  /**
+   * Finds out if the movie title already exists.
+   * The title is not case sensitive and spaces in between characters are 
+   * not considered the same movie.
+   *
+   * @param title the title of the new movie
+   * @return a boolean if the movie already exists
+   * @throws IOException if an I/O error occurs while reading the file
+   */
+  public boolean movieIsFound(String title) throws IOException {
+    return movieDeserializer.findMovie(title.toLowerCase().strip()) != null;
+  }
+
 }
