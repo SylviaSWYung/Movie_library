@@ -91,4 +91,14 @@ public class MovieManager {
     movieSerializer.addMovieToLibrary(movie);
   }
 
+  /**
+   * Deletes a movie from the movie library. 
+   *
+   * @param title title of the movie to be deleted
+   * @throws IOException if an I/O error occurs while accessing the file 
+   */
+  public void deleteMovie(String title) throws IOException {
+    this.movieSerializer.deleteMovieFromLibrary(title);
+  }
+
 }
