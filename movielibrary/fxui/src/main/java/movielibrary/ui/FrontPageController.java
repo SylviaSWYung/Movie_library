@@ -31,6 +31,10 @@ public class FrontPageController {
   @FXML
   private Button moreInfobtn;
 
+
+  @FXML 
+  private Button addMoviebtn;
+
   /**
    * {@code MovieScrollBar} is a {@code ChoiceBox} that contains 
    * all the movie titles from the {@code Movies.json} file.
@@ -90,6 +94,26 @@ public class FrontPageController {
       alert.setTitle("Error");
       alert.setHeaderText("No movie chosen");
       alert.showAndWait();
+    }
+  }
+
+  /**
+   * Handles AddMoviebtn onAction. Loads AddMoviePage.fxml when the button is clicked.
+   *
+   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+   */
+  public void handleAddMovieButton() throws IOException {
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass()
+                          .getResource("/movielibrary/ui/AddMoviePage.fxml"));
+      Parent parent = loader.load();
+
+      Stage stage = (Stage) addMoviebtn.getScene().getWindow();
+      Scene scene = new Scene(parent);
+      stage.setScene(scene);
+      stage.show();
+    } catch (IOException e) {
+      e.printStackTrace();
     }
   }
 
