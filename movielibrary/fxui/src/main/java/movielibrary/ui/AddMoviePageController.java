@@ -93,7 +93,7 @@ public class AddMoviePageController {
     } else if (newMovieLength.getText().strip().isEmpty()) {
       error = "You must fill out the length of the new movie!";
     } else if (newMovieDescription.getText().strip().isEmpty()) {
-      error = "You must fill out the desciption of the new movie!";
+      error = "You must fill out the description of the new movie!";
     } 
     
     try {
