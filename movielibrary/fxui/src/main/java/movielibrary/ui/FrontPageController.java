@@ -98,13 +98,14 @@ public class FrontPageController {
   }
 
   /**
-   * Handles AddMoviebtn onAction.
-   * 
+   * Handles AddMoviebtn onAction. Loads AddMoviePage.fxml when the button is clicked.
+   *
    * @throws IOException Throws IOException if an I/O error occurs while accessing the file
    */
   public void handleAddMovieButton() throws IOException {
     try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/AddMoviePage.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass()
+                          .getResource("/movielibrary/ui/AddMoviePage.fxml"));
       Parent parent = loader.load();
 
       Stage stage = (Stage) addMoviebtn.getScene().getWindow();
