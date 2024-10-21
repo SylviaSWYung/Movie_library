@@ -60,7 +60,12 @@ public class FrontPageController {
   @FXML
   public void initialize() throws IOException {
     try {
-      File jsonFile = new File("../core/src/main/resources/movielibrary/movies.json");
+      //File jsonFile = new File("../core/src/main/resources/movielibrary/movies.json");
+      File jsonFile = new File(
+          System.getProperty("user.home") 
+          + System.getProperty("file.separator")
+          + "movies.json"
+      );
       movieDeserializer = new MovieDeserializer(jsonFile);
 
       List<String> movieTitles = new ArrayList<>();

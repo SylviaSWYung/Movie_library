@@ -106,7 +106,11 @@ public class MoviePageController {
    */
   @FXML
   public void initialize() throws IOException {
-    File jsonFile = new File("../core/src/main/resources/movielibrary/movies.json");
+    File jsonFile = new File(
+        System.getProperty("user.home") 
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
     movieDeserializer = new MovieDeserializer(jsonFile);
     movieSerializer = new MovieSerializer(jsonFile);
     movieManager = new MovieManager();
