@@ -2,6 +2,9 @@ package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import movielibrary.core.Movie;
 
 /**
@@ -21,8 +24,25 @@ public class MovieManager {
    * @throws IOException if an I/O error occurs while reading the file 
    */
   public MovieManager() throws IOException {
-    this.file = new File("../core/src/main/resources/movielibrary/movies.json");
-    movieSerializer = new MovieSerializer(this.file);
+    File file = new File(
+        System.getProperty("user.home") 
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
+    try {
+      initializeMovieFile(file);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+    movieSerializer = new MovieSerializer(file);
+  }
+
+  // Method to handle file initialization and exception handling
+  private void initializeMovieFile(File file) throws IOException, URISyntaxException {
+    if (!file.exists()) {
+      Path originalFile = Path.of(getClass().getResource("movies.json").toURI());
+      Files.copy(originalFile, file.toPath());
+    }
   }
 
   /**

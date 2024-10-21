@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.NoSuchElementException;
 import movielibrary.core.Movie;
@@ -32,13 +35,23 @@ public class MovieDeserializer {
   public MovieDeserializer(File file) throws IOException {
     movieLibrary = new ObjectMapper();
     this.file = file;
-
+    try {
+      initializeMovieFile(file);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
     try {
       moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
     } catch (IOException e) {
       System.err.println("An error occured during reading movie data: " + e.getMessage());
     }
-    
+  }
+ 
+  private void initializeMovieFile(File file) throws IOException, URISyntaxException {
+    if (!file.exists()) {
+      InputStream originalFile = getClass().getResourceAsStream("movies.json");
+      Files.copy(originalFile, file.toPath());
+    }
   }
 
   /**
