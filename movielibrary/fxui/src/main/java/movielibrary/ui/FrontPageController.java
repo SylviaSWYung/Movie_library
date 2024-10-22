@@ -31,7 +31,10 @@ public class FrontPageController {
   @FXML
   private Button moreInfobtn;
 
-
+  /**
+   * FXML UI components on the FrontPage.
+   * {@code addMoviebtn} is a button that redirects the user to the {@code AddMoviePage.fxml} page.
+   */
   @FXML 
   private Button addMoviebtn;
 
