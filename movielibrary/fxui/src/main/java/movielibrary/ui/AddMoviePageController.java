@@ -78,7 +78,6 @@ public class AddMoviePageController {
    * Gives an information alert when the movie is succsessfully added. 
    * Catches an IllegalStateException if the movie title already exists.
    * Catches an IllegalArgumentException if the movie length is set as invalid 
-   * and the description isnt between 20-250 characters.
    *
    * @param event The event that will trigger this handler, in this case a button click user action.
    * @throws IOException Throws IOException if an I/O error occurs while accessing the file

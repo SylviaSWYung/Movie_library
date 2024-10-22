@@ -165,7 +165,7 @@ public class Movie {
    * Throws an exception if the length exceeds the maximum allowed number of characters. 
    *
    * @param description the description to validate, which is a String
-   * @throws IllegalArgumentException if the length of the description exceeds 50 characters
+   * @throws IllegalArgumentException if the length of the description isn't between 20-250 characters
    */
   private static void handleDescriptionLength(String description) {
     int maxCharacter = 250;
