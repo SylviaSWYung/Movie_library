@@ -87,19 +87,13 @@ public class AddMoviePageController {
     Alert alert = new Alert(AlertType.ERROR);
     alert.setTitle("Failed!");
 
-    
-
     String error = null;
-    
     if (newMovieTitle.getText().strip().isEmpty()) {
       error = "You must fill out the title of the new move!";
     } else if (newMovieLength.getText().strip().isEmpty()) {
       error = "You must fill out the length of the new movie!";
     } else if (newMovieDescription.getText().strip().isEmpty()) {
       error = "You must fill out the description of the new movie!";
-    } else if (newMovieDescription.getText().strip().length() < 20 || 
-    newMovieDescription.getText().strip().length() > 250) {
-      error = "Your description must be between 20 and 250 characters.";
     } 
     
     try {
