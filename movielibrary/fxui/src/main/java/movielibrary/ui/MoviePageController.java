@@ -100,13 +100,22 @@ public class MoviePageController {
 
   /**
    * Initialize the {@code MoviePage.fxml}.
-   * Creates objects of movieDeserializer, movieSerializer and movieManager for datahandling.
+   * Creates instances of {@link MovieDeserializer}, {@code MovieSerializer}
+   * and {@link MovieManager} for handling movie data.
    *
-   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+   * <p>The movie data file is loacted in the user's home directory 
+   * under the name {@code movies.json}.
+   *
+   * @throws IOException if an I/O error occurs while accessing or processing
+   *                     the {@code movies.json} file
    */
   @FXML
   public void initialize() throws IOException {
-    File jsonFile = new File("../core/src/main/resources/movielibrary/movies.json");
+    File jsonFile = new File(
+        System.getProperty("user.home") 
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
     movieDeserializer = new MovieDeserializer(jsonFile);
     movieSerializer = new MovieSerializer(jsonFile);
     movieManager = new MovieManager();

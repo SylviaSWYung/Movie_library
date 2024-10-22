@@ -51,23 +51,28 @@ public class FrontPageController {
 
   /**
    * Initialize the FrontPage. Creates a {@link MovieDeserializer} object 
-   * to access the data from {@code Movies.json}.
-   * Adds all movietitles from the data in {@code Movies.json} to the List {@code movieTitles}.
-   * Adds the {@code MovieTitle} elements as items in the {@code MovieScrollBar}
+   * to access the data from {@code Movies.json} file stored in the 
+   * user's home directory
+   * Retrieves all movie titles from the data in {@code Movies.json}
+   * and adds them to the list {@code movieTitles}.
+   * The movie titles are then added as items in the {@code MovieScrollBar}
    *
-   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+   * @throws IOException if an I/O error occurs while accessing the {@code movies.json} file
    */
   @FXML
   public void initialize() throws IOException {
     try {
-      File jsonFile = new File("../core/src/main/resources/movielibrary/movies.json");
+      File jsonFile = new File(
+          System.getProperty("user.home") 
+          + System.getProperty("file.separator")
+          + "movies.json"
+      );
       movieDeserializer = new MovieDeserializer(jsonFile);
 
       List<String> movieTitles = new ArrayList<>();
       for (Movie mov : movieDeserializer.getMoviesInLibrary()) {
         movieTitles.add(mov.getTitle());
       }
-      // adds the movieTitles in the ChoiceBox
       movieScrollBar.getItems().addAll(movieTitles);
 
     } catch (Exception e) {
