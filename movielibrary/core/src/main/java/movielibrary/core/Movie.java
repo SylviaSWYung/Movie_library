@@ -169,8 +169,9 @@ public class Movie {
    */
   private static void handleDescriptionLength(String description) {
     int maxCharacter = 250;
-    if (description.length() > maxCharacter) {
-      throw new IllegalArgumentException("The description cant exceed 250 characters");
+    int minCharacter = 20;
+    if (description.length() > maxCharacter || description.length() < minCharacter) {
+      throw new IllegalArgumentException("The description must be between 20 and 250 characters");
     }
   }
 }
