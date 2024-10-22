@@ -1,27 +1,26 @@
 package movielibrary.springboot.restserver;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieManager;
 import movielibrary.json.internal.MovieDeserializer;
+import movielibrary.json.internal.MovieManager;
 import movielibrary.json.internal.MovieSerializer;
-
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
 /**
- * The {@code MovieLibraryController} class handles the HTTP requests between the server and the application
- * The HTTP in question are GET, POST, PUT and DELETE requests
- * The class uses the {@link MovieManager}, {@link MovieDeserializer} and {@link MovieSerializer} classes
- * to handle the movies in the library
+ * The {@code MovieLibraryController} class handles the HTTP requests between
+ * the server and the application.
+ * The HTTP in question are GET, POST, PUT and DELETE requests.
+ * The class uses the {@link MovieManager}, {@link MovieDeserializer}
+ * and {@link MovieSerializer} classes.
+ * to handle the movies in the library.
  */
 @RestController
 public class MovieLibraryController {
@@ -31,34 +30,55 @@ public class MovieLibraryController {
   private MovieSerializer movieSerializer;
 
   /**
-   * Constructor that creates {@link MovieManager}, {@link MovieDeserializer} and {@link MovieSerializer} objects
-   * for later handling of the movies in the HTTP requests
-   * @throws IOException Throws IOException if an I/O error occurs while accessing the inputsteam
+   * Constructor that creates {@link MovieManager}, {@link MovieDeserializer}
+   * and {@link MovieSerializer} objects
+   * for later handling of the movies in the HTTP requests.
+   * The constructor accesses the {@code movies.json} file in the user's home directory.
+   *
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    */
   public MovieLibraryController() throws IOException {
-    File jsonFile = new File("./movielibrary/core/src/main/resources/movielibrary/movies.json");
+    File jsonFile = new File(
+        System.getProperty("user.home")
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
     movieManager = new MovieManager();
-    movieDeserializer = new MovieDeserializer(jsonFile); // fix so that class has inputstream as input?
-    movieSerializer = new MovieSerializer(jsonFile); // fix so that class has inputstream as input?
+    movieDeserializer = new MovieDeserializer(jsonFile);
+    movieSerializer = new MovieSerializer(jsonFile);
   }
 
 
   /**
-   * Get request to get all movies in the {@link movies.json} file. Answers with a list of all {@link Movie} objects
+   * GET request to get all movies in the {@link movies.json} file.
+   * The try clause calls the {@code movieDeserializer.reloadMovieData()} method
+   * to make sure the library updated dataand answers with a list of all {@link Movie} objects.
+   *
    * @return Returns a list of all movies
-   * @throws BadRequestException Throws BadRequestException if the request fails and the 
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws BadRequestException Throws BadRequestException if
+   *          the request fails when the movies cannot be found.
    */
-  // get movies request
   @GetMapping("movielibrary/movies")
   public List<Movie> getMovies() throws IOException {
     try {
+      movieDeserializer.reloadMovieData();
       return movieDeserializer.getMoviesInLibrary();
     } catch (IllegalArgumentException e) {
       throw new BadRequestException("Could not get the movies in the library");
     }
   }
 
-  // find movie request
+  /**
+   * GET request to find a movie with given title in the {@link movies.json} file.
+   * Answers the http get request with a {@Movie} object if the movie isfound.
+   * If the movie is not found it throws a BookNotFoundException.
+   *
+   * @param title The title of the desired movie
+   * @return Returns a {@link Movie} object with the given title
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found
+   */
   @GetMapping("movielibrary/movies/movie/{title}")
   public Movie findMovie(@PathVariable String title) throws IOException {
     try {
@@ -68,29 +88,49 @@ public class MovieLibraryController {
     }
   }
 
-  // lend movie request
+  /**
+   * POST request to lend a movie with the given title.
+   * Will change the lent status of the movie to be true.
+   *
+   * @param title The title of the movie we want to lend
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
+   */
   @PostMapping("movielibrary/lendmovie/{title}")
-  public void lendMovie(@RequestBody Movie movie) throws IOException {
+  public void lendMovie(@PathVariable String title) throws IOException {
     try {
-      movieManager.lend(movie.getTitle());
-      movieSerializer.writeAllMoviesPretty();
+      movieManager.lend(title);
     } catch (IllegalArgumentException e) {
-      throw new MovieNotFoundException(movie.getTitle());
+      throw new MovieNotFoundException(title);
     }
   }
 
-  // return movie request
+  /**
+   * Handles a POST request to return a previously lent movie by its title.
+   * Will change the lent status of the movie to be false.
+   *
+   * @param title The title of the movie to be returned.
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
+   */
   @PostMapping("movielibrary/returnmovie/{title}")
-  public void returnMovie(@RequestBody Movie movie) throws IOException {
+  public void returnMovie(@PathVariable String title) throws IOException {
     try {
-      movieManager.returnBack(movie.getTitle());
-      movieSerializer.writeAllMoviesPretty();
+      movieManager.returnBack(title);
     } catch (IllegalArgumentException e) {
-      throw new MovieNotFoundException(movie.getTitle());
+      throw new MovieNotFoundException(title);
     }
   }
 
-  // get lent status request
+  /**
+   * Handles a GET request to check whether a movie is currently lent.
+   * Returns the lent status of the movie: true if it is lent and false if it is not.
+   *
+   * @param title The title of the movie.
+   * @return {@code true} if the movie is lent, {@code false} otherwise.
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
+   */
   @GetMapping("movielibrary/movies/lentstatus/{title}")
   public boolean getLentStatus(@PathVariable String title) throws IOException {
     try {
@@ -101,28 +141,48 @@ public class MovieLibraryController {
   }
 
 
-  // addmovie request
-  @PutMapping("movielibrary/movies/addmovie/{title}")
-  public void addMovie(@RequestBody Movie movie) throws IOException {
+  /**
+   * Handles a PUT request to add a new movie to the library.
+   * The movie gets added to the library with the {@code addMovie} method.
+   * If the movie cannot be added, a BadRequestException is thrown.
+   *
+   * @param title The title of the movie.
+   * @param movieLength The length of the movie in minutes.
+   * @param description A short description of the movie.
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws BadRequestException Throws BadRequestException if the movie cannot be added.
+   */
+  @PutMapping("movielibrary/movies/addmovie/{title}, {movieLength}, {description}")
+  public void addMovie(@PathVariable String title,
+                      @PathVariable double movieLength,
+                      @PathVariable String description) throws IOException {
     try {
-      movieSerializer.addMovieToLibrary(movie);
-    } catch (IllegalArgumentException e) {
-      throw new MovieNotFoundException(movie.getTitle());
+      movieManager.addMovie(title, movieLength, description);
+    } catch (IllegalStateException e) {
+      throw new BadRequestException(e.getMessage());
     } catch (Exception e) {
-      throw new BadRequestException("could not add movie with title: " + movie.getTitle());
+      throw new BadRequestException("Could not add movie");
     }
   }
-  
-  // deletemovie request
+
+  /**
+   * Handles a DELETE request to remove a movie from the library by its title.
+   * Deletes the movie with the {@code deleteMovie} method.
+   * If the movie cannot be deleted, a BadRequestException is thrown.
+   *
+   * @param title The title of the movie to be deleted.
+   * @throws IOException Throws IOException if an I/O error occurs while reading the file.
+   * @throws BadRequestException Throws BadRequestException if the movie cannot be deleted.
+   * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
+   */
   @DeleteMapping("movielibrary/movies/deletemovie/{title}")
   public void deleteMovie(@PathVariable String title) throws IOException {
     try {
       movieManager.deleteMovie(title);
-      movieSerializer.writeAllMoviesPretty();
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     } catch (Exception e) {
-      throw new BadRequestException("could not delete movie with title: " + title);
+      throw new BadRequestException("Could not delete movie with title: " + title);
     }
   }
 }
