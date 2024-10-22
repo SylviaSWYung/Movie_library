@@ -2,6 +2,9 @@ package movielibrary.json.internal;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import movielibrary.core.Movie;
 
 /**
@@ -15,14 +18,43 @@ public class MovieManager {
   private MovieSerializer movieSerializer;
 
   /**
-   * Construcs a {@code MovieManager} with a default file to path to the movie library data. 
-   * Initializes the serializer for handling the movie data. 
+   * Construcs a {@code MovieManager} with a default file path to the movie library data 
+   * stored in the user's home directory. If the file does not exist, it initialize the file
+   * by copying the default movie data from classpath. 
+   * Additionally, it initializes the serializer for handling movie data. 
    *
-   * @throws IOException if an I/O error occurs while reading the file 
+   * <p>The movie data file is located in the user's home directory under the name "movies.json".
+   *
+   * @throws IOException if an I/O error occurs while reading or writing the file
    */
   public MovieManager() throws IOException {
-    this.file = new File("../core/src/main/resources/movielibrary/movies.json");
-    movieSerializer = new MovieSerializer(this.file);
+    File file = new File(
+        System.getProperty("user.home") 
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
+    try {
+      initializeMovieFile(file);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
+    movieSerializer = new MovieSerializer(file);
+  }
+
+  /**
+   * Initializes the movie file by checking if it exists in the specified location.
+   * If it does not exist, a default movie file from the classpath is 
+   * copied to the user's home directory. 
+   *
+   * @param file the file to check and initialize if necessary
+   * @throws IOException if an I/O error occurs during the file copying
+   * @throws URISyntaxException if there is an issue with the URI of the default movie file resource
+   */
+  private void initializeMovieFile(File file) throws IOException, URISyntaxException {
+    if (!file.exists()) {
+      Path originalFile = Path.of(getClass().getResource("movies.json").toURI());
+      Files.copy(originalFile, file.toPath());
+    }
   }
 
   /**

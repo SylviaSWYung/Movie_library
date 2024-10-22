@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.NoSuchElementException;
 import movielibrary.core.Movie;
@@ -21,24 +24,44 @@ public class MovieDeserializer {
   private File file; 
   private List<Movie> moviesInLibrary;
     
-  //JSON string til data, lese fil 
   /**
-   * Constructs a {@code MovieDeserializer} with the specified file. 
-   * The file should contain a JSON array representing the movies in the library. 
+   * Constructs a {@code MovieDeserializer} object that initializes the movie file 
+   * and reads the movie data into a list. 
+   * If the file does not exist, it will be created by copying 
+   * the default movie data from the classpath. 
    *
    * @param file the file containing the JSON data of the movie library
-   * @throws IOException if an I/O error occurs while reading the file
+   * @throws IOException if an I/O error occurs during the file initialization or reading
    */
   public MovieDeserializer(File file) throws IOException {
     movieLibrary = new ObjectMapper();
     this.file = file;
-
+    try {
+      initializeMovieFile(file);
+    } catch (IOException | URISyntaxException e) {
+      e.printStackTrace();
+    }
     try {
       moviesInLibrary = movieLibrary.readValue(this.file, new TypeReference<List<Movie>>(){});
     } catch (IOException e) {
       System.err.println("An error occured during reading movie data: " + e.getMessage());
     }
-    
+  }
+
+  /**
+   * Initializes the movie file by checking if it exists. 
+   * If it does not, a default movie file is copied from the classpath to the specific location. 
+   *
+   * @param file the file to check and initialize if necessary 
+   * @throws IOException if an I/O error occurs during the file creation
+   * @throws URISyntaxException if there is an issue with the URI of 
+   *                            the default movie file resource.
+   */
+  private void initializeMovieFile(File file) throws IOException, URISyntaxException {
+    if (!file.exists()) {
+      InputStream originalFile = getClass().getResourceAsStream("movies.json");
+      Files.copy(originalFile, file.toPath());
+    }
   }
 
   /**
