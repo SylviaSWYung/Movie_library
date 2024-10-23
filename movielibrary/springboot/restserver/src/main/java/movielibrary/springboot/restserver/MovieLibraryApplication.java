@@ -3,9 +3,12 @@ package movielibrary.springboot.restserver;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+/**
+ * The Spring application.
+ */
 @SpringBootApplication
-public class TestApplication {
+public class MovieLibraryApplication {
   public static void main(String[] args) {
-    SpringApplication.run(TestApplication.class, args);
+    SpringApplication.run(MovieLibraryApplication.class, args);
   }
 }
