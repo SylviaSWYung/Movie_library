@@ -21,6 +21,6 @@
       <TextField fx:id="newMovieLength" layoutX="299.0" layoutY="145.0" />
       <Button fx:id="addMoviebtn" layoutX="214.0" layoutY="323.0" mnemonicParsing="false" onAction="#addMovie" text="Add Movie" />
       <Button fx:id="cancelbtn" layoutX="300.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />
-      <TextArea fx:id="newMovieDescription" layoutX="299.0" layoutY="192.0" prefHeight="89.0" prefWidth="149.0" />
+      <TextArea fx:id="newMovieDescription" layoutX="299.0" layoutY="192.0" prefHeight="89.0" prefWidth="149.0" wrapText="true" />
    </children>
 </Pane>
