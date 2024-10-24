@@ -31,4 +31,10 @@ components:
           name: 5500-tcp
           protocol: http
           targetPort: 5500
+commands:
+  - id: changedir
+    exec:
+      component: movielibrary
+      commandLine: cd movielibrary
+      label: change directory
 
