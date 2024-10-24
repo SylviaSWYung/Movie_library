@@ -20,7 +20,8 @@ public class MovieManager {
   /**
    * Construcs a {@code MovieManager} with a default file path to the movie library data 
    * stored in the user's home directory. If the file does not exist, it initialize the file
-   * by copying the default movie data from classpath. 
+   * by copying the default movie data from classpath. The {@code MovieManager}'s
+   * file is then set to the new {@code File} object.  
    * Additionally, it initializes the serializer for handling movie data. 
    *
    * <p>The movie data file is located in the user's home directory under the name "movies.json".
@@ -38,7 +39,42 @@ public class MovieManager {
     } catch (IOException | URISyntaxException e) {
       e.printStackTrace();
     }
+    this.file = file;
     movieSerializer = new MovieSerializer(file);
+  }
+
+  /**
+   * Construcs a {@code MovieManager} with the given file. 
+   * Additionally, it initializes the serializer for handling movie data. 
+   *
+   * @param file a {@code File} object representing the new movie library data file
+   * @throws IOException if an I/O error occurs while reading or writing the file
+   */
+  public MovieManager(File file) throws IOException {
+    this.file = file;
+    this.movieSerializer = new MovieSerializer(file);
+  }
+
+  /**
+   * Creates and returns a {@code MovieManager} object.
+   * If the file is not null or it exists, the method returns a MovieManager object 
+   * using the second constructor. If the file is null or doesn't exist, the method
+   * returns a MovieManager object using the first constructor without a parameter. 
+   *
+   * @param file a {@code File} object representing the new movie library data file
+   * @return a {@code MovieManager} object
+   * @throws IOException if an I/O error occurs while reading or writing the file
+   */
+  public static MovieManager createMovieManager(File file) throws IOException {
+    MovieManager movieManager;
+    
+    if (file != null && file.exists()) {
+      movieManager = new MovieManager(file);
+    } else {
+      movieManager = new MovieManager();
+    }
+
+    return movieManager;
   }
 
   /**
