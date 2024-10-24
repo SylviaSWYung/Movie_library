@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import org.testfx.framework.junit5.ApplicationTest;
@@ -23,6 +23,8 @@ import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import movielibrary.json.internal.MovieSerializer;
 
@@ -32,21 +34,31 @@ public class MoviePageTest extends ApplicationTest {
   private Parent root;
 
   private MovieSerializer movieSerializer;
+  private File temporaryFile;
 
-  // accessing the Movies.json file to be able to check the lent status of the movie
-  // create an instance of the MovieSerializer class modify and check the lent status of the movie
-  @BeforeEach
-  public void setUp() throws IOException {
-    File movieFile = new File("../core/src/main/resources/movielibrary/movies.json");
-    movieSerializer = new MovieSerializer(movieFile);
+  //deletes the temporaryFile after each test run
+  @AfterEach
+  public void deleteTemporaryFile() {
+    temporaryFile.delete();
   }
 
   // starts the movie page and loads the MoviePage.fxml file
   @Override
   public void start(Stage stage) throws Exception {
+    //creates a temporaryFile so the data doesn't get modified during test runs
+    File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
+    temporaryFile = new File("../core/src/main/resources/movielibrary/json/internal/tempmovies.json");
+    Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+    movieSerializer = new MovieSerializer(temporaryFile);
+
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("MoviePage.fxml"));
     root = fxmlLoader.load();
     moviePageController = fxmlLoader.getController();
+
+    //sets the temporaryFile as the file used during test runs
+    moviePageController.setMovieFile(temporaryFile);
+
     // sets default movie details for the movie page
     moviePageController.setMovieDetails("The Trollgirl", "When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.", 100);
 

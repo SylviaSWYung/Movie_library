@@ -140,6 +140,9 @@ public class FrontPageController {
 
       MoviePageController moviePageController = loader.getController();
 
+      //Sets the file to null so it initializes movies.json file in user.home
+      moviePageController.setMovieFile(null);
+
       moviePageController.setMovieDetails(movieTitle, description, movieLength);
 
       Stage stage = (Stage) moreInfobtn.getScene().getWindow();
