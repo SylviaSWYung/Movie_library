@@ -99,28 +99,17 @@ public class MoviePageController {
   }
 
   /**
-   * Initialize the {@code MoviePage.fxml}.
-   * Creates instances of {@link MovieDeserializer}, {@code MovieSerializer}
-   * and {@link MovieManager} for handling movie data.
+   * Sets the file the {@code MovieManager} object, {@code MovieDeserializer} object
+   * and {@code MovieSerializer} object are going to use during the running of the app. 
    *
-   * <p>The movie data file is loacted in the user's home directory 
-   * under the name {@code movies.json}.
-   *
-   * @throws IOException if an I/O error occurs while accessing or processing
-   *                     the {@code movies.json} file
+   * @param file a {@code File} object to handle reading and writing 
+   * @throws IOException if an I/O error occurs while reading or writing the file
    */
-  @FXML
-  public void initialize() throws IOException {
-    File jsonFile = new File(
-        System.getProperty("user.home") 
-        + System.getProperty("file.separator")
-        + "movies.json"
-    );
-    movieDeserializer = new MovieDeserializer(jsonFile);
-    movieSerializer = new MovieSerializer(jsonFile);
-    movieManager = new MovieManager();
-  }
-  
+  public void setMovieFile(File file) throws IOException {
+    movieManager = MovieManager.createMovieManager(file);
+    movieDeserializer = new MovieDeserializer(movieManager.getFile());
+    movieSerializer = new MovieSerializer(movieManager.getFile());
+  }  
 
   /**
    * Handles the {@code lent} button, and lends the movie. 
