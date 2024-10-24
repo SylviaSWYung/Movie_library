@@ -29,11 +29,11 @@ public class MovieDeserializerTest {
   File temporaryFile;
 
   //Default setup for each test
-  //Creates a temporary file (a copy of the original movies.json) for the testing, and initializes the MovieManager object
+  //Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieDeserializer object
   @BeforeEach
   public void setUp() throws IOException{
-    File sourceOfFile = new File("../core/src/main/resources/movielibrary/movies.json");
-    temporaryFile = new File("../core/src/main/resources/movielibrary/tempmovies.json");
+    File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
+    temporaryFile = new File("../core/src/main/resources/movielibrary/json/internal/tempmovies.json");
     Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
     movieDeserializer = new MovieDeserializer(temporaryFile);
