@@ -1,6 +1,5 @@
 package movielibrary.springboot.restserver;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import movielibrary.core.Movie;
@@ -12,7 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
 
 /**
  * The {@code MovieLibraryController} class handles the HTTP requests between
@@ -23,11 +26,10 @@ import org.springframework.web.bind.annotation.RestController;
  * to handle the movies in the library.
  */
 @RestController
+@RequestMapping("movielibrary/movies")
 public class MovieLibraryController {
 
-  private MovieManager movieManager;
-  private MovieDeserializer movieDeserializer;
-  private MovieSerializer movieSerializer;
+  private final MovieLibraryService movieLibraryService;
 
   /**
    * Constructor that creates {@link MovieManager}, {@link MovieDeserializer}
@@ -37,15 +39,8 @@ public class MovieLibraryController {
    *
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    */
-  public MovieLibraryController() throws IOException {
-    File jsonFile = new File(
-        System.getProperty("user.home")
-        + System.getProperty("file.separator")
-        + "movies.json"
-    );
-    movieManager = new MovieManager();
-    movieDeserializer = new MovieDeserializer(jsonFile);
-    movieSerializer = new MovieSerializer(jsonFile);
+  public MovieLibraryController(MovieLibraryService movieLibraryService) throws IOException {
+    this.movieLibraryService = movieLibraryService;
   }
 
 
@@ -59,11 +54,10 @@ public class MovieLibraryController {
    * @throws BadRequestException Throws BadRequestException if
    *          the request fails when the movies cannot be found.
    */
-  @GetMapping("movielibrary/movies")
+  @GetMapping
   public List<Movie> getMovies() throws IOException {
     try {
-      movieDeserializer.reloadMovieData();
-      return movieDeserializer.getMoviesInLibrary();
+      return movieLibraryService.getMovies();
     } catch (IllegalArgumentException e) {
       throw new BadRequestException("Could not get the movies in the library");
     }
@@ -79,10 +73,10 @@ public class MovieLibraryController {
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found
    */
-  @GetMapping("movielibrary/movies/movie/{title}")
+  @GetMapping("/{title}")
   public Movie findMovie(@PathVariable String title) throws IOException {
     try {
-      return movieDeserializer.findMovie(title);
+      return movieLibraryService.findMovie(title);
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     }
@@ -96,10 +90,10 @@ public class MovieLibraryController {
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
    */
-  @PostMapping("movielibrary/lendmovie/{title}")
+  @PostMapping("/{title}/lend")
   public void lendMovie(@PathVariable String title) throws IOException {
     try {
-      movieManager.lend(title);
+      movieLibraryService.lendMovie(title);
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     }
@@ -113,10 +107,10 @@ public class MovieLibraryController {
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
    */
-  @PostMapping("movielibrary/returnmovie/{title}")
+  @PostMapping("/{title}/return")
   public void returnMovie(@PathVariable String title) throws IOException {
     try {
-      movieManager.returnBack(title);
+      movieLibraryService.returnMovie(title);
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     }
@@ -131,10 +125,10 @@ public class MovieLibraryController {
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
    */
-  @GetMapping("movielibrary/movies/lentstatus/{title}")
+  @GetMapping("/{title}/lentstatus")
   public boolean getLentStatus(@PathVariable String title) throws IOException {
     try {
-      return movieSerializer.getLentStatus(title);
+      return movieLibraryService.getLentStatus(title);
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     }
@@ -152,12 +146,11 @@ public class MovieLibraryController {
    * @throws IOException Throws IOException if an I/O error occurs while reading the file.
    * @throws BadRequestException Throws BadRequestException if the movie cannot be added.
    */
-  @PutMapping("movielibrary/movies/addmovie/{title}, {movieLength}, {description}")
-  public void addMovie(@PathVariable String title,
-                      @PathVariable double movieLength,
-                      @PathVariable String description) throws IOException {
+  @PutMapping
+  @ResponseStatus(HttpStatus.CREATED)
+  public void addMovie(@RequestBody Movie newMovie) throws IOException {
     try {
-      movieManager.addMovie(title, movieLength, description);
+      movieLibraryService.addMovie(newMovie.getTitle(), newMovie.getMovieLength(), newMovie.getDescription());
     } catch (IllegalStateException e) {
       throw new BadRequestException(e.getMessage());
     } catch (Exception e) {
@@ -175,10 +168,11 @@ public class MovieLibraryController {
    * @throws BadRequestException Throws BadRequestException if the movie cannot be deleted.
    * @throws MovieNotFoundException Throws MovieNotFoundException if the movie cannot be found.
    */
-  @DeleteMapping("movielibrary/movies/deletemovie/{title}")
+  @DeleteMapping("/{title}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
   public void deleteMovie(@PathVariable String title) throws IOException {
     try {
-      movieManager.deleteMovie(title);
+      movieLibraryService.deleteMovie(title);
     } catch (IllegalArgumentException e) {
       throw new MovieNotFoundException(title);
     } catch (Exception e) {
