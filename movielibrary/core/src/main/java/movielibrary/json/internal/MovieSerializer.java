@@ -103,6 +103,7 @@ public class MovieSerializer {
    * @throws IOException if an I/O error occurs while reading the file
    */
   public boolean getLentStatus(String title) throws IOException {
+    movieDeserializer.reloadMovieData();
     return this.movieDeserializer.checkIfLent(title);
   }
 
@@ -116,6 +117,7 @@ public class MovieSerializer {
    * @throws IOException if an I/O error occurs while reading the file
    */
   public boolean movieIsFound(String title) throws IOException {
+    movieDeserializer.reloadMovieData();
     return movieDeserializer.findMovie(title.toLowerCase().strip()) != null;
   }
 }
