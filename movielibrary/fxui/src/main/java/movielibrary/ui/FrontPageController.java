@@ -116,6 +116,9 @@ public class FrontPageController {
                           .getResource("/movielibrary/ui/AddMoviePage.fxml"));
       Parent parent = loader.load();
 
+      AddMoviePageController addMoviePageController = loader.getController();
+      addMoviePageController.setMovieFile(null);
+
       Stage stage = (Stage) addMoviebtn.getScene().getWindow();
       Scene scene = new Scene(parent);
       stage.setScene(scene);

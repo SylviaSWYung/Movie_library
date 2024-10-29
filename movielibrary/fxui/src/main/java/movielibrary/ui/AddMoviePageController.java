@@ -1,5 +1,6 @@
 package movielibrary.ui;
 
+import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -65,12 +66,13 @@ public class AddMoviePageController {
   private MovieManager movieManager;
 
   /**
-   * Initializes the AppMoviePage. Creates a {@link movieManager} object.
+   * Sets the file the {@code MovieManager} object are going to use during the app run.
    *
-   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+   * @param file a {@code File} object to handle reading and writing 
+   * @throws IOException IOException if an I/O error occurs while reading or writing the file
    */
-  public void initialize() throws IOException {
-    movieManager = new MovieManager();
+  public void setMovieFile(File file) throws IOException {
+    movieManager = MovieManager.createMovieManager(file);
   }
 
   /**
@@ -110,7 +112,7 @@ public class AddMoviePageController {
         returnToFrontPage(event);
       }
     } catch (IllegalStateException e) {
-      error = "The movie title already exists!";
+      error = e.getMessage();
       alert.setContentText(error);
       alert.showAndWait();
       return;
