@@ -6,6 +6,7 @@ import movielibrary.core.Movie;
 import movielibrary.json.internal.MovieDeserializer;
 import movielibrary.json.internal.MovieManager;
 import movielibrary.json.internal.MovieSerializer;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 /**
  * The {@code MovieLibraryController} class handles the HTTP requests between
  * the server and the application.
  * The HTTP in question are GET, POST, PUT and DELETE requests.
- * <p>
- * The class relies on {@link MovieManager}, {@link MovieDeserializer},
+ *
+ * <p>The class relies on {@link MovieManager}, {@link MovieDeserializer},
  * and {@link MovieSerializer} to handle movie data in the library.
  */
 @RestController
@@ -140,7 +140,9 @@ public class MovieLibraryController {
   @ResponseStatus(HttpStatus.CREATED)
   public void addMovie(@RequestBody Movie newMovie) throws IOException {
     try {
-      movieLibraryService.addMovie(newMovie.getTitle(), newMovie.getMovieLength(), newMovie.getDescription());
+      movieLibraryService.addMovie(newMovie.getTitle(), 
+                                  newMovie.getMovieLength(), 
+                                  newMovie.getDescription());
     } catch (IllegalStateException e) {
       throw new BadRequestException(e.getMessage());
     } catch (Exception e) {
