@@ -8,6 +8,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import org.testfx.framework.junit5.ApplicationTest;
@@ -35,6 +36,11 @@ public class MoviePageTest extends ApplicationTest {
 
   private MovieSerializer movieSerializer;
   private File temporaryFile;
+
+  @BeforeAll
+  public static void setUpHeadless() {
+    App.supportHeadless();
+  }
 
   //deletes the temporaryFile after each test run
   @AfterEach

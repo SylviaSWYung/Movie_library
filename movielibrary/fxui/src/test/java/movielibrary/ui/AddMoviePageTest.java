@@ -6,6 +6,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -36,6 +37,11 @@ public class AddMoviePageTest extends ApplicationTest {
 
   private MovieSerializer movieSerializer;
   private File temporaryFile;
+
+  @BeforeAll
+  public static void setUpHeadless() {
+    App.supportHeadless();
+  }
 
   //deletes the temporaryFile after each test run
   @AfterEach

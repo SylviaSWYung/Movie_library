@@ -8,6 +8,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,10 @@ public class FrontPageTest extends ApplicationTest {
   private Parent root;
   private FrontPageController controller;
 
+  @BeforeAll
+  public static void setUpHeadless() {
+    App.supportHeadless();
+  }
 
   // Loads the FrontPage.fxml file
   @Override
