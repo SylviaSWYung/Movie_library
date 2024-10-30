@@ -56,6 +56,9 @@ public class MovieManagerTest {
         + "movies.json"
     );
     Assertions.assertEquals(file, fakeMovieManager.getFile());
+
+    fakeMovieManager = MovieManager.createMovieManager(null);
+    Assertions.assertEquals(file, fakeMovieManager.getFile());
   }
 
   //Test getFile method of MovieManager.java
