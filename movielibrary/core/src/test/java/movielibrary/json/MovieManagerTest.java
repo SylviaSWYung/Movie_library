@@ -45,6 +45,20 @@ public class MovieManagerTest {
     temporaryFile.delete();
   }
 
+  //Tests fake file input in instructor
+  @Test
+  @DisplayName("Test invalid file input in constructor")
+  public void testInvalidFileInput() throws IOException {
+    MovieManager fakeMovieManager = MovieManager.createMovieManager(new File("FakeFile.json"));
+    File file = new File(
+        System.getProperty("user.home") 
+        + System.getProperty("file.separator")
+        + "movies.json"
+    );
+    Assertions.assertEquals(file, fakeMovieManager.getFile());
+    file.delete();
+  }
+
   //Test getFile method of MovieManager.java
   @Test
   @DisplayName("Test file")
