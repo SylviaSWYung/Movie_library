@@ -14,12 +14,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import movielibrary.json.internal.MovieManager;
+import movielibrary.json.internal.MovieSerializer;
 
 //Tests for MovieManager.java class
 public class MovieManagerTest {
     
   //MovieManager object to test, File object to use a temporary file
   private MovieManager movieManager;
+  private MovieSerializer movieSerializer;
   private File temporaryFile;
 
   //Default setup for each test
@@ -31,6 +33,7 @@ public class MovieManagerTest {
     Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     try {
         movieManager = MovieManager.createMovieManager(temporaryFile);
+        movieSerializer = new MovieSerializer(temporaryFile);
     } catch (IOException e) {
         fail("An error occured during setup: " + e.getMessage());
     }
@@ -87,4 +90,47 @@ public class MovieManagerTest {
     movieManager.lend("Day in the life of gr2403");
     movieManager.returnBack("Day in the life of gr2403");
   }
+
+  // Test add movie on the AddMoviePage.fxml
+  @Test
+  @DisplayName("Test add movie")
+  public void testAddMovie() throws IOException {
+    // Adds a test movie
+    movieManager.addMovie("TestMovie", 10, "Description with more that 20 characters.");
+
+    // Throws IllegalStateException if the movie title already exists
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      movieManager.addMovie("Loverboy", 10, "This is a movie about a boy who marries his crush.");
+    });
+    
+    // Check if the test movie has been added to the library
+    Assertions.assertTrue(movieSerializer.movieIsFound("TestMovie"), "Movie should be added to the collection.");
+  }
+
+  // Test delete movie on the front page
+  @Test
+  @DisplayName("Test delete movie")
+  public void testDeleteMovie() throws IOException {
+    // Adds a test movie and deletes the test movie
+    movieManager.addMovie("TestDeleteMovie", 10, "This is a test to see if the movie can be deleted.");
+    movieManager.deleteMovie("TestDeleteMovie");
+
+    // Checks if the movie has been deleted from the library
+    Assertions.assertFalse(movieSerializer.movieIsFound("TestDeleteMovie"), "Movie should be deleted from the library.");
+
+    // Throws a IllegalStateException if the movie does not exist
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      movieManager.deleteMovie("Non Existing Movie");;
+    });
+
+    // Throws IllegalStateException if there is less that one movie in the library
+    Assertions.assertThrows(IllegalStateException.class, () -> {
+      movieManager.deleteMovie("Loverboy");
+      movieManager.deleteMovie("The Trollgirl");
+      movieManager.deleteMovie("Day in the life of gr2403");
+      movieManager.deleteMovie("Life is tough");
+    });
+  }
 }
+
+
