@@ -39,13 +39,13 @@ public class AddMoviePageTest extends ApplicationTest {
   private MovieSerializer movieSerializer;
   private File temporaryFile;
 
-  //deletes the temporaryFile after each test run
+  //Deletes the temporaryFile after each test run
   @AfterEach
   public void deleteTemporaryFile() {
     temporaryFile.delete();
   }
 
-  // Loads the FrontPage.fxml file
+  //Loads the FrontPage.fxml file
   @Override
   public void start(Stage stage) throws Exception {
 
@@ -65,7 +65,7 @@ public class AddMoviePageTest extends ApplicationTest {
     stage.show();
   }
 
-  //test if the controller is not null
+  //Test if the controller is not null
   @Test
   @Order(1)
   @DisplayName("Test controller")
@@ -73,6 +73,7 @@ public class AddMoviePageTest extends ApplicationTest {
     assertNotNull(this.addMoviePageController);
   }
 
+  //Test if all nodes are shown when the page loads
   @Test
   @Order(2)
   @DisplayName("Test if nodes is shown")
@@ -98,7 +99,7 @@ public class AddMoviePageTest extends ApplicationTest {
     assertThat(cancelbtn).hasText("Cancel");
   }
 
-  //test invalid inputs for title
+  //Test invalid inputs for title
   @Test
   @Order(3)
   @DisplayName("Test invalid title")
@@ -124,7 +125,7 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("The movie title already exists in the movielibrary!"));
   }
 
-  //test invalid inputs for movie length
+  //Test invalid inputs for movie length
   @Test
   @Order(4)
   @DisplayName("Test invalid movie length")
@@ -161,7 +162,7 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("The movie length can't exceed 120 minutes."));
   }
 
-  //test invalid inputs for description
+  //Test invalid inputs for description
   @Test
   @Order(5)
   @DisplayName("Test invalid description")
@@ -197,7 +198,7 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("The description must be between 20 and 250 characters"));
   }
 
-  //test addMovie method and if the movie is made with valid inputs
+  //Test addMovie method and if the movie is made with valid inputs
   @Test
   @Order(6)
   @DisplayName("Test successful added movie to library")
@@ -217,7 +218,7 @@ public class AddMoviePageTest extends ApplicationTest {
     assertTrue(movieSerializer.movieIsFound("MorningBird"));
   }
 
-  // test the IO exception that occurs when failing to return to the front page
+  //Test the IO exception that occurs when failing to return to the front page
   @Test
   @Order(7)
   public void testReturnToFrontPageFail() throws IOException {
