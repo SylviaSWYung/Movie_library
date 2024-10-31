@@ -195,7 +195,7 @@
                     </javaOptions>
                     <!-- linux options --> 
                     <linuxShortcut>true</linuxShortcut>
-                    <linuxMenuGroup>TodoListFX</linuxMenuGroup>
+                    <linuxMenuGroup>movielibraryFX</linuxMenuGroup>
 
                     <!-- windows option -->
                     <winDirChooser>true</winDirChooser>
