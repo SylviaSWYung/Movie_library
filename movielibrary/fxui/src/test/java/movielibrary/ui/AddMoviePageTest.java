@@ -3,6 +3,7 @@ package movielibrary.ui;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import org.junit.jupiter.api.AfterEach;
@@ -17,6 +18,7 @@ import org.testfx.util.WaitForAsyncUtils;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -68,6 +70,30 @@ public class AddMoviePageTest extends ApplicationTest {
   @DisplayName("Test controller")
   public void testAddMoviePageController() {
     assertNotNull(this.addMoviePageController);
+  }
+
+  @Test
+  @DisplayName("Test if nodes is shown")
+  public void testNodesShownInWindow() {
+    verifyThat("#newMovieTitle", NodeMatchers.isVisible());
+    TextField newMovieTitleField = lookup("#newMovieTitle").queryAs(TextField.class);
+    assertTrue(newMovieTitleField.getText().isEmpty(), "Textfield should be empty on load");
+
+    verifyThat("#newMovieLength", NodeMatchers.isVisible());
+    TextField newMovieLengthField = lookup("#newMovieLength").queryAs(TextField.class);
+    assertTrue(newMovieLengthField.getText().isEmpty(), "Textfield should be empty on load");
+
+    verifyThat("#newMovieDescription", NodeMatchers.isVisible());
+    TextArea newMovieDescriptionField = lookup("#newMovieDescription").queryAs(TextArea.class);
+    assertTrue(newMovieDescriptionField.getText().isEmpty(), "TextArea should be empty on load");
+
+    verifyThat("#addMoviebtn", NodeMatchers.isVisible());
+    Button addMoviebtn = lookup("#addMoviebtn").queryAs(Button.class);
+    assertThat(addMoviebtn).hasText("Add Movie");
+
+    verifyThat("#cancelbtn", NodeMatchers.isVisible());
+    Button cancelbtn = lookup("#cancelbtn").queryAs(Button.class);
+    assertThat(cancelbtn).hasText("Cancel");
   }
 
   //test invalid inputs for title
@@ -187,6 +213,16 @@ public class AddMoviePageTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     assertTrue(movieSerializer.movieIsFound("MorningBird"));
+  }
+
+  // test the IO exception that occurs when failing to return to the front page
+  @Test
+  public void testReturnToFrontPageFail() throws IOException {
+    addMoviePageController.loadFrontPage(true);
+    WaitForAsyncUtils.waitForFxEvents();
+
+    verifyThat(".alert", NodeMatchers.isVisible());
+    verifyThat(".alert .content", hasText("Could not load the page"));
   }
 
 }
