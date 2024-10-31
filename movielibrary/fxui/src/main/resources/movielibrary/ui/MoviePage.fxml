@@ -8,14 +8,15 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movielibrary.ui.MoviePageController">
    <children>
-      <Button fx:id="lendbtn" layoutX="207.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleLendbtn" text="Lend" />
-      <Button fx:id="cancelbtn" layoutX="346.0" layoutY="335.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />
+      <Button fx:id="lendbtn" layoutX="188.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleLendbtn" text="Lend" />
+      <Button fx:id="cancelbtn" layoutX="372.0" layoutY="335.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />
       <TextField fx:id="movieTitleInPage" editable="false" layoutX="216.0" layoutY="34.0" prefHeight="41.0" prefWidth="169.0" />
       <TextArea fx:id="summary" layoutX="52.0" layoutY="132.0" prefHeight="95.0" prefWidth="497.0" />
       <Text layoutX="77.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Here is a short summary of the movie, and at the bottom you can lend it if you want!" />
       <TextField fx:id="movieDuration" layoutX="289.0" layoutY="261.0" prefHeight="25.0" prefWidth="62.0" />
       <Text layoutX="200.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Movie-duration: " />
       <Text layoutX="352.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="min" />
-      <Button fx:id="returnbtn" layoutX="275.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleReturnbtn" text="Return" />
+      <Button fx:id="returnbtn" layoutX="244.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleReturnbtn" text="Return" />
+      <Button fx:id="deleteMoviebtn" layoutX="311.0" layoutY="335.0" mnemonicParsing="false" onAction="#handleDeleteMoviebtn" text="Delete" />
    </children>
 </Pane>
