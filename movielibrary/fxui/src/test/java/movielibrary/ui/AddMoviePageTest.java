@@ -67,12 +67,14 @@ public class AddMoviePageTest extends ApplicationTest {
 
   //test if the controller is not null
   @Test
+  @Order(1)
   @DisplayName("Test controller")
   public void testAddMoviePageController() {
     assertNotNull(this.addMoviePageController);
   }
 
   @Test
+  @Order(2)
   @DisplayName("Test if nodes is shown")
   public void testNodesShownInWindow() {
     verifyThat("#newMovieTitle", NodeMatchers.isVisible());
@@ -98,7 +100,7 @@ public class AddMoviePageTest extends ApplicationTest {
 
   //test invalid inputs for title
   @Test
-  @Order(1)
+  @Order(3)
   @DisplayName("Test invalid title")
   public void testInvalidTitle() {
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
@@ -124,7 +126,7 @@ public class AddMoviePageTest extends ApplicationTest {
 
   //test invalid inputs for movie length
   @Test
-  @Order(2)
+  @Order(4)
   @DisplayName("Test invalid movie length")
   public void testInvalidMovieLength() {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
@@ -161,7 +163,7 @@ public class AddMoviePageTest extends ApplicationTest {
 
   //test invalid inputs for description
   @Test
-  @Order(3)
+  @Order(5)
   @DisplayName("Test invalid description")
   public void testInvalidDescription() {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
@@ -197,7 +199,7 @@ public class AddMoviePageTest extends ApplicationTest {
 
   //test addMovie method and if the movie is made with valid inputs
   @Test
-  @Order(4)
+  @Order(6)
   @DisplayName("Test successful added movie to library")
   public void testSuccessfulAdd() throws IOException {
     clickOn("#newMovieTitle").write("MorningBird");
@@ -217,6 +219,7 @@ public class AddMoviePageTest extends ApplicationTest {
 
   // test the IO exception that occurs when failing to return to the front page
   @Test
+  @Order(7)
   public void testReturnToFrontPageFail() throws IOException {
     addMoviePageController.loadFrontPage(true);
     WaitForAsyncUtils.waitForFxEvents();
