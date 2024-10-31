@@ -166,6 +166,15 @@
                 <version>0.0.8</version>
                 <configuration>
                     <mainClass>movielibrary.ui/movielibrary.ui.App</mainClass>
+                     <!-- rest of options are for jlink -->
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
+                    <launcher>movielibraryfx</launcher>
+                    <jlinkImageName>movielibraryfx</jlinkImageName>
+                    <jlinkZipName>movielibraryfx</jlinkZipName>
+
                 </configuration>
             </plugin>
 
@@ -184,6 +193,15 @@
                     <javaOptions>
                         <option>-Dfile.encoding=UTF-8</option>
                     </javaOptions>
+                    <!-- linux options --> 
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxMenuGroup>movielibraryFX</linuxMenuGroup>
+
+                    <!-- windows option -->
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+                    <winMenu>true</winMenu>
+                    <winMenuGroup>movielibraryFX</winMenuGroup>
                 </configuration>
             </plugin>
 
