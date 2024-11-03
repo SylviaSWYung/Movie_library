@@ -7,6 +7,7 @@ import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,6 +40,11 @@ public class AddMoviePageTest extends ApplicationTest {
 
   private MovieSerializer movieSerializer;
   private File temporaryFile;
+
+  @BeforeAll
+  public static void setUpHeadless() {
+    App.supportHeadless();
+  }
 
   //Deletes the temporaryFile after each test run
   @AfterEach
@@ -106,8 +113,16 @@ public class AddMoviePageTest extends ApplicationTest {
   public void testInvalidTitle() {
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
+    Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
+
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -118,7 +133,14 @@ public class AddMoviePageTest extends ApplicationTest {
     newMovieLength.setText("90");
     newMovieDescription.setText("This is about a boy who loves so much");
     clickOn("#newMovieTitle").write("Loverboy");
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
+
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -129,33 +151,62 @@ public class AddMoviePageTest extends ApplicationTest {
   @Test
   @Order(4)
   @DisplayName("Test invalid movie length")
-  public void testInvalidMovieLength() {
+  public void testInvalidMovieLength() throws InterruptedException {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
+    Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
     newMovieTitle.setText("MorningBird");
+    newMovieDescription.setText("This is a movie about a bird who likes to wake up early");
 
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
     verifyThat(".alert .content", hasText("You must fill out the length of the new movie!"));
     clickOn("OK");
+    WaitForAsyncUtils.waitForFxEvents();
 
-    newMovieDescription.setText("This is a movie about a bird who likes to wake up early");
-
+    Platform.runLater(() -> {
+      TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
+      if (movieLengthField != null) {
+        movieLengthField.requestFocus(); // Manually request focus
+      }
+    });
+    
     clickOn("#newMovieLength").write("0");
-    clickOn("#addMoviebtn");
+    WaitForAsyncUtils.waitForFxEvents();
+
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
     verifyThat(".alert .content", hasText("Movie length must be greater than 0 minutes."));
     clickOn("OK");
+    WaitForAsyncUtils.waitForFxEvents();
 
     doubleClickOn("#newMovieLength");
     push(KeyCode.DELETE);
     clickOn("#newMovieLength").write("123");
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -170,11 +221,18 @@ public class AddMoviePageTest extends ApplicationTest {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
+    Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
     newMovieTitle.setText("MorningBird");
     newMovieLength.setText("100");
 
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -182,7 +240,13 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("OK");
 
     clickOn("#newMovieDescription").write("A bird");
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -191,7 +255,13 @@ public class AddMoviePageTest extends ApplicationTest {
 
     newMovieDescription.setText("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut tristique ut nulla at pretium. Nullam malesuada dapibus purus, id sodales turpis gravida id. In hac habitasse platea dictumst. Maecenas vitae pulvinar nibh. Morbi imperdiet tortor tellus, non efficitur enim iaculis eget. Vestibulum justo arcu, dapibus faucibus luctus vel, blandit et justo. Vestibulum non dignissim arcu, ac egestas tellus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id finibus augue, non mattis ipsum. Nullam ornare massa id nisl varius tincidunt. Fusce euismod augue at odio gravida pulvinar sed vel massa. Curabitur auctor gravida nunc, id mattis augue.");
 
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -202,12 +272,33 @@ public class AddMoviePageTest extends ApplicationTest {
   @Test
   @Order(6)
   @DisplayName("Test successful added movie to library")
-  public void testSuccessfulAdd() throws IOException {
+  public void testSuccessfulAdd() throws IOException, InterruptedException {
+    TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     clickOn("#newMovieTitle").write("MorningBird");
-    clickOn("#newMovieLength").write("100");
-    clickOn("#newMovieDescription").write("This is a movie about a bird who likes to wake up early");
+    WaitForAsyncUtils.waitForFxEvents();
 
-    clickOn("#addMoviebtn");
+    Platform.runLater(() -> {
+      TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
+      if (movieLengthField != null) {
+        movieLengthField.requestFocus(); // Manually request focus
+      }
+    });
+
+    clickOn("#newMovieLength");
+    assertTrue(newMovieLength.isFocused());
+    write("100");
+    WaitForAsyncUtils.waitForFxEvents();
+    clickOn("#newMovieDescription").write("This is a movie about a bird who likes to wake up early");
+    WaitForAsyncUtils.waitForFxEvents();
+    Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -215,7 +306,7 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertTrue(movieSerializer.movieIsFound("MorningBird"));
+    assertTrue(movieSerializer.movieIsFound("MorningBird"), "The movie should be added");
   }
 
   //Test the IO exception that occurs when failing to return to the front page

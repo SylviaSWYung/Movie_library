@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
@@ -15,6 +17,11 @@ public class AppTest extends ApplicationTest {
 
   private Stage primaryStage;
   private App app;
+
+  @BeforeAll
+  public static void setUpHeadless() {
+    App.supportHeadless();
+  }
 
   // starts the application
   @Override
