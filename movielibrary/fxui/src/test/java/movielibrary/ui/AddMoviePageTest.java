@@ -153,12 +153,13 @@ public class AddMoviePageTest extends ApplicationTest {
   @Test
   @Order(4)
   @DisplayName("Test invalid movie length")
-  public void testInvalidMovieLength() {
+  public void testInvalidMovieLength() throws InterruptedException {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
     Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
     newMovieTitle.setText("MorningBird");
+    newMovieDescription.setText("This is a movie about a bird who likes to wake up early");
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
@@ -175,12 +176,16 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
 
-    newMovieDescription.setText("This is a movie about a bird who likes to wake up early");
-    WaitForAsyncUtils.waitForFxEvents();
+    Platform.runLater(() -> {
+      TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
+      if (movieLengthField != null) {
+          movieLengthField.requestFocus(); // Manually request focus
+      }
+    });
     
     clickOn("#newMovieLength").write("0");
-    
     WaitForAsyncUtils.waitForFxEvents();
+
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
           addMoviebtn.fire();
@@ -276,9 +281,20 @@ public class AddMoviePageTest extends ApplicationTest {
   @Order(6)
   @DisplayName("Test successful added movie to library")
   public void testSuccessfulAdd() throws IOException, InterruptedException {
+    TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     clickOn("#newMovieTitle").write("MorningBird");
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn("#newMovieLength").write("100");
+
+    Platform.runLater(() -> {
+      TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
+      if (movieLengthField != null) {
+          movieLengthField.requestFocus(); // Manually request focus
+      }
+    });
+
+    clickOn("#newMovieLength");
+    assertTrue(newMovieLength.isFocused());
+    write("100");
     WaitForAsyncUtils.waitForFxEvents();
     clickOn("#newMovieDescription").write("This is a movie about a bird who likes to wake up early");
     WaitForAsyncUtils.waitForFxEvents();
@@ -299,7 +315,7 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
 
-    assertTrue(movieSerializer.movieIsFound("MorningBird"));
+    assertTrue(movieSerializer.movieIsFound("MorningBird"), "The movie should be added");
   }
 
   //Test the IO exception that occurs when failing to return to the front page
