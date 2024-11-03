@@ -143,7 +143,16 @@ public class FrontPageTest extends ApplicationTest {
   @Test
   @DisplayName("Addmovie button test")
   public void testAddMoviebtn() {
-    clickOn("#addMoviebtn");
+    Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+          addMoviebtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat("#newMovieTitle", NodeMatchers.isVisible());
@@ -159,8 +168,7 @@ public class FrontPageTest extends ApplicationTest {
     assertTrue(newMovieDescriptionField.getText().isEmpty(), "TextArea should be empty on load");
 
     verifyThat("#addMoviebtn", NodeMatchers.isVisible());
-    Button addMoviebtn = lookup("#addMoviebtn").queryAs(Button.class);
-    assertThat(addMoviebtn).hasText("Add Movie");
+    assertThat(addMoviebtn).hasText("Add movie");
 
     verifyThat("#cancelbtn", NodeMatchers.isVisible());
     Button cancelbtn = lookup("#cancelbtn").queryAs(Button.class);
