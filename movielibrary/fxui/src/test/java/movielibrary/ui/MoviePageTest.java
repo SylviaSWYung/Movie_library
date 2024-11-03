@@ -100,10 +100,9 @@ public class MoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (lendbtn != null) {
-          lendbtn.fire();
-          System.out.println("Button fired");
+        lendbtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -124,10 +123,9 @@ public class MoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (returnbtn != null) {
-          returnbtn.fire();
-          System.out.println("Button fired");
+        returnbtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -148,10 +146,9 @@ public class MoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (lendbtn != null) {
-          lendbtn.fire();
-          System.out.println("Button fired");
+        lendbtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -172,10 +169,9 @@ public class MoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (returnbtn != null) {
-          returnbtn.fire();
-          System.out.println("Button fired");
+        returnbtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -193,10 +189,9 @@ public class MoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (cancelbtn != null) {
-          cancelbtn.fire();
-          System.out.println("Button fired");
+        cancelbtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();

@@ -117,10 +117,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
 
@@ -136,10 +135,9 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("#newMovieTitle").write("Loverboy");
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
 
@@ -163,10 +161,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -179,7 +176,7 @@ public class AddMoviePageTest extends ApplicationTest {
     Platform.runLater(() -> {
       TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
       if (movieLengthField != null) {
-          movieLengthField.requestFocus(); // Manually request focus
+        movieLengthField.requestFocus(); // Manually request focus
       }
     });
     
@@ -188,10 +185,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -206,10 +202,9 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("#newMovieLength").write("123");
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -233,10 +228,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -248,8 +242,7 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("#newMovieDescription").write("A bird");
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
           System.out.println("Button is null");
       }
@@ -264,10 +257,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
@@ -288,7 +280,7 @@ public class AddMoviePageTest extends ApplicationTest {
     Platform.runLater(() -> {
       TextField movieLengthField = (TextField) lookup("#newMovieLength").query();
       if (movieLengthField != null) {
-          movieLengthField.requestFocus(); // Manually request focus
+        movieLengthField.requestFocus(); // Manually request focus
       }
     });
 
@@ -302,10 +294,9 @@ public class AddMoviePageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();

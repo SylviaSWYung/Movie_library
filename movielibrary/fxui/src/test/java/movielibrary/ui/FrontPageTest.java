@@ -61,15 +61,15 @@ public class FrontPageTest extends ApplicationTest {
     @SuppressWarnings("unchecked")
     ChoiceBox<String> choiceBox = lookup("#movieScrollBar").queryAs(ChoiceBox.class);
     if (choiceBox != null) {
-        // Select "Loverboy" 
-        interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
-        WaitForAsyncUtils.waitForFxEvents();
+      // Select "Loverboy" 
+      interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
+      WaitForAsyncUtils.waitForFxEvents();
 
-        // Verify selection 
-        verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
-        "Loverboy".equals(choiceBox2.getValue())); 
+      // Verify selection 
+      verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
+      "Loverboy".equals(choiceBox2.getValue())); 
     } else {
-        System.out.println("ChoiceBox with ID #movieScrollBar not found.");
+      System.out.println("ChoiceBox with ID #movieScrollBar not found.");
     }
   }
 
@@ -82,10 +82,9 @@ public class FrontPageTest extends ApplicationTest {
     
     Platform.runLater(() -> {
       if (moreInfoBtn != null) {
-          moreInfoBtn.fire();
-          System.out.println("Button fired");
+        moreInfoBtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
 
@@ -102,25 +101,24 @@ public class FrontPageTest extends ApplicationTest {
     @SuppressWarnings("unchecked")
     ChoiceBox<String> choiceBox = lookup("#movieScrollBar").queryAs(ChoiceBox.class);
     if (choiceBox != null) {
-        // Select "Loverboy" 
-        interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
-        WaitForAsyncUtils.waitForFxEvents();
+      // Select "Loverboy" 
+      interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
+      WaitForAsyncUtils.waitForFxEvents();
 
-        // Verify selection 
-        verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
-        "Loverboy".equals(choiceBox2.getValue())); 
+      // Verify selection 
+      verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
+      "Loverboy".equals(choiceBox2.getValue())); 
     } else {
-        System.out.println("ChoiceBox with ID #movieScrollBar not found.");
+      System.out.println("ChoiceBox with ID #movieScrollBar not found.");
     }
 
     Button moreInfoBtn = (Button) lookup("#moreInfobtn").query();  // Locate the button by its ID
     
     Platform.runLater(() -> {
       if (moreInfoBtn != null) {
-          moreInfoBtn.fire();
-          System.out.println("Button fired");
+        moreInfoBtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
 
@@ -147,10 +145,9 @@ public class FrontPageTest extends ApplicationTest {
 
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
-          addMoviebtn.fire();
-          System.out.println("Button fired");
+        addMoviebtn.fire();
       } else {
-          System.out.println("Button is null");
+        System.out.println("Button is null");
       }
     });
     WaitForAsyncUtils.waitForFxEvents();
