@@ -1,9 +1,11 @@
 package movielibrary.ui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -13,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
-import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -94,7 +95,17 @@ public class MoviePageTest extends ApplicationTest {
   public void testLendMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", false);
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be false");
-    clickOn(LabeledMatchers.hasText("Lend"));
+
+    Button lendbtn = (Button) lookup("#lendbtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (lendbtn != null) {
+          lendbtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -108,7 +119,17 @@ public class MoviePageTest extends ApplicationTest {
   public void testReturnMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", true);
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be true");
-    clickOn(LabeledMatchers.hasText("Return"));
+
+    Button returnbtn = (Button) lookup("#returnbtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (returnbtn != null) {
+          returnbtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
     
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -122,7 +143,17 @@ public class MoviePageTest extends ApplicationTest {
   public void testLendAlreadyLentMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", true);
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be true");
-    clickOn(LabeledMatchers.hasText("Lend"));
+    
+    Button lendbtn = (Button) lookup("#lendbtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (lendbtn != null) {
+          lendbtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -136,7 +167,17 @@ public class MoviePageTest extends ApplicationTest {
   public void testReturnNotLentMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", false);
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be false");
-    clickOn(LabeledMatchers.hasText("Return"));
+
+    Button returnbtn = (Button) lookup("#returnbtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (returnbtn != null) {
+          returnbtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
     
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -148,7 +189,16 @@ public class MoviePageTest extends ApplicationTest {
   // verify that the elements from the movie page are present
   @Test
   public void testReturnToFrontPage() {
-    clickOn(LabeledMatchers.hasText("Cancel"));
+     Button cancelbtn = (Button) lookup("#cancelbtn").query();  // Locate the button by its ID
+
+    Platform.runLater(() -> {
+      if (cancelbtn != null) {
+          cancelbtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
     WaitForAsyncUtils.waitForFxEvents();
     
     verifyThat("#movieScrollBar", NodeMatchers.isVisible());

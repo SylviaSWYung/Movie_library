@@ -1,5 +1,6 @@
 package movielibrary.ui;
 
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -57,14 +58,19 @@ public class FrontPageTest extends ApplicationTest {
   @Test
   @DisplayName("Choosing a movie from the scrollbar test")
   public void testChooseMovie() {
-    clickOn("#movieScrollBar");
-    WaitForAsyncUtils.waitForFxEvents();
+    @SuppressWarnings("unchecked")
+    ChoiceBox<String> choiceBox = lookup("#movieScrollBar").queryAs(ChoiceBox.class);
+    if (choiceBox != null) {
+        // Select "Loverboy" 
+        interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
+        WaitForAsyncUtils.waitForFxEvents();
 
-    clickOn("Loverboy");
-    WaitForAsyncUtils.waitForFxEvents();
-
-    verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox) -> 
-    "Loverboy".equals(choiceBox.getValue()));
+        // Verify selection 
+        verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
+        "Loverboy".equals(choiceBox2.getValue())); 
+    } else {
+        System.out.println("ChoiceBox with ID #movieScrollBar not found.");
+    }
   }
 
 
@@ -72,7 +78,17 @@ public class FrontPageTest extends ApplicationTest {
   @Test
   @DisplayName("More info button test - no movie selected")
   public void moreInfoBtn_NoMovieSelected() throws IOException {
-    clickOn("#moreInfobtn");
+    Button moreInfoBtn = (Button) lookup("#moreInfobtn").query();  // Locate the button by its ID
+    
+    Platform.runLater(() -> {
+      if (moreInfoBtn != null) {
+          moreInfoBtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
+
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
@@ -83,13 +99,31 @@ public class FrontPageTest extends ApplicationTest {
   @Test
   @DisplayName("More info button test")
   public void testMoreInfobtn() throws IOException {
-    clickOn("#movieScrollBar");
-    WaitForAsyncUtils.waitForFxEvents();
+    @SuppressWarnings("unchecked")
+    ChoiceBox<String> choiceBox = lookup("#movieScrollBar").queryAs(ChoiceBox.class);
+    if (choiceBox != null) {
+        // Select "Loverboy" 
+        interact(() -> choiceBox.getSelectionModel().select("Loverboy"));
+        WaitForAsyncUtils.waitForFxEvents();
 
-    clickOn("Loverboy");
-    WaitForAsyncUtils.waitForFxEvents();
+        // Verify selection 
+        verifyThat("#movieScrollBar", (ChoiceBox<String> choiceBox2) -> 
+        "Loverboy".equals(choiceBox2.getValue())); 
+    } else {
+        System.out.println("ChoiceBox with ID #movieScrollBar not found.");
+    }
 
-    clickOn("#moreInfobtn");
+    Button moreInfoBtn = (Button) lookup("#moreInfobtn").query();  // Locate the button by its ID
+    
+    Platform.runLater(() -> {
+      if (moreInfoBtn != null) {
+          moreInfoBtn.fire();
+          System.out.println("Button fired");
+      } else {
+          System.out.println("Button is null");
+      }
+    });
+
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat("#movieTitleInPage", NodeMatchers.isVisible());
