@@ -218,7 +218,7 @@ public class MoviePageController {
       if (throwError) {
         throw new IOException("Simulated IOException");
       }
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/Frontpage.fxml"));
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/FrontPage.fxml"));
       Parent root = loader.load();
 
       // get current stage and set the new scene (frontpage).
