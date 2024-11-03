@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -21,6 +22,7 @@ import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
 import java.io.IOException;
 
@@ -101,6 +103,34 @@ public class FrontPageTest extends ApplicationTest {
     verifyThat("#movieDuration", NodeMatchers.isVisible());
     TextField movieDurationField = lookup("#movieDuration").queryAs(TextField.class);
     assertThat(movieDurationField).hasText("30.0");
+  }
+
+  // Tests to see if AddMoveiPage.fxml is loaded correctly
+  @Test
+  @DisplayName("Addmovie button test")
+  public void testAddMoviebtn() {
+    clickOn("#addMoviebtn");
+    WaitForAsyncUtils.waitForFxEvents();
+
+    verifyThat("#newMovieTitle", NodeMatchers.isVisible());
+    TextField newMovieTitleField = lookup("#newMovieTitle").queryAs(TextField.class);
+    assertTrue(newMovieTitleField.getText().isEmpty(), "Textfield should be empty on load");
+
+    verifyThat("#newMovieLength", NodeMatchers.isVisible());
+    TextField newMovieLengthField = lookup("#newMovieLength").queryAs(TextField.class);
+    assertTrue(newMovieLengthField.getText().isEmpty(), "Textfield should be empty on load");
+
+    verifyThat("#newMovieDescription", NodeMatchers.isVisible());
+    TextArea newMovieDescriptionField = lookup("#newMovieDescription").queryAs(TextArea.class);
+    assertTrue(newMovieDescriptionField.getText().isEmpty(), "TextArea should be empty on load");
+
+    verifyThat("#addMoviebtn", NodeMatchers.isVisible());
+    Button addMoviebtn = lookup("#addMoviebtn").queryAs(Button.class);
+    assertThat(addMoviebtn).hasText("Add Movie");
+
+    verifyThat("#cancelbtn", NodeMatchers.isVisible());
+    Button cancelbtn = lookup("#cancelbtn").queryAs(Button.class);
+    assertThat(cancelbtn).hasText("Cancel");
   }
 
   // Indirectly test the error when running the loadPage method with a invalid FXML file

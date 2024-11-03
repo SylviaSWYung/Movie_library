@@ -72,6 +72,14 @@ public class MoviePageController {
   private Button cancelbtn;
 
   /**
+   * FXML UI components on the MoviePage.
+   * {@code deleteMoviebtn} is a button that delete the chosen movie 
+   * and returns the user back to {@code FrontPage.fxml}.
+   */
+  @FXML
+  private Button deleteMoviebtn;
+
+  /**
    * Declare movieDeserializer variable of type {@link MovieDeserializer}, 
    * and movieSerializer variable of type {@link MovieSerializer}.
    * Declare movieManager variable of type {@link MovieManager}, 
@@ -161,6 +169,30 @@ public class MoviePageController {
       alert.showAndWait();
     }    
   }
+
+  /**
+   * Handles the {@code Delete} button and deletes the movie on the page. 
+   * Runs the {@code returnToFrontPage} method to load the front page {@code FrontPage.fxml}.
+   *
+   * @throws IOException Throws IOException if an I/O error occurs while accessing the file
+   */
+  @FXML
+  public void handleDeleteMoviebtn(ActionEvent event) throws IOException {
+    movie = movieDeserializer.findMovie(movieTitleInPage.getText());
+    try {
+      movieSerializer.deleteMovieFromLibrary(movie.getTitle());
+      Alert alert = new Alert(AlertType.CONFIRMATION);
+      alert.setTitle("Success!");
+      alert.setContentText("Movie is deleted!");
+      alert.showAndWait();
+      returnToFrontPage(event);
+    } catch (IllegalStateException e) {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Failed!");
+      alert.setContentText(e.getMessage());
+      alert.showAndWait();
+    }
+  } 
 
   /**
    * Handles the {@code cancel} button, returning to the front page.

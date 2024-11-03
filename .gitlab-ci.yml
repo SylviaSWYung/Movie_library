@@ -1,0 +1,42 @@
+default:
+  image: maven:latest
+
+stages:
+  - build
+  - checkstyle
+  - spotbugs
+  - mvn-test
+  - clean
+
+variables:
+  GIT_DEPTH: "0"
+  MAVEN_OPTS: "-DskipTests"
+  SKIP_UI_TESTS: "true"
+
+build:
+  stage: build
+  script:
+    - "mvn clean install --file movielibrary/ -Pskip-fxui-tests"
+    - "mvn compile --file movielibrary/"
+
+checkstyle-test:
+  stage: checkstyle
+  script:
+    - "mvn checkstyle:check --file movielibrary/"
+
+spotbugs:
+  stage: spotbugs
+  script:
+    - "mvn install -pl core -am --file movielibrary/"
+    - "mvn spotbugs:check --file movielibrary/"
+
+maven-test:
+  stage: mvn-test
+  script:
+    - "mvn test --file movielibrary/ -Pskip-fxui-tests"
+  allow_failure: true
+
+clean-up:
+  stage: clean
+  script:
+    - "mvn clean --file movielibrary/"
