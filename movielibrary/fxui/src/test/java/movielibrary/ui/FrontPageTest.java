@@ -11,7 +11,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -25,13 +24,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.testfx.api.FxAssert.verifyThat;
-import java.io.IOException;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public class FrontPageTest extends ApplicationTest {
 
   private Parent root;
   private FrontPageController controller;
+  private File temporaryFile;
 
   @BeforeAll
   public static void setUpHeadless() {
@@ -41,18 +44,19 @@ public class FrontPageTest extends ApplicationTest {
   // Loads the FrontPage.fxml file
   @Override
   public void start(Stage stage) throws Exception {
+    File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
+    temporaryFile = new File("../core/src/main/resources/movielibrary/json/internal/tempmovies.json");
+    Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("FrontPage.fxml"));
     root = fxmlLoader.load();    
+
+    controller = fxmlLoader.getController();
+    controller.setMovieFile(temporaryFile);
 
     stage.setScene(new Scene(root));
     stage.show();
   }
-
-  // initializes the FrontPageController
-  @BeforeEach
-  public void setUp() {
-    controller = new FrontPageController();
-  }
+  
 
   // Tests to see if the choosen movie is handled correctly
   @Test
