@@ -53,8 +53,8 @@ public class FrontPageController {
   private Movie movie;
 
   /**
-   * Sets the file the {@code MovieManager} object, {@code MovieDeserializer} object
-   * and {@code MovieSerializer} object are going to use during the running of the app. 
+   * Sets the file the {@code MovieDeserializer} object 
+   * that it is going to use during the running of the app. 
    * Retrieves all movie titles from the data in {@code File} object
    * and adds them to the list {@code movieTitles}.
    * The movie titles are then added as items in the {@code MovieScrollBar}
