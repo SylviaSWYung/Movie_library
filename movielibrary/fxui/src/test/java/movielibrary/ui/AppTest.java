@@ -2,6 +2,7 @@ package movielibrary.ui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.IOException;
@@ -21,6 +22,47 @@ public class AppTest extends ApplicationTest {
   @BeforeAll
   public static void setUpHeadless() {
     App.supportHeadless();
+  }
+
+  @Test
+  public void testSupportHeadlessWhenHeadlessTrue() {
+    // Set the "headless" property to true
+    System.setProperty("headless", "true");
+    
+    App.supportHeadless();
+    
+    // Assert that system properties are correctly set
+    assertEquals("glass", System.getProperty("testfx.robot"));
+    assertEquals("true", System.getProperty("testfx.headless"));
+    assertEquals("sw", System.getProperty("prism.order"));
+    assertEquals("t2k", System.getProperty("prism.text"));
+    assertEquals("true", System.getProperty("java.awt.headless"));
+    
+    // Cleanup after test
+    System.clearProperty("headless");
+    System.clearProperty("testfx.robot");
+    System.clearProperty("testfx.headless");
+    System.clearProperty("prism.order");
+    System.clearProperty("prism.text");
+    System.clearProperty("java.awt.headless");
+  }
+
+  @Test
+  public void testSupportHeadlessWhenHeadlessFalse() {
+    // Set the "headless" property to false
+    System.setProperty("headless", "false");
+
+    App.supportHeadless();
+    
+    // Assert that system properties are NOT set
+    assertNull(System.getProperty("testfx.robot"));
+    assertNull(System.getProperty("testfx.headless"));
+    assertNull(System.getProperty("prism.order"));
+    assertNull(System.getProperty("prism.text"));
+    assertNull(System.getProperty("java.awt.headless"));
+    
+    // Cleanup after test
+    System.clearProperty("headless");
   }
 
   // starts the application
