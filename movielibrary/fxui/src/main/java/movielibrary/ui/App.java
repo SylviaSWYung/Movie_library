@@ -32,6 +32,10 @@ public class App extends Application {
       FXMLLoader fxmlLoader = 
           new FXMLLoader(App.class.getResource("/movielibrary/ui/FrontPage.fxml"));
       Parent parent = fxmlLoader.load();
+
+      //Retreieves controller for FrontPage
+      FrontPageController frontPageController = fxmlLoader.getController();
+      frontPageController.setMovieFile(null);
       
       primaryStage.setScene(new Scene(parent));
       primaryStage.setTitle("MovieLibrary App");
