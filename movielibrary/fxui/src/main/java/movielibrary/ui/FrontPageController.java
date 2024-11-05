@@ -53,34 +53,32 @@ public class FrontPageController {
   private Movie movie;
 
   /**
-   * Initialize the FrontPage. Creates a {@link MovieDeserializer} object 
-   * to access the data from {@code Movies.json} file stored in the 
-   * user's home directory
-   * Retrieves all movie titles from the data in {@code Movies.json}
+   * Sets the file the {@code MovieDeserializer} object 
+   * that it is going to use during the running of the app. 
+   * Retrieves all movie titles from the data in {@code File} object
    * and adds them to the list {@code movieTitles}.
    * The movie titles are then added as items in the {@code MovieScrollBar}
    *
-   * @throws IOException if an I/O error occurs while accessing the {@code movies.json} file
+   * @param file a {@code File} object to handle reading and writing 
+   * @throws IOException if an I/O error occurs while reading or writing the file
    */
-  @FXML
-  public void initialize() throws IOException {
-    try {
+  public void setMovieFile(File file) throws IOException {
+    if (file == null || !file.exists()) {
       File jsonFile = new File(
           System.getProperty("user.home") 
           + System.getProperty("file.separator")
           + "movies.json"
       );
       movieDeserializer = new MovieDeserializer(jsonFile);
-
-      List<String> movieTitles = new ArrayList<>();
-      for (Movie mov : movieDeserializer.getMoviesInLibrary()) {
-        movieTitles.add(mov.getTitle());
-      }
-      movieScrollBar.getItems().addAll(movieTitles);
-
-    } catch (Exception e) {
-      e.printStackTrace();
+    } else {
+      movieDeserializer = new MovieDeserializer(file);
     }
+
+    List<String> movieTitles = new ArrayList<>();
+    for (Movie mov : movieDeserializer.getMoviesInLibrary()) {
+      movieTitles.add(mov.getTitle());
+    }
+    movieScrollBar.getItems().addAll(movieTitles);
   }
 
   /**
