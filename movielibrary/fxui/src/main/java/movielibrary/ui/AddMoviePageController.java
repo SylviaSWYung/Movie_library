@@ -151,6 +151,9 @@ public class AddMoviePageController {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("/movielibrary/ui/FrontPage.fxml"));
       Parent root = loader.load();
 
+      FrontPageController frontPageController = loader.getController();
+      frontPageController.setMovieFile(null);
+
       // get current stage and set the new scene (frontpage).
       Stage stage = (Stage) cancelbtn.getScene().getWindow();
       Scene scene = new Scene(root);
