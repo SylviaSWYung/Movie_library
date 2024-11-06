@@ -21,15 +21,15 @@ import org.junit.jupiter.api.Test;
 import movielibrary.core.Movie;
 import movielibrary.json.internal.MovieDeserializer;
 
-//Tests for MovieDeserializer.java
+// Tests for MovieDeserializer.java
 public class MovieDeserializerTest {
     
-  //MovieDeserializer object to test, File object to use a temporary file
+  // MovieDeserializer object to test, File object to use a temporary file
   MovieDeserializer movieDeserializer;
   File temporaryFile;
 
-  //Default setup for each test
-  //Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieDeserializer object
+  // Default setup for each test
+  // Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieDeserializer object
   @BeforeEach
   public void setUp() throws IOException{
     File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
@@ -39,13 +39,13 @@ public class MovieDeserializerTest {
     movieDeserializer = new MovieDeserializer(temporaryFile);
   }
 
-  //Deletes the temporary file after each test
+  // Deletes the temporary file after each test
   @AfterEach
   public void deleteTemporaryFile() {
     temporaryFile.delete();
   }
 
-  //Test deserialization process
+  // Test deserialization process
   @Test
   @DisplayName("Test deserialization process, ensure that json string correctly deserializes into a list of movie")
   public void testDeserializeMovie() throws IOException{
@@ -54,7 +54,7 @@ public class MovieDeserializerTest {
     assertEquals(4, movies.size(), "There should be 4 movies in the library.");
   }
 
-  //Test findMovie method
+  // Test findMovie method
   @Test
   @DisplayName("Test movie search, test for findMovie()")
   public void testFindMovie() throws IOException{
@@ -64,7 +64,7 @@ public class MovieDeserializerTest {
 
   }
 
-  //Test non-existen movie in library
+  // Test non-existen movie in library
   @Test
   @DisplayName("Test finding a non-exsistent movie")
   public void testFindNoneExistentMovie() throws IOException{
@@ -72,14 +72,14 @@ public class MovieDeserializerTest {
     assertNull(movie, "Non-existent movie should return null");
   }
 
-  //Test checkIfLent method
+  // Test checkIfLent method
   @Test
   @DisplayName("Test movie lending status, checkifLent()")
   public void testCheckIfMovieIsLent() throws IOException{
     assertFalse(movieDeserializer.checkIfLent("The Trollgirl"), "The movie should be available to lent");
   }
 
-  //Test non-existent movie is lent
+  // Test non-existent movie is lent
   @Test
   @DisplayName("Test if non-existent movie is lent")
   public void testCheckIfLentNonExistentMovie() throws IOException{
@@ -88,7 +88,7 @@ public class MovieDeserializerTest {
     }, "Should throw NoSuchElementException for non-exist movie");
   }
 
-  //Test reloadMovieData method
+  // Test reloadMovieData method
   @Test
   @DisplayName("Test reloading movie data, reloadmoviedata()")
   public void testReloadMovieData() throws IOException{

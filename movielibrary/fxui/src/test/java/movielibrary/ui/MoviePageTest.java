@@ -43,16 +43,16 @@ public class MoviePageTest extends ApplicationTest {
     App.supportHeadless();
   }
 
-  //deletes the temporaryFile after each test run
+  // Deletes the temporaryFile after each test run
   @AfterEach
   public void deleteTemporaryFile() {
     temporaryFile.delete();
   }
 
-  // starts the movie page and loads the MoviePage.fxml file
+  // Starts the movie page and loads the MoviePage.fxml file
   @Override
   public void start(Stage stage) throws Exception {
-    //creates a temporaryFile so the data doesn't get modified during test runs
+    // Creates a temporaryFile so the data doesn't get modified during test runs
     File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
     temporaryFile = new File("../core/src/main/resources/movielibrary/json/internal/tempmovies.json");
     Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
@@ -63,17 +63,17 @@ public class MoviePageTest extends ApplicationTest {
     root = fxmlLoader.load();
     moviePageController = fxmlLoader.getController();
 
-    //sets the temporaryFile as the file used during test runs
+    // Sets the temporaryFile as the file used during test runs
     moviePageController.setMovieFile(temporaryFile);
 
-    // sets default movie details for the movie page
+    // Sets default movie details for the movie page
     moviePageController.setMovieDetails("The Trollgirl", "When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.", 100);
 
     stage.setScene(new Scene(root));
     stage.show();
   }
 
-  // set movie details test
+  // Set movie details test
   @Test
   public void testSetMovieDetails() {
     moviePageController.setMovieDetails("The Trollgirl", "When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.", 100);
@@ -89,8 +89,8 @@ public class MoviePageTest extends ApplicationTest {
     assertThat(movieDurationField).hasText("100.0");
   }
 
-  // test lend movie
-  // should display an alert that the movie is lent and set the lending status to true
+  // Test lend movie
+  // Should display an alert that the movie is lent and set the lending status to true
   @Test
   public void testLendMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", false);
@@ -112,8 +112,8 @@ public class MoviePageTest extends ApplicationTest {
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be turned to true");
   }
 
-  // test return movie
-  // should display an alert that the movie is returned and set the lending status to false
+  // Test return movie
+  // Should display an alert that the movie is returned and set the lending status to false
   @Test
   public void testReturnMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", true);
@@ -135,8 +135,8 @@ public class MoviePageTest extends ApplicationTest {
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should be turned to false");
   }
 
-  // test lend movie that is already lent
-  // should display an alert that the movie is already lent and keep the lending status as true
+  // Test lend movie that is already lent
+  // Should display an alert that the movie is already lent and keep the lending status as true
   @Test
   public void testLendAlreadyLentMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", true);
@@ -158,8 +158,8 @@ public class MoviePageTest extends ApplicationTest {
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should still be true");
   }
 
-  // test return movie that is not lent
-  // should display an alert that the movie is not lent and keep the lending status as false
+  // Test return movie that is not lent
+  // Should display an alert that the movie is not lent and keep the lending status as false
   @Test
   public void testReturnNotLentMovie() throws IOException {
     movieSerializer.changeLentStatus("The Trollgirl", false);
@@ -181,8 +181,8 @@ public class MoviePageTest extends ApplicationTest {
     assertFalse(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should still be false");
   }
 
-  // test returning to the front page by pressing the cancel button
-  // verify that the elements from the movie page are present
+  // Test returning to the front page by pressing the cancel button
+  // Verify that the elements from the movie page are present
   @Test
   public void testReturnToFrontPage() {
      Button cancelbtn = (Button) lookup("#cancelbtn").query();  // Locate the button by its ID
@@ -200,7 +200,7 @@ public class MoviePageTest extends ApplicationTest {
     verifyThat("#moreInfobtn", NodeMatchers.isVisible());
   }
 
-  // test the IO exception that occurs when failing to return to the front page
+  // Test the IO exception that occurs when failing to return to the front page
   @Test
   public void testReturnToFrontPageFail() throws IOException {
     moviePageController.loadFrontPage(true);

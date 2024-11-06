@@ -14,15 +14,15 @@ import org.junit.jupiter.api.Test;
 
 import movielibrary.json.internal.MovieSerializer;
 
-//Tests for MovieSerializer.java class
+// Tests for MovieSerializer.java class
 public class MovieSerializerTest {
     
-  //MovieSerializer object for testing, File object for temporary file
+  // MovieSerializer object for testing, File object for temporary file
   private MovieSerializer movieSerializer;
   private File temporaryFile;
 
-  //Default setup for each test
-  //Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieSerializer object
+  // Default setup for each test
+  // Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieSerializer object
   @BeforeEach
   public void setup() throws IOException {
     File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
@@ -32,13 +32,13 @@ public class MovieSerializerTest {
     movieSerializer = new MovieSerializer(temporaryFile);
   }
 
-  //Deletes the temporary file after each test
+  // Deletes the temporary file after each test
   @AfterEach
   public void deleteTemporaryFile() {
     temporaryFile.delete();
   }
 
-  //Test serialize method of MovieSerializer.java
+  // Test serialize method of MovieSerializer.java
   @Test
   @DisplayName("Test-serialize")
   public void testSerializer() throws IOException {
