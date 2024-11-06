@@ -23,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import movielibrary.json.internal.MovieSerializer;
 
@@ -153,6 +152,7 @@ public class AddMoviePageTest extends ApplicationTest {
   @DisplayName("Test invalid movie length")
   public void testInvalidMovieLength() throws InterruptedException {
     TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
+    TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
     Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
@@ -197,8 +197,7 @@ public class AddMoviePageTest extends ApplicationTest {
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
 
-    doubleClickOn("#newMovieLength");
-    push(KeyCode.DELETE);
+    newMovieLength.clear();
     clickOn("#newMovieLength").write("123");
     Platform.runLater(() -> {
       if (addMoviebtn != null) {
