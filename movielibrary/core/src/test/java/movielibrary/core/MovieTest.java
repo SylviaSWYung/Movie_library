@@ -7,16 +7,16 @@ import org.junit.jupiter.api.Test;
 
 public class MovieTest {
 
-  //Movie-object for testing
+  // Movie-object for testing
   private Movie movie;
 
-  //Default setup for each test
+  // Default setup for each test
   @BeforeEach
   public void setup() {
     movie = Movie.createMovie("Cinderella", 110, "A girl with evil step sisters.");
   }
   
-  //Testing the construction of Movie class
+  // Testing the construction of Movie class
   @Test
   @DisplayName("Constructor")
   public void testConstructor() {
@@ -56,7 +56,7 @@ public class MovieTest {
     });
   }
 
-  //Testing the setTitle method
+  // Testing the setTitle method
   @Test
   @DisplayName("Set-title")
   public void testTitle() {
@@ -75,7 +75,7 @@ public class MovieTest {
     });
   }
 
-  //Testing the setDescription method
+  // Testing the setDescription method
   @Test
   @DisplayName("Set-description")
   public void testDescription() {
@@ -99,7 +99,7 @@ public class MovieTest {
     });
   }
 
-  //Testing the setMovieLength method
+  // Testing the setMovieLength method
   @Test
   @DisplayName("Set-movieLength")
   public void testMovieLength() {
@@ -115,7 +115,7 @@ public class MovieTest {
     });
   }
 
-  //Testing the setLent method
+  // Testing the setLent method
   @Test
   @DisplayName("Test-Lent")
   public void testIsLent() {

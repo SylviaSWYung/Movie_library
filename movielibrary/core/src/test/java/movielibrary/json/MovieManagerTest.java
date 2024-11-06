@@ -16,16 +16,16 @@ import org.junit.jupiter.api.Test;
 import movielibrary.json.internal.MovieManager;
 import movielibrary.json.internal.MovieSerializer;
 
-//Tests for MovieManager.java class
+// Tests for MovieManager.java class
 public class MovieManagerTest {
     
-  //MovieManager object to test, File object to use a temporary file
+  // MovieManager object to test, File object to use a temporary file
   private MovieManager movieManager;
   private MovieSerializer movieSerializer;
   private File temporaryFile;
 
-  //Default setup for each test
-  //Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieManager object
+  // Default setup for each test
+  // Creates a temporary file (a copy of the original moviesTest.json) for the testing, and initializes the MovieManager object
   @BeforeEach
   public void setup() throws IOException {
     File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
@@ -39,13 +39,13 @@ public class MovieManagerTest {
     }
   }
 
-  //Deletes the temporary file after each test
+  // Deletes the temporary file after each test
   @AfterEach
   public void deleteTemporaryFile() {
     temporaryFile.delete();
   }
 
-  //Tests fake file input in instructor
+  // Tests fake file input in instructor
   @Test
   @DisplayName("Test invalid file input in constructor")
   public void testInvalidFileInput() throws IOException {
@@ -61,14 +61,14 @@ public class MovieManagerTest {
     Assertions.assertEquals(file, fakeMovieManager.getFile());
   }
 
-  //Test getFile method of MovieManager.java
+  // Test getFile method of MovieManager.java
   @Test
   @DisplayName("Test file")
   public void testFile() {
     Assertions.assertEquals(temporaryFile, movieManager.getFile());
   }
 
-  //Test setFile method
+  // Test setFile method
   @Test
   @DisplayName("Test setFile")
   public void testSetFile() throws IOException {
@@ -78,12 +78,12 @@ public class MovieManagerTest {
     testFile.delete();
   }
 
-  //Test lend method
+  // Test lend method
   @Test
   @DisplayName("Lend movie")
   public void testLend() throws IOException {
     movieManager.lend("The Trollgirl");
-    //Cannot lend when already lent
+    // Cannot lend when already lent
     Assertions.assertThrows(IllegalStateException.class, () -> {
         movieManager.lend("The Trollgirl");
     });
@@ -99,7 +99,7 @@ public class MovieManagerTest {
     });
   }
 
-  //Test successful return of a lent movie
+  // Test successful return of a lent movie
   @Test
   @DisplayName("Test successful return")
   public void testSuccessfulReturn() throws IOException {
