@@ -158,6 +158,30 @@ public class MoviePageTest extends ApplicationTest {
     assertTrue(movieSerializer.getLentStatus("The Trollgirl"), "Movie lending status should still be true");
   }
 
+  // Test deleting movie success
+  @Test
+  public void testDeleteMovieSuccess() throws IOException {
+
+    Button deletebtn = (Button) lookup("#deleteMoviebtn").query();  // Locate the button by its ID
+
+    assertTrue(movieSerializer.movieIsFound("The Trollgirl"), "The movie is not in the library.");
+    
+    Platform.runLater(() -> {
+      if (deletebtn != null) {
+        deletebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
+    WaitForAsyncUtils.waitForFxEvents();
+
+    verifyThat(".alert", NodeMatchers.isVisible());
+    verifyThat(".alert .content", hasText("Movie is deleted!"));
+
+    assertFalse(movieSerializer.movieIsFound("The Trollgirl"), "Movie is not deleted from the library.");
+  }
+
+
   // Test return movie that is not lent
   // Should display an alert that the movie is not lent and keep the lending status as false
   @Test
