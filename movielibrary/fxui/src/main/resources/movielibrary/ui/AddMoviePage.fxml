@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movielibrary.ui.AddMoviePageController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="movielibrary.ui.AddMoviePageController">
    <children>
       <Text fill="#ff659d" layoutX="185.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a movie to your library">
          <font>
@@ -19,8 +19,8 @@
       <Text layoutX="128.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Description of the movie:" />
       <Text layoutX="151.0" layoutY="162.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length of the movie:" />
       <TextField fx:id="newMovieLength" layoutX="299.0" layoutY="145.0" />
-      <Button fx:id="addMoviebtn" layoutX="214.0" layoutY="323.0" mnemonicParsing="false" onAction="#addMovie" text="Add Movie" />
-      <Button fx:id="cancelbtn" layoutX="300.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />
+      <Button fx:id="addMoviebtn" layoutX="206.0" layoutY="323.0" mnemonicParsing="false" onAction="#addMovie" text="Add Movie" />
+      <Button fx:id="cancelbtn" layoutX="311.0" layoutY="323.0" mnemonicParsing="false" onAction="#returnToFrontPage" text="Cancel" />
       <TextArea fx:id="newMovieDescription" layoutX="299.0" layoutY="192.0" prefHeight="89.0" prefWidth="149.0" wrapText="true" />
    </children>
 </Pane>
