@@ -125,7 +125,7 @@ public class AddMoviePageTest extends ApplicationTest {
     WaitForAsyncUtils.waitForFxEvents();
 
     verifyThat(".alert", NodeMatchers.isVisible());
-    verifyThat(".alert .content", hasText("You must fill out the title of the new move!"));
+    verifyThat(".alert .content", hasText("You must fill out the title of the new movie!"));
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
 
