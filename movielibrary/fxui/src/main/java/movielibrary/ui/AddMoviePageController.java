@@ -90,7 +90,7 @@ public class AddMoviePageController {
 
     String error = null;
     if (newMovieTitle.getText().strip().isEmpty()) {
-      error = "You must fill out the title of the new move!";
+      error = "You must fill out the title of the new movie!";
     } else if (newMovieLength.getText().strip().isEmpty()) {
       error = "You must fill out the length of the new movie!";
     } else if (newMovieDescription.getText().strip().isEmpty()) {
