@@ -1,6 +1,5 @@
 package movielibrary.ui;
 
-import java.io.File;
 import java.io.IOException;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -15,10 +14,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieDeserializer;
-import movielibrary.json.internal.MovieManager;
-import movielibrary.json.internal.MovieSerializer;
-
 
 /**
  * The {@code MoviePageController} handles the FXML file {@code MoviePage} and it's behaviour.
@@ -28,6 +23,8 @@ import movielibrary.json.internal.MovieSerializer;
  * If the user wants to cancel the chosen movie, user can click on the {@code cancel} button.  
  */
 public class MoviePageController {
+
+  private RemoteMovieLibraryAccess access = new RemoteMovieLibraryAccess();
 
   /**
    * FXML UI components on the MoviePage.
@@ -79,45 +76,16 @@ public class MoviePageController {
   @FXML
   private Button deleteMoviebtn;
 
-  /**
-   * Declare movieDeserializer variable of type {@link MovieDeserializer}, 
-   * and movieSerializer variable of type {@link MovieSerializer}.
-   * Declare movieManager variable of type {@link MovieManager}, 
-   * and movie variable of type {@link Movie}.
-   */
-  private MovieDeserializer movieDeserializer;
-  private MovieSerializer movieSerializer;
-  private MovieManager movieManager;
-  private Movie movie;
-  
-  
-  /**
-   * Handles the movie data {@code movieTitle}, {@code description} 
-   * and {@code movieLength} from the chosen movie.
-   * Sets the movie data to the corresponing FXML UI component on the {@code MoviePage.fxml}.
-   *
-   * @param movieTitle A String with the chosen movie title
-   * @param description A String with the description of the chosen movie
-   * @param movieLength A double with the length of the chosen movie
-   */
-  public void setMovieDetails(String movieTitle, String description, double movieLength) {
-    movieTitleInPage.setText(movieTitle);
-    summary.setText(description);
-    movieDuration.setText(String.valueOf(movieLength));
+  public void setMovieDetails(String movieTitle) {
+    Movie movie = access.getMovieByTitle(movieTitle);
+    if (movie != null) {
+      movieTitleInPage.setText(movie.getTitle());
+      summary.setText(movie.getDescription());
+      movieDuration.setText(String.valueOf(movie.getMovieLength()));
+    } else {
+      showAlert(AlertType.ERROR, "Error", "Movie not found on server.");
+    }
   }
-
-  /**
-   * Sets the file the {@code MovieManager} object, {@code MovieDeserializer} object
-   * and {@code MovieSerializer} object are going to use during the running of the app. 
-   *
-   * @param file a {@code File} object to handle reading and writing 
-   * @throws IOException if an I/O error occurs while reading or writing the file
-   */
-  public void setMovieFile(File file) throws IOException {
-    movieManager = MovieManager.createMovieManager(file);
-    movieDeserializer = new MovieDeserializer(movieManager.getFile());
-    movieSerializer = new MovieSerializer(movieManager.getFile());
-  }  
 
   /**
    * Handles the {@code lent} button, and lends the movie. 
@@ -129,18 +97,12 @@ public class MoviePageController {
    */
   @FXML
   public void handleLendbtn(ActionEvent event) throws IOException {
-    movie = movieDeserializer.findMovie(movieTitleInPage.getText().strip());
-    if (movieDeserializer.checkIfLent(movie.getTitle())) {
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Failed!");
-      alert.setContentText("The movie is alredy lent!");
-      alert.showAndWait();
+    String title = movieTitleInPage.getText();
+    if (access.getLentStatus(title)) {
+      showAlert(AlertType.ERROR, "Failed", "The movie is already lent!");
     } else {
-      movieManager.lend(movie.getTitle());
-      Alert alert = new Alert(AlertType.INFORMATION);
-      alert.setTitle("Success!");
-      alert.setContentText("Movie lend!");
-      alert.showAndWait();
+      access.lendMovie(title);
+      showAlert(AlertType.INFORMATION, "Success", "Movie lend!");
     }
   }
 
@@ -154,19 +116,11 @@ public class MoviePageController {
    */
   @FXML
   public void handleReturnbtn(ActionEvent event) throws IOException {
-    movie = movieDeserializer.findMovie(movieTitleInPage.getText().strip());
-    if (!movieDeserializer.checkIfLent(movie.getTitle())) {
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Failed!");
-      alert.setContentText("You have not lent this movie.");
-      alert.showAndWait();
+    if (!access.getLentStatus(movieTitleInPage.getText())) {
+      showAlert(AlertType.ERROR, "Failed!", "The movie is not lent this movie.");
     } else {
-      movieManager.returnBack(movie.getTitle());
-      movieSerializer.changeLentStatus(movie.getTitle(), false);
-      Alert alert = new Alert(AlertType.CONFIRMATION);
-      alert.setTitle("Success!");
-      alert.setContentText("Movie is returned!");
-      alert.showAndWait();
+      access.returnMovie(movieTitleInPage.getText());
+      showAlert(AlertType.INFORMATION, "Success!", "Movie is returned!");
     }    
   }
 
@@ -178,19 +132,13 @@ public class MoviePageController {
    */
   @FXML
   public void handleDeleteMoviebtn(ActionEvent event) throws IOException {
-    movie = movieDeserializer.findMovie(movieTitleInPage.getText());
     try {
-      movieSerializer.deleteMovieFromLibrary(movie.getTitle());
-      Alert alert = new Alert(AlertType.CONFIRMATION);
-      alert.setTitle("Success!");
-      alert.setContentText("Movie is deleted!");
-      alert.showAndWait();
+      String movieTitle = movieTitleInPage.getText();
+      access.deleteMovie(movieTitle);
+      showAlert(AlertType.INFORMATION, "Success!", "Movie deleted!");
       returnToFrontPage(event);
     } catch (IllegalStateException e) {
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Failed!");
-      alert.setContentText(e.getMessage());
-      alert.showAndWait();
+      showAlert(AlertType.ERROR, "Failed!", e.getMessage());
     }
   } 
 
@@ -222,7 +170,7 @@ public class MoviePageController {
       Parent root = loader.load();
 
       FrontPageController frontPageController = loader.getController();
-      frontPageController.setMovieFile(null);
+      frontPageController.initializes();
 
       // get current stage and set the new scene (frontpage).
       Stage stage = (Stage) cancelbtn.getScene().getWindow();
@@ -231,13 +179,15 @@ public class MoviePageController {
       stage.show();
     } catch (IOException e) {
       Platform.runLater(() -> {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText("Could not load the page");
-        alert.showAndWait();
+        showAlert(Alert.AlertType.ERROR, "Error", "Could not load the page");
       });
     }
   }
-  
+
+  private void showAlert(Alert.AlertType type, String title, String message) {
+    Alert alert = new Alert(type);
+    alert.setTitle(title);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }  
 }

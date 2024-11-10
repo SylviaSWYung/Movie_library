@@ -35,7 +35,7 @@ public class App extends Application {
 
       //Retreieves controller for FrontPage
       FrontPageController frontPageController = fxmlLoader.getController();
-      frontPageController.setMovieFile(null);
+      frontPageController.initializes();
       
       primaryStage.setScene(new Scene(parent));
       primaryStage.setTitle("MovieLibrary App");

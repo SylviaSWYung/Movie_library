@@ -51,7 +51,7 @@ public class FrontPageTest extends ApplicationTest {
     root = fxmlLoader.load();    
 
     controller = fxmlLoader.getController();
-    controller.setMovieFile(temporaryFile);
+    controller.initializes();
 
     stage.setScene(new Scene(root));
     stage.show();
