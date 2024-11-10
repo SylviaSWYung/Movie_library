@@ -1,6 +1,5 @@
 package movielibrary.ui;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import movielibrary.core.Movie;
-import movielibrary.json.internal.MovieDeserializer;
 
 /**
  * The {@code FrontPageController} handles the FXML file {@code FrontPage} and it's behaviour.
@@ -24,6 +22,8 @@ import movielibrary.json.internal.MovieDeserializer;
  */
 public class FrontPageController {
     
+  private RemoteMovieLibraryAccess access = new RemoteMovieLibraryAccess();
+
   /**
    * FXML UI components on the FrontPage.
    * {@code MoreInfobtn} is a button that redirects the user to the {@code MoviePage.fxml} page
@@ -45,40 +45,18 @@ public class FrontPageController {
   @FXML
   private ChoiceBox<String> movieScrollBar;
 
-  /**
-   * Declare movieDeserializer variable of type {@link MovieDeserializer} 
-   * and movie variable of type {@link Movie}.
-   */
-  private MovieDeserializer movieDeserializer;
-  private Movie movie;
 
-  /**
-   * Sets the file the {@code MovieDeserializer} object 
-   * that it is going to use during the running of the app. 
-   * Retrieves all movie titles from the data in {@code File} object
-   * and adds them to the list {@code movieTitles}.
-   * The movie titles are then added as items in the {@code MovieScrollBar}
-   *
-   * @param file a {@code File} object to handle reading and writing 
-   * @throws IOException if an I/O error occurs while reading or writing the file
-   */
-  public void setMovieFile(File file) throws IOException {
-    if (file == null || !file.exists()) {
-      File jsonFile = new File(
-          System.getProperty("user.home") 
-          + System.getProperty("file.separator")
-          + "movies.json"
-      );
-      movieDeserializer = new MovieDeserializer(jsonFile);
-    } else {
-      movieDeserializer = new MovieDeserializer(file);
+  public void initializes() throws IOException {
+    try {
+      List<Movie> movies = access.getMovies();
+      List<String> movieTitles = new ArrayList<>();
+      for (Movie mov : movies) {
+        movieTitles.add(mov.getTitle());
+      }
+      movieScrollBar.getItems().addAll(movieTitles);
+    } catch (RuntimeException e) {
+      e.printStackTrace();
     }
-
-    List<String> movieTitles = new ArrayList<>();
-    for (Movie mov : movieDeserializer.getMoviesInLibrary()) {
-      movieTitles.add(mov.getTitle());
-    }
-    movieScrollBar.getItems().addAll(movieTitles);
   }
 
   /**
@@ -93,7 +71,7 @@ public class FrontPageController {
   public void handleMoreInfoButton() throws IOException {
     String chosenMovie = movieScrollBar.getValue();
     if (chosenMovie != null && !chosenMovie.isEmpty()) {
-      movie = movieDeserializer.findMovie(chosenMovie);
+      Movie movie = access.getMovieByTitle(chosenMovie);
       loadPage("MoviePage.fxml", movie.getTitle(), movie.getDescription(), movie.getMovieLength());
     } else {
       Alert alert = new Alert(AlertType.ERROR, "Please choose a movie from the scrollbar menu");
@@ -113,9 +91,6 @@ public class FrontPageController {
       FXMLLoader loader = new FXMLLoader(getClass()
                           .getResource("/movielibrary/ui/AddMoviePage.fxml"));
       Parent parent = loader.load();
-
-      AddMoviePageController addMoviePageController = loader.getController();
-      addMoviePageController.setMovieFile(null);
 
       Stage stage = (Stage) addMoviebtn.getScene().getWindow();
       Scene scene = new Scene(parent);
@@ -141,10 +116,7 @@ public class FrontPageController {
 
       MoviePageController moviePageController = loader.getController();
 
-      //Sets the file to null so it initializes movies.json file in user.home
-      moviePageController.setMovieFile(null);
-
-      moviePageController.setMovieDetails(movieTitle, description, movieLength);
+      moviePageController.setMovieDetails(movieTitle);
 
       Stage stage = (Stage) moreInfobtn.getScene().getWindow();
       Scene scene = new Scene(parent);

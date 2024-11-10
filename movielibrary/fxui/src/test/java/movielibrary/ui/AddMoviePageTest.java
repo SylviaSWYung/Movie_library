@@ -2,11 +2,14 @@ package movielibrary.ui;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.assertions.api.Assertions.assertThat;
 import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
@@ -15,6 +18,7 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.base.NodeMatchers;
 import org.testfx.util.WaitForAsyncUtils;
+import org.mockito.*;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -24,48 +28,37 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import movielibrary.json.internal.MovieSerializer;
+import movielibrary.core.Movie;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+
 
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
 public class AddMoviePageTest extends ApplicationTest {
+
+  @Mock
+  private RemoteMovieLibraryAccess mockedAccess = mock(RemoteMovieLibraryAccess.class);
   
+  @InjectMocks
   private AddMoviePageController addMoviePageController;
+
   private Parent root;
 
-  private MovieSerializer movieSerializer;
-  private File temporaryFile;
 
   @BeforeAll
   public static void setUpHeadless() {
     App.supportHeadless();
   }
 
-  // Deletes the temporaryFile after each test run
-  @AfterEach
-  public void deleteTemporaryFile() {
-    temporaryFile.delete();
-  }
 
   // Loads the FrontPage.fxml file
   @Override
   public void start(Stage stage) throws Exception {
 
-    File sourceOfFile = new File("../core/src/main/resources/movielibrary/json/internal/moviesTest.json");
-    temporaryFile = new File("../core/src/main/resources/movielibrary/json/internal/tempmovies.json");
-    Files.copy(sourceOfFile.toPath(), temporaryFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-    movieSerializer = new MovieSerializer(temporaryFile);
-
     FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("AddMoviePage.fxml"));
     root = fxmlLoader.load();    
     addMoviePageController = fxmlLoader.getController();
-
-    addMoviePageController.setMovieFile(temporaryFile);
+    addMoviePageController.setRemoteAccess(mockedAccess);
 
     stage.setScene(new Scene(root));
     stage.show();
@@ -110,6 +103,8 @@ public class AddMoviePageTest extends ApplicationTest {
   @Order(3)
   @DisplayName("Test invalid title")
   public void testInvalidTitle() {
+    doThrow(new IllegalStateException("The movie title already exists in the movielibrary!")).when(mockedAccess).addMovie(any(Movie.class));
+
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
     Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
@@ -271,9 +266,12 @@ public class AddMoviePageTest extends ApplicationTest {
   @Test
   @Order(6)
   @DisplayName("Test successful added movie to library")
-  public void testSuccessfulAdd() throws IOException, InterruptedException {
+  public void testSuccessfulAdd() throws Exception {
+    Movie movie = new Movie("Moana", 100, "This is a movie about a girl who loves the ocean");
+    doNothing().when(mockedAccess).addMovie(movie);
+    
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
-    clickOn("#newMovieTitle").write("MorningBird");
+    clickOn("#newMovieTitle").write("Moana");
     WaitForAsyncUtils.waitForFxEvents();
 
     Platform.runLater(() -> {
@@ -287,7 +285,7 @@ public class AddMoviePageTest extends ApplicationTest {
     assertTrue(newMovieLength.isFocused());
     write("100");
     WaitForAsyncUtils.waitForFxEvents();
-    clickOn("#newMovieDescription").write("This is a movie about a bird who likes to wake up early");
+    clickOn("#newMovieDescription").write("This is a movie about a girl who loves the ocean");
     WaitForAsyncUtils.waitForFxEvents();
     Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
 
@@ -304,8 +302,6 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("New movie is added to the library!"));
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
-
-    assertTrue(movieSerializer.movieIsFound("MorningBird"), "The movie should be added");
   }
 
   // Test the IO exception that occurs when failing to return to the front page
