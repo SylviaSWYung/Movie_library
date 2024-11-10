@@ -76,6 +76,13 @@ public class MoviePageController {
   @FXML
   private Button deleteMoviebtn;
 
+  /**
+   * Sets the details of the movie that is to be displayed.
+   * Fetches the rest of the information from the {@link RemoteMovieLibraryAccess} object
+   * used for interacting with the remote library.
+   *
+   * @param movieTitle the title of the movie to be displayed
+   */
   public void setMovieDetails(String movieTitle) {
     Movie movie = access.getMovieByTitle(movieTitle);
     if (movie != null) {
@@ -85,6 +92,16 @@ public class MoviePageController {
     } else {
       showAlert(AlertType.ERROR, "Error", "Movie not found on server.");
     }
+  }
+
+  /**
+   * Sets the remote access object for interacting with the remote movie library service.
+   *
+   * @param access The {@link RemoteMovieLibraryAccess} 
+    object used for interacting with the remote library.
+   */
+  public void setRemoteAccess(final RemoteMovieLibraryAccess access) {
+    this.access = access;
   }
 
   /**
@@ -117,7 +134,7 @@ public class MoviePageController {
   @FXML
   public void handleReturnbtn(ActionEvent event) throws IOException {
     if (!access.getLentStatus(movieTitleInPage.getText())) {
-      showAlert(AlertType.ERROR, "Failed!", "The movie is not lent this movie.");
+      showAlert(AlertType.ERROR, "Failed!", "The movie is not lent.");
     } else {
       access.returnMovie(movieTitleInPage.getText());
       showAlert(AlertType.INFORMATION, "Success!", "Movie is returned!");
@@ -135,7 +152,7 @@ public class MoviePageController {
     try {
       String movieTitle = movieTitleInPage.getText();
       access.deleteMovie(movieTitle);
-      showAlert(AlertType.INFORMATION, "Success!", "Movie deleted!");
+      showAlert(AlertType.INFORMATION, "Success!", "Movie is deleted!");
       returnToFrontPage(event);
     } catch (IllegalStateException e) {
       showAlert(AlertType.ERROR, "Failed!", e.getMessage());
