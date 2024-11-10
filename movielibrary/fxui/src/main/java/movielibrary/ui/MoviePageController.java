@@ -184,6 +184,14 @@ public class MoviePageController {
     }
   }
 
+  /**
+   * Shows an alert with the specified type, title, and message.
+   * This is the utility method used to display informational or error alerts to the user.
+   *
+   * @param type The type of the alert (e.g., ERROR, INFORMATION).
+   * @param title The title of the alert.
+   * @param message The content message of the alert.
+   */
   private void showAlert(Alert.AlertType type, String title, String message) {
     Alert alert = new Alert(type);
     alert.setTitle(title);

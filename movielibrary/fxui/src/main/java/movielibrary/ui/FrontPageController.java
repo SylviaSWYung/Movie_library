@@ -45,7 +45,12 @@ public class FrontPageController {
   @FXML
   private ChoiceBox<String> movieScrollBar;
 
-
+  /**
+   * Initializes the front page by loading the movie titles from the remote movie library access,
+   * and populating the {@code movieScrollBar} with the movie titles.
+   *
+   * @throws IOException If an I/O error occurs while accessing the movies.
+   */
   public void initializes() throws IOException {
     try {
       List<Movie> movies = access.getMovies();

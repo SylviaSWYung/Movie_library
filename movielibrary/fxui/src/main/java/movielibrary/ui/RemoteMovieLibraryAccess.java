@@ -2,14 +2,12 @@ package movielibrary.ui;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
-
 import movielibrary.core.Movie;
 
 /**
@@ -21,7 +19,7 @@ import movielibrary.core.Movie;
  */
 public class RemoteMovieLibraryAccess {
   
-  private String baseURI = "http://localhost:";
+  private String baseUri = "http://localhost:";
 
   private static final String APPLICATION_JSON = "application/json";
 
@@ -46,7 +44,7 @@ public class RemoteMovieLibraryAccess {
    * @param port the server port to connect to 
    */
   public RemoteMovieLibraryAccess(final int port) {
-    baseURI += port + "/";
+    baseUri += port + "/";
     this.objectMapper = new ObjectMapper();  
   }
 
@@ -57,17 +55,20 @@ public class RemoteMovieLibraryAccess {
    * @throws RuntimeException if there is an error in fetching the movies
    */
   public List<Movie> getMovies() {
-    String endpoint = baseURI + "movielibrary/movies";
+    String endpoint = baseUri + "movielibrary/movies";
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
           .header(ACCEPT_HEADER, APPLICATION_JSON)
           .GET()
           .build();
-      HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response = HttpClient.newBuilder()
+                                                .build()
+                                                .send(request, HttpResponse
+                                                              .BodyHandlers.ofString());
       return objectMapper.readValue(response.body(), new TypeReference<List<Movie>>(){});
     } catch (IOException | InterruptedException e) {
-      throw new  RuntimeException("Failed to fetch movies",e);
+      throw new  RuntimeException("Failed to fetch movies", e);
     }
   }
 
@@ -79,14 +80,18 @@ public class RemoteMovieLibraryAccess {
    * @throws RuntimeException if there is an error in fetching the movie
    */
   public Movie getMovieByTitle(String title) {
-    String endpoint = baseURI + "movielibrary/movies/" + title;
+    String endpoint = baseUri + "movielibrary/movies/" + title;
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
           .header(ACCEPT_HEADER, APPLICATION_JSON)
           .GET()
           .build();
-      HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response = HttpClient
+                                          .newBuilder()
+                                          .build() 
+                                          .send(request, HttpResponse
+                                                        .BodyHandlers.ofString());
       return objectMapper.readValue(response.body(), Movie.class);
     } catch (IOException | InterruptedException e) {
       throw new  RuntimeException("Failed to fetch movie with title: " + title, e);
@@ -100,15 +105,19 @@ public class RemoteMovieLibraryAccess {
    * @return true if the movie is lent, false otherwise
    * @throws RuntimeException if there is an error in fetching the lent status
    */
-  public boolean getLentStatus(String title){
-    String endpoint = baseURI + "movielibrary/movies/" + title + "/lentstatus";
+  public boolean getLentStatus(String title) {
+    String endpoint = baseUri + "movielibrary/movies/" + title + "/lentstatus";
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
           .header(ACCEPT_HEADER, APPLICATION_JSON)
           .GET()
           .build();
-      HttpResponse<String> response = HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+      HttpResponse<String> response = HttpClient
+                                          .newBuilder()
+                                          .build()
+                                          .send(request, HttpResponse
+                                                        .BodyHandlers.ofString());
       return objectMapper.readValue(response.body(), Boolean.class);
     } catch (IOException | InterruptedException e) {
       throw new  RuntimeException("Failed to fetch lent status for movie with title: " + title, e);
@@ -122,7 +131,7 @@ public class RemoteMovieLibraryAccess {
    * @throws RuntimeException if there is an error in lending the movie
    */
   public void lendMovie(String title) {
-    String endpoint = baseURI + "movielibrary/movies/" + title + "/lend";
+    String endpoint = baseUri + "movielibrary/movies/" + title + "/lend";
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
@@ -141,8 +150,8 @@ public class RemoteMovieLibraryAccess {
    * @param title the title of the movie to return
    * @throws RuntimeException if there is an error in returning the movie
    */
-  public void returnMovie(String title){
-    String endpoint = baseURI + "movielibrary/movies/" + title + "/return";
+  public void returnMovie(String title) {
+    String endpoint = baseUri + "movielibrary/movies/" + title + "/return";
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
@@ -163,7 +172,7 @@ public class RemoteMovieLibraryAccess {
    * @throws IllegalStateException if the movie title already exists
    */
   public void addMovie(Movie movie) {
-    String endpoint = baseURI + "movielibrary/movies";
+    String endpoint = baseUri + "movielibrary/movies";
     try {
       String jsonBody = objectMapper.writeValueAsString(movie);
       HttpRequest request = HttpRequest.newBuilder()
@@ -180,7 +189,8 @@ public class RemoteMovieLibraryAccess {
       } else if (response.statusCode() == 409) {
         throw new IllegalStateException("The movie title already exists in the movielibrary!");
       } else if (response.statusCode() != 200) {
-        throw new RuntimeException("Failed to add movie; server responded with status: " + response.statusCode());
+        throw new RuntimeException("Failed to add movie; server responded with status: " 
+                                    + response.statusCode());
       }
     } catch (IOException | InterruptedException e) {
       throw new RuntimeException("Failed to add movie; " + movie.getTitle(), e);
@@ -194,7 +204,7 @@ public class RemoteMovieLibraryAccess {
    * @throws RuntimeException if there is an error in deleting the movie
    */
   public void deleteMovie(String title) {
-    String endpoint = baseURI + "movielibrary/movies/" + title;
+    String endpoint = baseUri + "movielibrary/movies/" + title;
     try {
       HttpRequest request = HttpRequest.newBuilder()
           .uri(URI.create(endpoint))
