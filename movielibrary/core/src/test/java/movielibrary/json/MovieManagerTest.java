@@ -82,10 +82,10 @@ public class MovieManagerTest {
   @Test
   @DisplayName("Lend movie")
   public void testLend() throws IOException {
-    movieManager.lend("The Trollgirl");
+    movieManager.lend("The_Trollgirl");
     // Cannot lend when already lent
     Assertions.assertThrows(IllegalStateException.class, () -> {
-        movieManager.lend("The Trollgirl");
+        movieManager.lend("The_Trollgirl");
     });
   }
 
@@ -103,8 +103,8 @@ public class MovieManagerTest {
   @Test
   @DisplayName("Test successful return")
   public void testSuccessfulReturn() throws IOException {
-    movieManager.lend("Day in the life of gr2403");
-    movieManager.returnBack("Day in the life of gr2403");
+    movieManager.lend("Day_in_the_life_of_gr2403");
+    movieManager.returnBack("Day_in_the_life_of_gr2403");
   }
 
   // Test add movie on the AddMoviePage.fxml
@@ -136,15 +136,15 @@ public class MovieManagerTest {
 
     // Throws a IllegalStateException if the movie does not exist
     Assertions.assertThrows(IllegalStateException.class, () -> {
-      movieManager.deleteMovie("Non Existing Movie");;
+      movieManager.deleteMovie("Non_Existing_Movie");;
     });
 
     // Throws IllegalStateException if there is less that one movie in the library
     Assertions.assertThrows(IllegalStateException.class, () -> {
       movieManager.deleteMovie("Loverboy");
-      movieManager.deleteMovie("The Trollgirl");
-      movieManager.deleteMovie("Day in the life of gr2403");
-      movieManager.deleteMovie("Life is tough");
+      movieManager.deleteMovie("The_Trollgirl");
+      movieManager.deleteMovie("Day_in_the_life_of_gr2403");
+      movieManager.deleteMovie("Life_is_tough");
     });
   }
 }

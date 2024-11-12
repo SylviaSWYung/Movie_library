@@ -58,9 +58,9 @@ public class MovieDeserializerTest {
   @Test
   @DisplayName("Test movie search, test for findMovie()")
   public void testFindMovie() throws IOException{
-    Movie movie = movieDeserializer.findMovie("The Trollgirl");
+    Movie movie = movieDeserializer.findMovie("The_Trollgirl");
     assertNotNull(movie, "The movie should be found.");
-    assertEquals("The Trollgirl", movie.getTitle(), "The title should match.");
+    assertEquals("The_Trollgirl", movie.getTitle(), "The title should match.");
 
   }
 
@@ -76,7 +76,7 @@ public class MovieDeserializerTest {
   @Test
   @DisplayName("Test movie lending status, checkifLent()")
   public void testCheckIfMovieIsLent() throws IOException{
-    assertFalse(movieDeserializer.checkIfLent("The Trollgirl"), "The movie should be available to lent");
+    assertFalse(movieDeserializer.checkIfLent("The_Trollgirl"), "The movie should be available to lent");
   }
 
   // Test non-existent movie is lent

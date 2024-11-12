@@ -126,7 +126,7 @@ public class AddMoviePageController {
     }
 
     try {
-      Movie movie = new Movie(newMovieTitle.getText(), 
+      Movie movie = Movie.createMovie(newMovieTitle.getText(), 
           Integer.parseInt(newMovieLength.getText()), newMovieDescription.getText());
       access.addMovie(movie);
       showAlert(AlertType.INFORMATION, "Success!", "New movie is added to the library!");

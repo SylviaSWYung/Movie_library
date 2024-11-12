@@ -1,6 +1,6 @@
 [
     {
-    "title":"The Trollgirl",
+    "title":"The_Trollgirl",
     "movieLength":100,
     "description":"When a girl is kidnapped by a troll, and turned into a troll. She meets the love of her life.",
     "isLent":false
@@ -12,13 +12,13 @@
     "isLent":false
     },
     {
-    "title":"Day in the life of gr2403",
+    "title":"Day_in_the_life_of_gr2403",
     "movieLength":110,
     "description":"The movie follows four young computer science girls, fighting their way thorugh their worst nightmare ITP",
     "isLent":false
     },
     {
-    "title":"Life is tough",
+    "title":"Life_is_tough",
     "movieLength":120, 
     "description":"A movie about why life is a bitch sometimes",
     "isLent":false 

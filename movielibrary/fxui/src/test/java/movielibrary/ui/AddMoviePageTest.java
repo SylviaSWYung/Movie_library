@@ -103,8 +103,7 @@ public class AddMoviePageTest extends ApplicationTest {
   @Order(3)
   @DisplayName("Test invalid title")
   public void testInvalidTitle() {
-    doThrow(new IllegalStateException("The movie title already exists in the movielibrary!")).when(mockedAccess).addMovie(any(Movie.class));
-
+    TextField newMovieTitle = (TextField) lookup("#newMovieTitle").query();
     TextField newMovieLength = (TextField) lookup("#newMovieLength").query();
     TextArea newMovieDescription = (TextArea) lookup("#newMovieDescription").query();
     Button addMoviebtn = (Button) lookup("#addMoviebtn").query();  // Locate the button by its ID
@@ -123,6 +122,31 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("You must fill out the title of the new movie!"));
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
+
+    doThrow(new IllegalStateException("The title cannot contain spaces, replace it with an underscore '_'.")).when(mockedAccess).addMovie(any(Movie.class));
+
+    newMovieLength.setText("75");
+    newMovieDescription.setText("This is a movie with a lot of spaces!");
+    clickOn("#newMovieTitle").write("White space movie");
+    Platform.runLater(() -> {
+      if (addMoviebtn != null) {
+        addMoviebtn.fire();
+      } else {
+        System.out.println("Button is null");
+      }
+    });
+
+    WaitForAsyncUtils.waitForFxEvents();
+
+    verifyThat(".alert", NodeMatchers.isVisible());
+    verifyThat(".alert .content", hasText("The title cannot contain spaces, replace it with an underscore '_'."));
+    clickOn("OK");
+
+    newMovieTitle.clear();
+
+    WaitForAsyncUtils.waitForFxEvents();
+
+    doThrow(new IllegalStateException("The movie title already exists in the movielibrary!")).when(mockedAccess).addMovie(any(Movie.class));
 
     newMovieLength.setText("90");
     newMovieDescription.setText("This is about a boy who loves so much");
