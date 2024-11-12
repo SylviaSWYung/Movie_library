@@ -21,8 +21,11 @@ import movielibrary.core.Movie;
  * and clicking the {@code MoreInfo} button.
  */
 public class FrontPageController {
-    
-  private RemoteMovieLibraryAccess access = new RemoteMovieLibraryAccess();
+  
+  /**
+   * Rest API object used for calling backend application.
+   */
+  private RemoteMovieLibraryAccess access;
 
   /**
    * FXML UI components on the FrontPage.
@@ -51,7 +54,9 @@ public class FrontPageController {
    *
    * @throws IOException If an I/O error occurs while accessing the movies.
    */
-  public void initializes() throws IOException {
+  public void initializes(RemoteMovieLibraryAccess access) throws IOException {
+    this.access = access;
+
     try {
       List<Movie> movies = access.getMovies();
       List<String> movieTitles = new ArrayList<>();
@@ -120,6 +125,7 @@ public class FrontPageController {
       Parent parent = loader.load();
 
       MoviePageController moviePageController = loader.getController();
+      moviePageController.setRemoteAccess(this.access);
 
       moviePageController.setMovieDetails(movieTitle);
 
@@ -130,5 +136,14 @@ public class FrontPageController {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Sets the remote access object for interacting with the remote movie library service.
+   *
+   * @param access The {@link RemoteMovieLibraryAccess} object used for interacting with the remote library.
+   */
+  public void setRemoteAccess(final RemoteMovieLibraryAccess access) {
+    this.access = access;
   }
 }

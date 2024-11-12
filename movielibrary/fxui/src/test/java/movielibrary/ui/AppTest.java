@@ -4,17 +4,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 
 import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 
 public class AppTest extends ApplicationTest {
+
+  @Mock
+  private RemoteMovieLibraryAccess mockedAccess = mock(RemoteMovieLibraryAccess.class);
 
   private Stage primaryStage;
   private App app;
@@ -70,6 +75,8 @@ public class AppTest extends ApplicationTest {
   public void start(final Stage stage) throws IOException {
     this.primaryStage = stage;
     this.app = new App();
+    app.setRemoteAccess(mockedAccess);
+
     app.start(stage);
   }
 

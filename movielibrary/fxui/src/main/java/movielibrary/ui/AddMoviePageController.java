@@ -174,7 +174,7 @@ public class AddMoviePageController {
       Parent root = loader.load();
 
       FrontPageController frontPageController = loader.getController();
-      frontPageController.initializes();
+      frontPageController.initializes(this.access);
 
       // get current stage and set the new scene (frontpage).
       Stage stage = (Stage) cancelbtn.getScene().getWindow();

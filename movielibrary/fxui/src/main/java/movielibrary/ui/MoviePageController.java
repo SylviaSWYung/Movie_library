@@ -24,6 +24,9 @@ import movielibrary.core.Movie;
  */
 public class MoviePageController {
 
+  /**
+   * Rest API object used for calling backend application.
+   */
   private RemoteMovieLibraryAccess access = new RemoteMovieLibraryAccess();
 
   /**
@@ -187,7 +190,7 @@ public class MoviePageController {
       Parent root = loader.load();
 
       FrontPageController frontPageController = loader.getController();
-      frontPageController.initializes();
+      frontPageController.initializes(this.access);
 
       // get current stage and set the new scene (frontpage).
       Stage stage = (Stage) cancelbtn.getScene().getWindow();
