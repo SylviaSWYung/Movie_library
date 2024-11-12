@@ -32,27 +32,31 @@ public class MovieTest {
     Assertions.assertFalse(movie.getIsLent());
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = Movie.createMovie("", 20, "Nothing is here at the moment!");
+      movie = Movie.createMovie("", 20, "Nothing is here at the moment!");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = Movie.createMovie("Hello", 20, "");
+      movie = Movie.createMovie("Hello", 20, "");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = Movie.createMovie("No time movie?", 0, "Nothing is here at the moment!");
+      movie = Movie.createMovie("No_time_movie?", 0, "Nothing is here at the moment!");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = Movie.createMovie("Too long movie", 150, "Nothing is here at the moment!");
+      movie = Movie.createMovie("Too_long_movie", 150, "Nothing is here at the moment!");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-      movie = Movie.createMovie("Too short movie", 150, "Nothing!");
+      movie = Movie.createMovie("Too_short_movie", 150, "Nothing!");
     });
 
     Assertions.assertThrows(IllegalArgumentException.class, () -> {
-        movie = Movie.createMovie("Too long description", 20, "Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.");
+      movie = Movie.createMovie("Too_long_description", 20, "Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.Sed iaculis luctus risus, in auctor magna porta nec. Etiam et diam luctus, hendrerit orci eget, lobortis urna. Morbi convallis scelerisque lectus id dapibus. Nulla sollicitudin lorem justo, non viverra tellus maximus vel. Suspendisse fermentum ultrices est, in aliquam nunc imperdiet ac. Mauris aliquam massa non eros maximus, luctus vestibulum nulla dapibus. Cras nec nunc eu dui sollicitudin laoreet. Vestibulum nunc tortor, ornare at aliquet vitae, semper vitae nibh. Proin auctor ex id nisl tempor tincidunt. Duis at elit eget diam pretium posuere eu in ante. Duis non diam dui. Mauris id vestibulum purus. In quis vulputate nibh, dignissim dictum urna. Vivamus volutpat molestie nunc, ut facilisis turpis suscipit sed. Donec maximus convallis diam, in consequat velit hendrerit pellentesque. Maecenas non ex et felis bibendum pulvinar.");
+    });
+
+    Assertions.assertThrows(IllegalArgumentException.class, () -> {
+      movie = Movie.createMovie("Hei på deg", 80, "Heisann på deg, for en fin dag i dag");
     });
   }
 
@@ -60,8 +64,8 @@ public class MovieTest {
   @Test
   @DisplayName("Set-title")
   public void testTitle() {
-    movie.setTitle("The Frog Princess");
-    Assertions.assertEquals("The Frog Princess", movie.getTitle());
+    movie.setTitle("The_Frog_Princess");
+    Assertions.assertEquals("The_Frog_Princess", movie.getTitle());
 
     movie.setLent(true);
     Assertions.assertTrue(movie.getIsLent());

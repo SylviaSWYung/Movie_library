@@ -42,6 +42,7 @@ public class Movie {
    */
   public static Movie createMovie(String title, double movieLength, String description) {
     handleStringError(title);
+    handleTitleWithSpacesError(title);
     handleDoubleError(movieLength); 
     handleStringError(description);
     handleDescriptionLength(description);
@@ -67,6 +68,7 @@ public class Movie {
    */
   public void setTitle(String title) {
     handleStringError(title);
+    handleTitleWithSpacesError(title);
     this.title = title;
   }
 
@@ -142,6 +144,18 @@ public class Movie {
   private static void handleStringError(String input) {
     if (input == null || input.isEmpty()) {
       throw new IllegalArgumentException("Your argument can't be empty or null");
+    }
+  }
+
+  /**
+   * Validates that the title does not contain
+   * a white space in between the characters/words. 
+   *
+   * @param title the string to validate
+   */
+  private static void handleTitleWithSpacesError(String title) {
+    if (title.trim().contains(" ")) {
+      throw new IllegalArgumentException("The title cannot contain spaces, replace it with an underscore '_'.");
     }
   }
 
