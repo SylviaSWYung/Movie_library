@@ -12,6 +12,11 @@ import javafx.stage.Stage;
  */
 
 public class App extends Application {
+
+  /**
+   * Rest API object used for calling backend application.
+   */
+  private RemoteMovieLibraryAccess access = new RemoteMovieLibraryAccess();
     
   /**
    * Helper method used by tests needing to run headless.
@@ -35,7 +40,7 @@ public class App extends Application {
 
       //Retreieves controller for FrontPage
       FrontPageController frontPageController = fxmlLoader.getController();
-      frontPageController.initializes();
+      frontPageController.initializes(this.access);
       
       primaryStage.setScene(new Scene(parent));
       primaryStage.setTitle("MovieLibrary App");
@@ -43,6 +48,15 @@ public class App extends Application {
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  /**
+   * Sets the remote access object for interacting with the remote movie library service.
+   *
+   * @param access The {@link RemoteMovieLibraryAccess} object used for interacting with the remote library.
+   */
+  public void setRemoteAccess(final RemoteMovieLibraryAccess access) {
+    this.access = access;
   }
 
   public static void main(String[] args) {
