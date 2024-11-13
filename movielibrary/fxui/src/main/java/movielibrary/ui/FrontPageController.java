@@ -141,7 +141,8 @@ public class FrontPageController {
   /**
    * Sets the remote access object for interacting with the remote movie library service.
    *
-   * @param access The {@link RemoteMovieLibraryAccess} object used for interacting with the remote library.
+   * @param access The {@link RemoteMovieLibraryAccess} object used for interacting 
+   *                with the remote library.
    */
   public void setRemoteAccess(final RemoteMovieLibraryAccess access) {
     this.access = access;

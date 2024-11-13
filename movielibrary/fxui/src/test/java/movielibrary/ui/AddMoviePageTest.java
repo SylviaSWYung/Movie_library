@@ -215,7 +215,7 @@ public class AddMoviePageTest extends ApplicationTest {
     verifyThat(".alert .content", hasText("Movie length must be greater than 0 minutes."));
     clickOn("OK");
     WaitForAsyncUtils.waitForFxEvents();
-
+    
     newMovieLength.clear();
     clickOn("#newMovieLength").write("123");
     Platform.runLater(() -> {
