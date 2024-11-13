@@ -14,10 +14,6 @@
     <artifactId>springboot.restserver</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <!-- <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-    </properties> -->
     <dependencies>
       <dependency>
         <groupId>movielibrary</groupId>
@@ -133,7 +129,7 @@
                 <configuration>
                     <argLine>
                     ${jaCoCoArgLine}
-                    --add-opens movielibrary.springboot.restserver/movielibrary.springboot.restserver=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    --add-opens movielibrary.springboot.restserver/movielibrary.springboot.restserver=ALL-UNNAMED
                     </argLine>
                 </configuration>
             </plugin>

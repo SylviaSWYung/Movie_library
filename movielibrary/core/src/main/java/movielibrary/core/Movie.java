@@ -155,7 +155,9 @@ public class Movie {
    */
   private static void handleTitleWithSpacesError(String title) {
     if (title.trim().contains(" ")) {
-      throw new IllegalArgumentException("The title cannot contain spaces, replace it with an underscore '_'.");
+      throw new IllegalArgumentException(
+        "The title cannot contain spaces, replace it with an underscore '_'."
+      );
     }
   }
 
