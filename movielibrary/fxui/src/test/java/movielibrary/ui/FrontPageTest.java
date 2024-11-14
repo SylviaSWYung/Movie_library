@@ -112,12 +112,14 @@ public class FrontPageTest extends ApplicationTest {
     Movie mockedMovie = new Movie("Loverboy", 30.0, "Based on a true story, about a boy who marries his crush");
     when(mockedAccess.getMovieByTitle("Loverboy")).thenReturn(mockedMovie);
 
+    Button moreInfoBtn = lookup("#moreInfobtn").query();
+
     Platform.runLater(() -> {
       ChoiceBox<String> movieChoiceBox = lookup("#movieScrollBar").query();
       movieChoiceBox.setValue("Loverboy");
       WaitForAsyncUtils.waitForFxEvents();
 
-      clickOn("#moreInfobtn");
+      moreInfoBtn.fire();
       WaitForAsyncUtils.waitForFxEvents();
     
     });
