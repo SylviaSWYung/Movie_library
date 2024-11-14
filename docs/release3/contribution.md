@@ -1,15 +1,17 @@
-# Contribution 
-<!-- context: focus for release 3, possible other releases too-->
+# Contribution
 
-## Adele Xiao Yuan Strysse 
-<!-- max 200 words -->
+## Adele Xiao Yuan Strysse
 
-## Helle Hornes Fystro 
-<!-- max 200 words -->
+I have been collaborating with Helle Hornes Fystro through release 3. My main focus has been updating the application to add and delete movies in the movie library by updating the classes: `MovieDeserializer.java`, `MovieSerializer.java` and `MovieManager.java` with methods to handle these functions. In addition, I also created tests for the new methods. Furthermore, I developed `AddMoviePageController.java` to handle adding movies in the `AddMoviePage.fxml`, and updated `FrontPageController.java` to load the new FXML page `AddMoviePage.fxml` using a new implemented button in `FrontPage.fxml`. I created tests for the new implemented controller as well as update new tests for `FrontPageController.java`. Due to problems with the usage of Eclipse Che, I had to reconstruct the code for some controllers in fxui along with the tests to make the application work in both environments. I have also updated `classDiagram.puml` and `packageDiagram.puml`, and contributed to `sustainability.md`.
 
-## Jennica Duong 
-<!-- max 200 words -->
+## Helle Hornes Fystro
 
-## Sylvia Suet Wai Yung 
-<!-- max 200 words -->
+Throughout release 3, I have been collaborating with Adele Strysse on pair programming. My contributions focused on enhancing functionality, usability, and documentation to improve both the user and developer experience. I created the `AddMoviePage.fxml` file, which serves as the foundation for adding movies to our app, aligning with the intended design and user flow. To ensure the layout was visually appealing and functional across development environments, I also adjusted and optimized the pages to display correctly within Eclipse Che. Additionally, I wrote unit tests for the deleteMovie method in `MoviePageController.java` to ensure performance and reliability. I improved project documentation by fixing Javadoc comments, making the codebase more understandable for other developers. To enhance user experience, I implemented error handling for the movie description field, providing alerts to prevent invalid entries. Lastly, I contributed to the sustainability efforts by writing reflective content in `sustainability.md`, focusing on eco-friendly practices and efficient resource management within the app.
 
+## Jennica Duong
+
+In release 3, I pair programmed with Sylvia Yung. My primary contributions included implementing the project to run using the REST-API. This includes creating and API controller `MovieLibraryController.java` as well as `MovieLibraryApplication.java`, which serves as the backbone for our application’s server logic by handling a user's http requests and routing them to logic in the `MovieLibraryService.java` and further to the core logic. Another contribution was to implement a GitLab Continuous Integration (CI) in `.gitlab-ci.yml`. The CI checks that the project builds, runs tests and cleans successfully, and that there are no errors in checkstyle and spotbugs. While working on the rest-api I implemented custom exception handling classes `MovieNotFoundException.java` and `BadRequestException.java` (and their corresponding Advice classes) to provide clear error messages to detect different cases of errors. Additionally, I wrote tests for our Spring Boot setup: `MovielibraryApplicationTest.java` and `MovieLibraryServiceTest.java`, ensuring each component worked as expected. Finally, I contributed to the project documentation, including writing `rest-api.md`, updating the `release3.md`, and implementing `sequenceDiagram.puml` to visualize what happens in the application from a user clicks on Add Movie to the POST request call given to the server.
+
+## Sylvia Suet Wai Yung
+
+Throughout release 3, I have been collaborating with Jennica Duong on pair programming, with primary focus on implementing the REST API. My main contributions included developing the `MovieLibraryService.java` class and `RemoteMovieLibraryAccess.java`. I have also moved the file handling, which was previously located in the core module, to the `springboot.restserver` module within `MovieLibraryApplication.java`. I moved the file handling because I had to support the implementation of remote access in the FXUI. Our application cannot function without a server, and the server cannot start without a JSON file, making it necessary to relocate this functionality to another module. Additionally, by implementing Remote Access, I also created corresponding testers. Beyond coding, I contributed to the documentation by writing the `README.md` at the root level, as well as contributing to the `release3.md`, `challenges.md`, and `user-stories.md` files.
