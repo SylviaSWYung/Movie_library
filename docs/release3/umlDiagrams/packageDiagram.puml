@@ -1,0 +1,38 @@
+@startuml packageDiagram.puml
+
+skinparam ArrowStyle dashed
+
+component core {
+  package movielibrary.core
+  package movielibrary.json
+}
+
+component fxui {
+  package movielibrary.ui
+}
+
+component javafx {
+  component fxml {
+  }
+}
+
+component jackson {
+}
+
+component RESTserver {
+  package "REST-API"
+}
+
+component SpringBoot {
+}
+
+
+
+fxui ...> javafx
+movielibrary.json ...> movielibrary.core
+movielibrary.json ...> jackson
+RESTserver ...> SpringBoot
+movielibrary.ui -right-> RESTserver
+RESTserver ...> movielibrary.json
+
+@enduml
