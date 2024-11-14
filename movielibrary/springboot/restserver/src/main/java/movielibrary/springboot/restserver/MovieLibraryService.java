@@ -19,13 +19,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MovieLibraryService {
 
-  private MovieManager movieManager;
-  private MovieDeserializer movieDeserializer;
-  private MovieSerializer movieSerializer;
+  private final MovieManager movieManager;
+  private final MovieDeserializer movieDeserializer;
+  private final MovieSerializer movieSerializer;
 
   /**
    * Initializes the {@code MovieLibraryService} with the file handling for movies
-   * stored in the useræs home directory.
+   * stored in the user's home directory.
    *
    * @throws IOException If an I/O error occurs while accessing or creating the JSON file. 
    */
@@ -38,6 +38,21 @@ public class MovieLibraryService {
     this.movieManager = new MovieManager();
     this.movieDeserializer = new MovieDeserializer(jsonFile);
     this.movieSerializer = new MovieSerializer(jsonFile);
+  }
+
+  /**
+   * Initalizes the {@code MovieLibraryService} with the specified {@link MovieManager},
+   * {@link MovieDeserializer} and {@link MovieSerializer}.
+   *
+   * @param movieManager Movie class containing data and methods to verify it.
+   * @param movieDeserializer MovieDeserializer class to deserialize movie data.
+   * @param movieSerializer MovieSerializer class to serialize movie data.
+   */
+  public MovieLibraryService(MovieManager movieManager, MovieDeserializer movieDeserializer, 
+                              MovieSerializer movieSerializer) {
+    this.movieManager = movieManager;
+    this.movieDeserializer = movieDeserializer;
+    this.movieSerializer = movieSerializer;
   }
 
   /**
