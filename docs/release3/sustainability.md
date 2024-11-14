@@ -15,3 +15,8 @@ Deploying and maintaining the service involves regular updates to ensure smooth 
 In the future, a self-service model could provide more accessibility, allowing users to engage directly with the app on a desk or terminal in the library. Users could use the app to search for movies, track their rentals, and save films of interest to a personal account with secure login credentials. These accounts would allow users to manage their movie lists independently, without needing to interact with the librarian unless necessary. Librarians would retain access to essential administrative functions, such as adding or deleting movies, to maintain control over the library’s collection and ensure quality. 
 
 The main target group of this product is librarians, given their essential role in maintaining the library’s movie offerings. However, it simultaneously empowers users to use a library resource independently, fostering digital literacy in a community-centered environment. This approach ensures the service remains sustainable and valuable by emphasizing social engagement, economic accessibility, individual mental health benefits, and ease of use, providing a well-rounded, sustainable service for both librarians and users.
+
+Figure 1 shows the connections between environmental, social, technical, individual and economic factors to our application. 
+
+![SusAD.png](/docs/images/SusAD.png)
+Figure 1: This is a Sustainability Awareness Diagram 
