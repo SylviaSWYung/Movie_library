@@ -1,0 +1,41 @@
+@startuml sequenceDiagram.puml
+
+actor User
+
+User -> ui.FrontPageController: click #addMoviebtn
+ui.FrontPageController -> FXMLLoader: load("/movielibrary/ui/AddMoviePage.fxml")
+FXMLLoader -> ui.AddMoviePageController: initialize AddMoviePageController
+
+ui.FrontPageController -> Stage: display AddMoviePage.fxml scene
+
+User -> ui.AddMoviePageController: input movie details and click #addMoviebtn
+ui.AddMoviePageController -> ui.AddMoviePageController: validate input fields
+alt Validation Error
+    ui.AddMoviePageController -> User: display error alert with validation message
+else Valid Input
+    ui.AddMoviePageController -> Movie: new Movie(title, movieLength, description)
+    ui.AddMoviePageController -> ui.RemoteMovieLibraryAccess: addMovie(newMovie)
+    
+    ui.RemoteMovieLibraryAccess -> ObjectMapper: writeValueAsString(newMovie)
+    ui.RemoteMovieLibraryAccess -> HttpClient: send PUT request to /movielibrary/movies with JSON body
+
+    alt Success - 201 Created
+        HttpClient -> ui.RemoteMovieLibraryAccess: response 201 Created
+        ui.RemoteMovieLibraryAccess -> ui.AddMoviePageController: confirm success
+        ui.AddMoviePageController -> User: display success alert "New movie is added!"
+        ui.AddMoviePageController -> ui.AddMoviePageController: returnToFrontPage()
+        ui.AddMoviePageController -> FXMLLoader: load("/movielibrary/ui/FrontPage.fxml")
+        FXMLLoader -> ui.FrontPageController: initialize FrontPageController
+        ui.AddMoviePageController -> Stage: display FrontPage.fxml scene
+    else Failure - 409 Conflict
+        HttpClient -> ui.RemoteMovieLibraryAccess: response 409 Conflict
+        ui.RemoteMovieLibraryAccess -> ui.AddMoviePageController: throw IllegalStateException
+        ui.AddMoviePageController -> User: display error alert "Movie title already exists!"
+    else Other Failure
+        HttpClient -> ui.RemoteMovieLibraryAccess: response other status code
+        ui.RemoteMovieLibraryAccess -> ui.AddMoviePageController: throw RuntimeException
+        ui.AddMoviePageController -> User: display error alert "Failed to add movie"
+    end
+end
+
+@enduml

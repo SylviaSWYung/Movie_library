@@ -1,0 +1,65 @@
+@startuml classDiagram.puml 
+
+class Movie {
+  String title 
+  double movieLength 
+  String description
+  boolean isLent
+  Movie createMovie(String title, double movieLength, String description )
+  String getTitle()
+  double getMovieLength()
+  String getDescription()
+  boolean getIsLent()
+  void setTitle(String title)
+  void setMovieLength(double movieLength)
+  void setDescription(String description)
+  void setLent(boolean isLent)
+  void handleStringError(String input)
+  void handleTitleWithSpacesError(String title)
+  void handleDoubleError(double minutes)
+  void handleDescriptionLength(String description)
+}
+
+class MovieSerializer {
+  ObjectMapper movieLibrary
+  File file 
+  MovieDeserializer movieDeserializer 
+  boolean getLentStatus(String title)
+  boolean movieIsFound()
+  void writeAllMoviesPretty()
+  void addMovieToLibrary(Movie movie)
+  void deleteMovieFromLibrary(String title)
+  void changeLentStatus(String title, boolean newStatus)
+}
+
+class MovieDeserializer {
+  ObjectMapper movieLibrary
+  File file 
+  List<Movie> moviesInLibrary
+  Movie findMovie(String title)
+  List<Movie> getMoviesInLibrary()
+  boolean checkIfLent(String title)
+  void initializeMovieFile(File file)
+  void reloadMovieData()
+}
+
+class MovieManager {
+  File file
+  MovieSerializer movieSerializer
+  File getFile()
+  MovieManager createMovieManager(File file)
+  void initializeMovieFile(File file)
+  void setFile(File file)
+  void lend(String title)
+  void returnBack(Sting title)
+  void addMovie(String title, double movieLength, String description)
+  void deleteMovie(String title)
+}
+
+MovieManager "1" - "1" MovieSerializer
+MovieDeserializer "1" - "*" Movie
+MovieSerializer " 1" -- "*" Movie
+MovieSerializer "1   " -- "1" MovieDeserializer
+
+@enduml
+
